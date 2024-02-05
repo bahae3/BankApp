@@ -125,3 +125,4 @@ class Admin(db.Model, UserMixin):
 
 with app.app_context():
     db.create_all()
+
