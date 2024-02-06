@@ -1,7 +1,9 @@
+/* margin body 0 */
 body{
   margin: 0;
 }
 
+/* logo at left, and title at right */
 .first-head{
   display: flex;
   justify-content: space-between;
@@ -28,6 +30,7 @@ body{
   color: #278664;
 }
 
+/* menu styling */
 .second-head{
   background-color: #f9f9f9;
   display: flex;
@@ -70,6 +73,7 @@ body{
   background-color: #f9f9f9;
 }
 
+/* photos slides */
 .slideshow-container {
   position: relative;
   overflow: hidden;
@@ -90,8 +94,8 @@ body{
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-/*--------------------*/
 
+/* disabled buttons (loans...) */
 .loans-info {
   display: flex;
   flex-direction: column;
@@ -109,7 +113,7 @@ body{
   padding: 10px 25px;
   margin: 0 20px;
   width: 170px;
-  height: 75px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,12 +131,204 @@ body{
   background-color: #203e5f;
 }
 
+/* sign up and log in styling */
+.join-bank{
+  border: 2px solid #007bff;
+  margin: 15px auto;
+  padding: 30px 0;
+  width: 42%;
+}
+
+.title2, .title3{
+  text-align: center;
+  font-size: 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+
+.title3{
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.title3-anchor{
+  text-decoration: none;
+  color: #007bff;
+}
+
+.title3-anchor:hover{
+  text-decoration: underline;
+}
+
+/* 2 lines with or in the middle */
+.hr-container {
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+  width: 40%;
+}
+
+.hr-line {
+  flex: 1;
+  height: 1.5px;
+  background-color: #007bff;
+}
+
+.hr-text {
+  padding: 0 8px;
+  color: #007bff;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+/* download side style */
+.download-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 70px 0;
+}
+
+.download-left {
+  text-align: center;
+  width: 50%;
+}
+
+.download-right {
+  width: 50%;
+}
+
+.download-title {
+  margin-bottom: 40px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.download-img{
+  width: 185px;
+  height: auto;
+  margin: 0 14px;
+}
+
+.download-logo{
+  width: 400px;
+  height: auto;
+  margin: 0 150px;
+}
+
+/* footer styling */
+footer {
+    background-color: #278664;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+/* more infos/links styling */
+.more-links {
+  display: flex;
+}
+
+.link-column {
+  flex: 1;
+  padding: 20px; /* Add padding for spacing between columns */
+}
+
+.link1,
+.link2,
+.link3 {
+  border: 1px solid #ddd; /* Optional: Add border for visual separation */
+  padding: 10px;
+}
+
+.link-title {
+  margin-bottom: 20px; /* Add margin below titles for spacing */
+  font-family: sans-serif;
+  font-size: 21px;
+}
+
+.link1 ul,
+.link1 ul li {
+  margin: 0;
+  padding: 0;
+  list-style: none; /* Remove default list styles */
+}
+
+.link1 ul li a {
+  display: inline-block; /* Make links appear on separate lines */
+}
 
 
 
+.link1 a{
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  color: #007bff;
+  margin: 0 56px;
+  text-decoration: none;
+  transition: color 0.5s ease-out;
+}
+
+.link1 a:hover{
+    color: #007;
+}
+
+.link3 a {
+  display: block; /* Make the images appear on separate lines */
+}
+
+.link3-img{
+ width: 130px;
+ height: auto;
+}
+
+.link3 a {
+  margin-bottom: 10px;
+}
+
+/* icons and copyright-footer */
+.footer-icon {
+    color: #fff;
+    font-size: 30px;
+    margin: 10px;
+    text-decoration: none;
+
+}
+
+.fa-brands{
+    transition: color 0.3s ease;
+}
+
+.fa-facebook:hover {
+    color: #007bff;
+}
+
+.fa-instagram:hover{
+    color: #f83376;
+}
+
+.fa-twitter:hover{
+    color: #2f9aea;
+}
+
+.fa-snapchat:hover{
+    color: #fffb00;
+}
 
 
-/*hr style*/
+.footer-subheading {
+    margin-top: 25px;
+    font-size: 22px;
+    opacity: 0.8;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+}
+
+
+/* hr style */
 hr {
   height: 2px;
   width: 90%;
