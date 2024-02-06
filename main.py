@@ -123,8 +123,8 @@ class Admin(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 @app.route("/")

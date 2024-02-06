@@ -10,11 +10,13 @@
           rel="stylesheet">
 </head>
 <body>
+
 <header>
     <div class="first-head">
         <img src="static/client/logobank.png" alt="Bank Logo" class="top-logo">
-        <p class="top-description">The bank of the future</p>
+        <p class="top-description">The <span class="bank-word">bank</span> of the future</p>
     </div>
+
     <div class="second-head">
         <a href="#" class="menu-head">Home</a>
         <a href="#" class="menu-head">Log in</a>
@@ -23,33 +25,43 @@
         <a href="#" class="head-button">Create an account</a>
     </div>
 </header>
-<hr>
+
 <div class="slideshow-container">
     <div class="slide">
         <img src="static/client/carloan.jpg" alt="Slide 1">
     </div>
+
     <div class="slide">
         <img src="static/client/houseloan.jpg" alt="Slide 2">
     </div>
+
     <div class="slide">
         <img src="static/client/interest.jpg" alt="Slide 3">
     </div>
 </div>
-<script>
-    let slideIndex = 0;
-    showSlides();
 
-    function showSlides() {
-      let slides = document.getElementsByClassName("slide");
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) {slideIndex = 1}
-      slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 2000); // Change image every 2 seconds
-    }
+<div class="loans-info">
+  <div class="button-container">
+    <p class="info">Car Loan 🚗</p>
+    <p class="info">House Loan 🏡</p>
+  </div>
 
-</script>
+  <div class="button-container">
+    <p class="info">Security 🔐</p>
+    <p class="info">0% Interest 💶</p>
+  </div>
+</div>
+
+<hr>
+
+<h2 class="title2">If you want to become one of us</h2>
+<h3 class="title3">Click here to <a href="#">sign up</a></h3>
+
+
+
+
+
+
+<script src="static/client/loansTopImages.js"></script>
 </body>
 </html>
