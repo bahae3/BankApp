@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bahae Bank - Home</title>
+    <!-- The icon image -->
+    <link rel="icon" href="static/client/img/iconbank.png">
+    <!-- CSS file -->
+    <link rel="stylesheet" href="static/client/home.css">
+    <!-- font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <!-- social media icons links -->
+    <script src="https://kit.fontawesome.com/a7aad111ea.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+    <div class="first-head">
+        <img src="static/client/img/logobank.png" alt="Bank Logo" class="top-logo">
+        <p class="top-description">The <span class="bank-word">bank</span> of the future</p>
+    </div>
+
+    <div class="second-head">
+        <a href="{{ url_for('home') }}" class="menu-head">Home</a>
+        <a href="{{ url_for('login') }}" class="menu-head">Log in</a>
+        <a href="#" class="menu-head">Contact us</a>
+        <a href="#" class="menu-head">About us</a>
+        <a href="{{ url_for('signup') }}" class="head-button">Create an account</a>
+    </div>
+</header>
