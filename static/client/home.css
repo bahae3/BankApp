@@ -75,6 +75,7 @@ body{
 
 /* photos slides */
 .slideshow-container {
+  margin: 60px 0;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -97,6 +98,7 @@ body{
 
 /* disabled buttons (loans...) */
 .loans-info {
+  margin: 50px 0 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,7 +136,7 @@ body{
 /* sign up and log in styling */
 .join-bank{
   border: 2px solid #007bff;
-  margin: 15px auto;
+  margin: 50px auto;
   padding: 30px 0;
   width: 42%;
 }
@@ -186,23 +188,24 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 70px 0;
+  margin: 115px 0;
 }
 
 .download-left {
+  margin-left: 120px;
   text-align: center;
-  width: 50%;
+  width: 40%;
 }
 
 .download-right {
-  width: 50%;
+  width: 52%;
 }
 
 .download-title {
   margin-bottom: 40px;
   font-family: "Lato", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .download-img{
@@ -221,75 +224,69 @@ body{
 footer {
     background-color: #278664;
     color: #fff;
-    padding: 30px 0;
     text-align: center;
 }
 
 /* more infos/links styling */
 .more-links {
   display: flex;
+  background-color: #3c9273;
+  padding-top: 30px;
 }
 
 .link-column {
   flex: 1;
-  padding: 20px; /* Add padding for spacing between columns */
-}
-
-.link1,
-.link2,
-.link3 {
-  border: 1px solid #ddd; /* Optional: Add border for visual separation */
-  padding: 10px;
+  padding: 30px;
 }
 
 .link-title {
   margin-bottom: 20px; /* Add margin below titles for spacing */
   font-family: sans-serif;
-  font-size: 21px;
+  font-size: 24px;
+  text-decoration: underline;
 }
 
-.link1 ul,
-.link1 ul li {
-  margin: 0;
+ul, ul li {
+  margin: 8px 0;
   padding: 0;
-  list-style: none; /* Remove default list styles */
+  list-style: none;
 }
 
-.link1 ul li a {
+.footer-link {
   display: inline-block; /* Make links appear on separate lines */
-}
-
-
-
-.link1 a{
+  width: 114px;
+  text-align: left;
   font-family: "Lato", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 24px;
-  color: #007bff;
+  font-size: 22px;
+  color: #007;
   margin: 0 56px;
   text-decoration: none;
-  transition: color 0.5s ease-out;
+  transition: color 0.5s ease;
 }
 
-.link1 a:hover{
-    color: #007;
+
+.footer-link:hover{
+  color: #fff;
 }
 
-.link3 a {
-  display: block; /* Make the images appear on separate lines */
+.footer-download{
+  margin-top: 25px;
 }
 
-.link3-img{
- width: 130px;
+
+.link-img{
+ width: 150px;
  height: auto;
-}
-
-.link3 a {
-  margin-bottom: 10px;
+ margin: 0 12px;
 }
 
 /* icons and copyright-footer */
+.copyright-footer{
+  padding: 36px 0;
+}
+
 .footer-icon {
     color: #fff;
     font-size: 30px;
