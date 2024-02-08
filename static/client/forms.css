@@ -1,0 +1,97 @@
+/* Sign up page styling */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  margin: 55px auto 80px;
+}
+
+.form-title {
+  color: #007bff;
+  font-size: 37px;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+}
+
+.form {
+  width: 300px;
+  font-size: 19px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  border-left: 2px solid #007bff;
+border-right: 2px solid #007bff;
+border-bottom: 2px solid #007bff;
+padding: 2px 60px 20px 45px;
+
+}
+
+.form-label {
+  color: #278664;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #007bff;
+}
+
+.form-button {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: block;
+  margin: 20px auto 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+
+.bottom-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 11px;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 21px;
+}
+
+.haveaccount{
+  margin-right: 7px;
+}
+
+.form-link{
+  color: #007bff;
+  text-decoration: none;
+}
+
+.form-link:hover{
+  text-decoration: underline;
+}
+
+/* Log in styling */
+.login-container{
+  height: 65vh;
+  margin: 40px;
+}
+
+.login-title{
+  margin-bottom: 40px;
+}

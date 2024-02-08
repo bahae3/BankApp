@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% include 'client/header.html' %}
 
-</body>
-</html>
+<div class="form-container login-container">
+    <h1 class="form-title login-title">Log in to Bahae Bank.</h1>
+    <div class="form">
+        <form action="{{ url_for('home') }}" method="post">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-input") }}
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-input") }}
+            {{ form.login(class="form-button") }}
+        </form>
+    </div>
+    <div class="bottom-text">
+      <p class="haveaccount">Don't have an account? Click here to
+      <a href="{{ url_for('signup') }}" class="form-link">Sign up</a>
+      .</p>
+    </div>
+</div>
+
+{% include 'client/footer.html' %}
