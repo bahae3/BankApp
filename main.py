@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import NoResultFound
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from forms import Signup, Login
 
 # Creating the application
 app = Flask(__name__)
@@ -130,6 +131,18 @@ class Admin(db.Model, UserMixin):
 @app.route("/")
 def home():
     return render_template("client/home.html")
+
+
+@app.route("/signup")
+def signup():
+    form = Signup()
+    return render_template("client/signup.html", form=form)
+
+
+@app.route("/login")
+def login():
+    form = Login()
+    return render_template("client/login.html", form=form)
 
 
 if __name__ == "__main__":
