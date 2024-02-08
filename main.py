@@ -1,3 +1,5 @@
+import random
+
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import NoResultFound
@@ -127,22 +129,55 @@ class Admin(db.Model, UserMixin):
 # with app.app_context():
 #     db.create_all()
 
-
 @app.route("/")
 def home():
     return render_template("client/home.html")
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = Signup()
-    return render_template("client/signup.html", form=form)
+    if form.validate_on_submit():
+        rib = random.randint(1111111111111111, 9999999999999999)
+        new_client = Client(
+            rib=rib,
+            firstName=request.form['firstName'],
+            lastName=request.form['lastName'],
+            email=request.form['email'],
+            password=request.form['password'],
+            address=request.form['address'],
+            phone=request.form['phone']
+        )
+        db.session.add(new_client)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template("client/signup.html", form=form, current_user=current_user)
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = Login()
-    return render_template("client/login.html", form=form)
+    if form.validate_on_submit():
+        email = request.form['email']
+        password = request.form['password']
+        existing_account = Client.query.filter_by(email=email).first()
+        if existing_account:
+            if existing_account.password == password:
+                login_user(existing_account)
+                return redirect(url_for("clientInterface"))
+            else:
+                flash('Wrong password. Try again!')
+                return redirect(url_for('login'))
+        else:
+            flash('Wrong email. Try again!')
+            return redirect(url_for('login'))
+    return render_template("client/login.html", form=form, current_user=current_user)
+
+
+@app.route("/clientInterface")
+@login_required
+def clientInterface():
+    return render_template("client/clientInterface.html", current_user=current_user)
 
 
 if __name__ == "__main__":
