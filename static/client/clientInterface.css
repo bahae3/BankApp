@@ -1,0 +1,83 @@
+/* styling of the home page of authenticated account */
+/* container styling */
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-section,
+.bottom-section {
+    width: 100%;
+}
+
+.middle-section {
+    display: flex;
+}
+
+.left-section {
+    width: 15%;
+}
+
+.right-section {
+    width: 85%;
+    background-color: lightcoral;
+}
+
+/* first div: top section */
+.top-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 45px auto 60px;
+}
+
+.logo-and-title {
+    display: flex;
+    align-items: center;
+}
+
+.first-logo{
+  width: 380px;
+  height: auto;
+  margin-right: 25px;
+}
+
+.first-title{
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  margin-left: 15px;
+}
+
+.everyone-word{
+  display: block;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 45px;
+  color: #007bff;
+}
+
+/* second div styling */
+/* left side */
+.left-section{
+  border-right: 2px solid #007bff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 60px;
+}
+
+.left-link{
+  font-size: 20px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  margin: 10px 0;
+  color: #007bff;
+  transition: color 0.4s ease;
+}
+
+.left-link:hover{
+  color: #007;
+}
