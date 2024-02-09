@@ -167,15 +167,12 @@ def login():
         if existing_account:
             if existing_account.password == password:
                 login_user(existing_account)
-                print('successfully logged in')
                 return redirect(url_for("clientInterface"))
             else:
                 flash('Wrong password. Try again!')
-                print('Wrong password. Try again!')
                 return redirect(url_for('login'))
         else:
             flash('Wrong email. Try again!')
-            print('Wrong email. Try again!')
             return redirect(url_for('login'))
     return render_template("client/login.html", form=form, current_user=current_user)
 
