@@ -325,6 +325,12 @@ ul, ul li {
     font-weight: 400;
 }
 
+/* styling of the flash in login */
+.flash-message{
+  color: red;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
 
 /* hr style */
 hr {

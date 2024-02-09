@@ -7,10 +7,33 @@
             {{ form.csrf_token }}
             {{ form.email.label(class="form-label") }}
             {{ form.email(class="form-input") }}
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  {% if message == 'Wrong email. Try again!' %}
+                    <em class="flash-message">{{ message }}</em>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
             {{ form.password.label(class="form-label") }}
             {{ form.password(class="form-input") }}
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  {% if message == 'Wrong password. Try again!' %}
+                    <em class="flash-message">{{ message }}</em>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
             {{ form.login(class="form-button") }}
         </form>
+
     </div>
     <div class="bottom-text">
         <p class="haveaccount">Don't have an account? Click here to
