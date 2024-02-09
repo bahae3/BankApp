@@ -25,10 +25,17 @@
     </div>
 
     <div class="second-head">
-        <a href="{{ url_for('home') }}" class="menu-head">Home</a>
-        <a href="{{ url_for('login') }}" class="menu-head">Log in</a>
-        <a href="#" class="menu-head">Contact us</a>
-        <a href="#" class="menu-head">About us</a>
-        <a href="{{ url_for('signup') }}" class="head-button">Create an account</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('clientInterface') }}" class="menu-head">Home</a>
+            <a href="#" class="menu-head">Contact us</a>
+            <a href="#" class="menu-head">About us</a>
+            <a href="{{ url_for('logout') }}" class="head-button">Log out</a>
+        {% else %}
+            <a href="{{ url_for('home') }}" class="menu-head">Home</a>
+            <a href="{{ url_for('login') }}" class="menu-head">Log in</a>
+            <a href="#" class="menu-head">Contact us</a>
+            <a href="#" class="menu-head">About us</a>
+            <a href="{{ url_for('signup') }}" class="head-button">Create an account</a>
+        {% endif %}
     </div>
 </header>

@@ -4,9 +4,16 @@
         <div class="link-column">
             <h3 class="link-title">Bahae Bank</h3>
             <ul>
-                <li><a href="{{ url_for('signup') }}" class="footer-link">Sign up</a></li>
-                <li><a href="{{ url_for('login') }}" class="footer-link">Log in</a></li>
+                {% if current_user.is_authenticated %}
                 <li><a href="#" class="footer-link">About us</a></li>
+                <li><a href="#" class="footer-link">Test Link</a></li>
+                <li><a href="#" class="footer-link">Test Link</a></li>
+                <li><a href="{{ url_for('logout') }}" class="footer-link">Log out</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('signup') }}" class="footer-link">Sign up</a></li>
+                    <li><a href="{{ url_for('login') }}" class="footer-link">Log in</a></li>
+                    <li><a href="#" class="footer-link">About us</a></li>
+                {% endif %}
             </ul>
         </div>
 

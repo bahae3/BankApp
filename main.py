@@ -1,10 +1,9 @@
-import random
-
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import NoResultFound
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from forms import Signup, Login
+import random
 
 # Creating the application
 app = Flask(__name__)
@@ -38,6 +37,9 @@ class Client(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False)
+
+    def get_id(self):
+        return str(self.client_id)
 
     def __init__(self, rib, lastName, firstName, email, password, address, phone):
         self.rib = rib
@@ -126,8 +128,9 @@ class Admin(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
+
 
 @app.route("/")
 def home():
@@ -141,12 +144,12 @@ def signup():
         rib = random.randint(1111111111111111, 9999999999999999)
         new_client = Client(
             rib=rib,
-            firstName=request.form['firstName'],
-            lastName=request.form['lastName'],
-            email=request.form['email'],
-            password=request.form['password'],
-            address=request.form['address'],
-            phone=request.form['phone']
+            firstName=form.firstName.data,
+            lastName=form.lastName.data,
+            email=form.email.data,
+            password=form.password.data,
+            address=form.address.data,
+            phone=form.phone.data
         )
         db.session.add(new_client)
         db.session.commit()
@@ -158,18 +161,21 @@ def signup():
 def login():
     form = Login()
     if form.validate_on_submit():
-        email = request.form['email']
-        password = request.form['password']
+        email = form.email.data
+        password = form.password.data
         existing_account = Client.query.filter_by(email=email).first()
         if existing_account:
             if existing_account.password == password:
                 login_user(existing_account)
+                print('successfully logged in')
                 return redirect(url_for("clientInterface"))
             else:
                 flash('Wrong password. Try again!')
+                print('Wrong password. Try again!')
                 return redirect(url_for('login'))
         else:
             flash('Wrong email. Try again!')
+            print('Wrong email. Try again!')
             return redirect(url_for('login'))
     return render_template("client/login.html", form=form, current_user=current_user)
 
@@ -178,6 +184,12 @@ def login():
 @login_required
 def clientInterface():
     return render_template("client/clientInterface.html", current_user=current_user)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
