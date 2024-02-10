@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import NoResultFound
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from forms import Signup, Login
+from forms import Signup, Login, Account
 import random
 
 # Creating the application
@@ -180,10 +180,21 @@ def login():
 @app.route("/clientInterface")
 @login_required
 def clientInterface():
-    return render_template("client/clientInterface.html", current_user=current_user)
+    form = Account()
+    current_account = Client.query.filter_by(client_id=current_user.client_id).first()
+    client = {
+        "firstName": current_account.firstName,
+        "lastName": current_account.lastName,
+        "rib": current_account.rib,
+        "email": current_account.email,
+        "phone": current_account.phone,
+        "address": current_account.address
+    }
+    return render_template("client/clientInterface.html", current_user=current_user, form=form, client=client)
 
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("home"))
