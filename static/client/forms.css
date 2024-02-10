@@ -4,8 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
-  margin: 55px auto 80px;
+  margin: 50px auto 50px;
 }
 
 .form-title {
@@ -40,6 +39,18 @@
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #007bff;
+}
+
+#gender{
+  border: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.form-input li {
+    display: inline-block;
+    margin-right: 20px;
+    margin-top: 0;
 }
 
 .form-button {
