@@ -14,13 +14,8 @@
     display: flex;
 }
 
-.left-section {
-    width: 15%;
-}
-
 .right-section {
     width: 85%;
-    background-color: lightcoral;
 }
 
 /* first div: top section */
@@ -28,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 45px auto 60px;
+    margin: 60px auto 110px;
 }
 
 .logo-and-title {
@@ -61,23 +56,123 @@
 /* second div styling */
 /* left side */
 .left-section{
+  width: 15%;
   border-right: 2px solid #007bff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 40px 60px;
+  padding: 40px 50px 40px 85px;
 }
 
 .left-link{
-  font-size: 20px;
+  font-size: 22px;
   font-family: "Lato", sans-serif;
   font-weight: 700;
   text-decoration: none;
-  margin: 10px 0;
+  margin: 14px 0;
   color: #007bff;
   transition: color 0.4s ease;
 }
 
 .left-link:hover{
   color: #007;
+}
+
+/* the right section styling */
+/* home section style */
+.home-section{
+  padding: 20px 63px;
+}
+
+.home-title{
+  color: #007bff;
+  font-size: 28px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  margin-left: 50px;
+}
+
+.biggest-title{
+  color: #007;
+  font-size: 40px;
+  font-weight: 900;
+  text-align: center;
+}
+
+/* account section style */
+.account-section {
+    font-size: 19px;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+}
+
+.account-title{
+  font-size: 32px;
+  text-align: center;
+  color: #007bff;
+  margin: 10px auto 30px;
+}
+
+.account-form{
+  margin: 5px auto;
+  width: 300px;
+  border-left: 2px solid #007bff;
+  border-right: 2px solid #007bff;
+  border-bottom: 2px solid #007bff;
+  padding: 25px 62px 20px 89px;
+}
+
+.label-input {
+    margin-bottom: 25px;
+}
+
+.account-label {
+    margin-bottom: 4px;
+    display: inline-block;
+    width: 132px;
+}
+
+.account-input {
+    width: 80%;
+    border: 1px solid #007bff;
+    padding: 10px;
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+}
+
+.account-rib {
+  margin: 0;
+    color: #007bff;
+
+}
+
+.change-password {
+    display: block;
+    width: 148px;
+    text-decoration: none;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.change-password:hover{
+  text-decoration: underline;
+}
+
+.account-update {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 1px;
+    display: block;
+    margin: 40px auto 12px 83px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.account-update:hover {
+    background-color: #0056b3;
 }

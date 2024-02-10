@@ -1,34 +1,92 @@
 {% include 'client/header.html' %}
 
 <div class="container">
-  <div class="top-section">
-  <div class="logo-and-title">
-      <img src="static/client/img/logobank.png" alt="Bank Logo" class="first-logo">
-      <h2 class="first-title">The bank that <span class="everyone-word">everyone</span>needs.</h2>
-  </div>
-</div>
+    <div class="top-section">
+        <div class="logo-and-title">
+            <img src="static/client/img/logobank.png" alt="Bank Logo" class="first-logo">
+            <h2 class="first-title">The bank that <span class="everyone-word">everyone</span>needs.</h2>
+        </div>
+    </div>
 
 
     <div class="middle-section">
         <div class="left-section">
-          <a href="#" class="left-link">Home</a>
-          <a href="#" class="left-link">Your account</a>
-          <a href="#" class="left-link">Balance</a>
-          <a href="#" class="left-link">Beneficiaries</a>
-          <a href="#" class="left-link">Transfer money</a>
-          <a href="#" class="left-link">Deposit money</a>
-          <a href="#" class="left-link">Withdraw money</a>
-          <a href="#" class="left-link">Your loans</a>
-          <a href="#" class="left-link">Card information</a>
+            <a href="#" class="left-link" data-target="home">Home</a>
+            <a href="#" class="left-link" data-target="account">Your account</a>
+            <a href="#" class="left-link" data-target="balance">Balance</a>
+            <a href="#" class="left-link" data-target="benef">Beneficiaries</a>
+            <a href="#" class="left-link" data-target="transfer">Transfer money</a>
+            <a href="#" class="left-link" data-target="deposit">Deposit money</a>
+            <a href="#" class="left-link" data-target="withdraw">Withdraw money</a>
+            <a href="#" class="left-link" data-target="loans">Your loans</a>
+            <a href="#" class="left-link" data-target="card">Card information</a>
         </div>
 
         <div class="right-section">
-<p>right</p>
+            <div id="home" class="home-section">
+                <h2 class="home-title biggest-title">Choosing our bank was the right choice!</h2>
+                <h3 class="home-title">You can easily deposit your money 📥.</h3>
+                <h3 class="home-title">You can quickly transfer money 📤.</h3>
+                <h3 class="home-title">And we will keep your money safe and secure 🔐.</h3>
+            </div>
+
+            <div id="account" class="account-section" style="display: none;">
+                <h2 class="account-title">Account information</h2>
+                <div class="account-form">
+                    <form action="{{ url_for('clientInterface') }}" method="post">
+                        {{ form.csrf_token }}
+                        <div class="label-input">
+                          {{ form.firstName.label(class="account-label") }}
+                          {{ form.firstName(class="account-input", value=client['firstName']) }}
+                        </div>
+
+                        <div class="label-input">
+                          {{ form.lastName.label(class="account-label") }}
+                          {{ form.lastName(class="account-input", value=client['lastName']) }}
+                        </div>
+
+                        <div class="label-input">
+                          <label class="account-label">Your rib: </label>
+                          <p class="account-rib">{{ client['rib'] }}</p>
+                        </div>
+
+
+                        <div class="label-input">
+                          {{ form.email.label(class="account-label") }}
+                          {{ form.email(class="account-input", value=client['email']) }}
+                        </div>
+
+
+                        <div class="label-input">
+                          {{ form.phone.label(class="account-label") }}
+                          {{ form.phone(class="account-input", value=client['phone']) }}
+                        </div>
+
+
+                        <div class="label-input">
+                          {{ form.address.label(class="account-label") }}
+                          {{ form.address(class="account-input", value=client['address']) }}
+                        </div>
+
+
+
+                        <a href="#" class="change-password">Change password</a>
+
+                        {{ form.update(class="account-update") }}
+                    </form>
+                </div>
+            </div>
+
+            <div id="balance" class="section"style="display: none;">Your balance</div>
+
+            <div id="benef" class="section"style="display: none;">Beneficiaries</div>
+
+
         </div>
     </div>
 
     <div class="bottom-section">
-<p>bottom</p>
+        <p>bottom</p>
     </div>
 </div>
 
