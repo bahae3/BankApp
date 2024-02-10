@@ -51,6 +51,17 @@
 </footer>
 
 
+<script>
+    $(document).ready(function() {
+        $('.myLink').click(function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            $('#contentContainer').load(url);
+        });
+    });
+</script>
+
 <script src="static/client/loansTopImages.js"></script>
+<script src="static/client/clientInterfaceRightContents.js"></script>
 </body>
 </html>
