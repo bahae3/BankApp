@@ -5,18 +5,28 @@
     <div class="form">
         <form action="{{ url_for('signup') }}" method="POST">
             {{ form.csrf_token }}
+
             {{ form.firstName.label(class="form-label") }}
             {{ form.firstName(class="form-input") }}
+
             {{ form.lastName.label(class="form-label") }}
             {{ form.lastName(class="form-input") }}
+
+            {{ form.gender.label(class="form-label") }}
+            {{ form.gender(class="form-input") }}
+
             {{ form.email.label(class="form-label") }}
             {{ form.email(class="form-input") }}
+
             {{ form.password.label(class="form-label") }}
             {{ form.password(class="form-input") }}
+
             {{ form.phone.label(class="form-label") }}
             {{ form.phone(class="form-input") }}
+
             {{ form.address.label(class="form-label") }}
             {{ form.address(class="form-input") }}
+
             {{ form.signup(class="form-button") }}
         </form>
     </div>
