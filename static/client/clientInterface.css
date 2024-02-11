@@ -126,10 +126,13 @@
     margin-bottom: 25px;
 }
 
+
+
 .account-label {
+  font-size: 20px;
     margin-bottom: 4px;
     display: inline-block;
-    width: 132px;
+    width: 151px;
 }
 
 .account-input {
@@ -137,7 +140,7 @@
     border: 1px solid #007bff;
     padding: 10px;
     font-family: "Lato", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .account-rib {
@@ -175,4 +178,43 @@
 
 .account-update:hover {
     background-color: #0056b3;
+}
+
+/* balance section styling */
+.balance-section{
+  margin: 5px auto;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+
+.balance-title{
+  font-weight: 900;
+  font-size: 40px;
+  color: #007bff;
+}
+
+.balance-data{
+  margin: 0 auto;
+  width: 500px;
+  padding: 30px;
+  border: 2px solid #007bff;
+}
+
+.balance-title3{
+  font-size: 28px;
+  text-decoration: underline;
+  color: #007bff;
+}
+
+.balance-p{
+  font-size: 26px;
+  color: #007;
+}
+
+.balance-line{
+  border: none;
+  color: #007bff;
+  height: 2px;
+  width: 200;
 }

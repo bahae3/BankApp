@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="label-input">
-                          <label class="account-label">Your rib: </label>
+                          <label class="account-label">Account number: </label>
                           <p class="account-rib">{{ client['rib'] }}</p>
                         </div>
 
@@ -77,7 +77,25 @@
                 </div>
             </div>
 
-            <div id="balance" class="section"style="display: none;">Your balance</div>
+            <div id="balance" class="balance-section" style="display: none;">
+              <h2 class="balance-title">
+                Hello
+                {% if client['gender'] == 'Man' %}
+                  Mr.
+                {% else %}
+                  Mrs.
+                {% endif %}
+                {{ client['lastName'] }} {{ client['firstName'] }}
+              </h2>
+
+              <div class="balance-data">
+                <h3 class="balance-title3">Account number:</h3>
+                <p class="balance-p">{{ client['rib'] }}</p>
+                <hr class="balance-line">
+                <h3 class="balance-title3">Your balance:</h3>
+                <p class="balance-p">€ {{ client['balance'] }}</p>
+              </div>
+            </div>
 
             <div id="benef" class="section"style="display: none;">Beneficiaries</div>
 
