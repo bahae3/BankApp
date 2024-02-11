@@ -33,6 +33,8 @@ class Client(db.Model, UserMixin):
     rib = db.Column(db.Integer, nullable=False, unique=True)
     lastName = db.Column(db.String, nullable=False)
     firstName = db.Column(db.String, nullable=False)
+    gender = db.Column(db.String, nullable=False)
+    balance = db.Column(db.Float, nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
@@ -41,10 +43,12 @@ class Client(db.Model, UserMixin):
     def get_id(self):
         return str(self.client_id)
 
-    def __init__(self, rib, lastName, firstName, email, password, address, phone):
+    def __init__(self, rib, lastName, firstName, gender, balance, email, password, address, phone):
         self.rib = rib
         self.lastName = lastName
         self.firstName = firstName
+        self.gender = gender
+        self.balance = balance
         self.email = email
         self.password = password
         self.address = address
@@ -146,6 +150,8 @@ def signup():
             rib=rib,
             firstName=form.firstName.data,
             lastName=form.lastName.data,
+            gender=form.gender.data,
+            balance=0.00,
             email=form.email.data,
             password=form.password.data,
             address=form.address.data,
@@ -177,7 +183,7 @@ def login():
     return render_template("client/login.html", form=form, current_user=current_user)
 
 
-@app.route("/clientInterface")
+@app.route("/clientInterface", methods=['GET', 'POST'])
 @login_required
 def clientInterface():
     form = Account()
@@ -186,10 +192,21 @@ def clientInterface():
         "firstName": current_account.firstName,
         "lastName": current_account.lastName,
         "rib": current_account.rib,
+        "gender": current_account.gender,
+        "balance": current_account.balance,
         "email": current_account.email,
         "phone": current_account.phone,
         "address": current_account.address
     }
+    if form.validate_on_submit():
+        client_to_update = Client.query.get(current_user.client_id)
+        client_to_update.firstName = form.firstName.data
+        client_to_update.lastName = form.lastName.data
+        client_to_update.email = form.email.data
+        client_to_update.phone = form.phone.data
+        client_to_update.address = form.address.data
+        db.session.commit()
+        return redirect(url_for("clientInterface"))
     return render_template("client/clientInterface.html", current_user=current_user, form=form, client=client)
 
 
