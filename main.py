@@ -206,6 +206,9 @@ def clientInterface():
         client_to_update.phone = form.phone.data
         client_to_update.address = form.address.data
         db.session.commit()
+
+        # Selecting the beneficiareis:
+        benefs = db.query(Beneficiaries.beneficiary_id).filter_by(client_id=2).all()
         return redirect(url_for("clientInterface"))
     return render_template("client/clientInterface.html", current_user=current_user, form=form, client=client)
 
