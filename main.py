@@ -22,7 +22,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(client_id):
-    return Client.query.get(client_id)
+    return db.session.query(Client).get(client_id)
 
 
 # Creating tables
@@ -208,7 +208,11 @@ def clientInterface():
         db.session.commit()
 
         # Selecting the beneficiareis:
-        # benefs = db.query(Beneficiaries.beneficiary_id).filter_by(client_id=2).all()
+        benefs = Beneficiaries.query.filter_by(client_id=1).all()
+        if len(benefs) == 0 or benefs is None:
+            print("rah khawi")
+        else:
+            print(benefs)
         return redirect(url_for("clientInterface"))
     return render_template("client/clientInterface.html", current_user=current_user, form=form, client=client)
 
