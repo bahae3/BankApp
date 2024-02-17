@@ -99,27 +99,56 @@
 
             <div id="benef" class="benef-section" style="display: none;">
               <h2 class="benef-title">Beneficiaries</h2>
-                <div class="benef-section-current-user">
-                  <h3 class="benef-username">
-                    {% if client['gender'] == 'Man' %}
-                      Mr.
-                    {% else %}
-                      Mrs.
-                    {% endif %}
-                    {{ client['lastName'] }} {{ client['firstName'] }}
-                  </h3>
-                  <p class="benef-p">{{ client['rib'] }}</p>
-                </div>
 
+              <h3 class="benef-username">
+                {% if client['gender'] == 'Man' %}
+                  Mr.
+                {% else %}
+                  Mrs.
+                {% endif %}
+                {{ client['lastName'] }} {{ client['firstName'] }}
+              </h3>
+              <p class="benef-p">{{ client['rib'] }}</p>
+
+              <div class="benef-buttons">
                 <a href="#" class="benef-ad add">Add beneficiary</a>
-                <a href="#" class="benef-ad delete">Delete beneficiary</a>
+              </div>
 
-                <div class="all-benef">
-                  <div class="benef-user">
-                    <h3>BAHAE ASKARY</h3>
-                    <p>5210568415654756</p>
-                  </div>
+              <div class="benef-add"></div>
+
+              <div class="all-benef">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                  <a href="#" class="benef-delete delete">Delete beneficiary</a>
                 </div>
+                <hr class="benef-hr">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                </div>
+                <hr class="benef-hr">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                </div>
+                <hr class="benef-hr">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                </div>
+                <hr class="benef-hr">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                </div>
+                <hr class="benef-hr">
+                <div class="benef-user">
+                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
+                  <p class="benef-user-p">5210568415654756</p>
+                </div>
+              </div>
+                
 
             </div>
 

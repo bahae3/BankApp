@@ -233,22 +233,65 @@
   color: #007bff;
 }
 
-.benef-ad{
-  display: inline-block;
-    padding: 10px 20px;
-    margin-right: 10px; /* Adjust as needed */
-    background-color: #007bff; /* Button background color */
-    color: #fff; /* Text color */
-    text-decoration: none; /* Remove default underline */
-    border: none; /* Remove default button border */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease;
+.benef-username{
+  margin-bottom: 0;
+  color: #0056b3;
 }
 
-.add:hover{
-  color: green;
+.benef-p{
+  margin-top: 4px;
+  color: #007;
 }
 
-.delete:hover{
-  color: red;
+.benef-buttons{
+  text-align: left;
+  margin-left: 240px;
+  margin-bottom: 12px;;
+}
+
+.benef-add{
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.benef-add:hover{
+  background-color: #11C714;
+}
+
+.benef-delete {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.benef-delete:hover{
+  text-decoration: underline;
+}
+
+.all-benef{
+  background-color: #F5F5F5;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  height: 300px;
+  margin: auto;
+  width: 50%;
+}
+
+.benef-user-h3{
+  margin-bottom: 0;
+  color: #007bff;
+}
+
+.benef-user-p{
+  margin-top: 5px;
+  color: #007;
+}
+
+.benef-hr{
+  border: none;
+  color: #007bff;
 }
