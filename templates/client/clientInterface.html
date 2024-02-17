@@ -97,8 +97,31 @@
               </div>
             </div>
 
-            <div id="benef" class="section"style="display: none;">Beneficiaries</div>
+            <div id="benef" class="benef-section" style="display: none;">
+              <h2 class="benef-title">Beneficiaries</h2>
+                <div class="benef-section-current-user">
+                  <h3 class="benef-username">
+                    {% if client['gender'] == 'Man' %}
+                      Mr.
+                    {% else %}
+                      Mrs.
+                    {% endif %}
+                    {{ client['lastName'] }} {{ client['firstName'] }}
+                  </h3>
+                  <p class="benef-p">{{ client['rib'] }}</p>
+                </div>
 
+                <a href="#" class="benef-ad add">Add beneficiary</a>
+                <a href="#" class="benef-ad delete">Delete beneficiary</a>
+
+                <div class="all-benef">
+                  <div class="benef-user">
+                    <h3>BAHAE ASKARY</h3>
+                    <p>5210568415654756</p>
+                  </div>
+                </div>
+
+            </div>
 
         </div>
     </div>

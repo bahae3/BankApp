@@ -218,3 +218,37 @@
   height: 2px;
   width: 200;
 }
+
+/* beneficiaries section style */
+.benef-section{
+  margin: 5px auto;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+}
+
+.benef-title{
+  font-weight: 900;
+  font-size: 40px;
+  color: #007bff;
+}
+
+.benef-ad{
+  display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px; /* Adjust as needed */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove default underline */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+}
+
+.add:hover{
+  color: green;
+}
+
+.delete:hover{
+  color: red;
+}
