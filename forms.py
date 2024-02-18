@@ -27,3 +27,8 @@ class Account(FlaskForm):
     phone = StringField("Phone Number: ", validators=[DataRequired()])
     address = StringField("Address: ", validators=[DataRequired()])
     update = SubmitField("Update")
+
+
+class AddBenef(FlaskForm):
+    rib = StringField("Account number: ", validators=[DataRequired()])
+    add = SubmitField("Add beneficiary")
