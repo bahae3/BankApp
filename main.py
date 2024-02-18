@@ -1,8 +1,8 @@
+import sys
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import NoResultFound
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from forms import Signup, Login, Account
+from forms import Signup, Login, Account, AddBenef
 import random
 
 # Creating the application
@@ -14,15 +14,6 @@ app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bahaebank.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-# Flask login
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(client_id):
-    return db.session.query(Client).get(client_id)
 
 
 # Creating tables
@@ -132,8 +123,14 @@ class Admin(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
-with app.app_context():
-    db.create_all()
+# Flask login
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(client_id):
+    return db.session.get(Client, int(client_id))
 
 
 @app.route("/")
@@ -186,7 +183,9 @@ def login():
 @app.route("/clientInterface", methods=['GET', 'POST'])
 @login_required
 def clientInterface():
-    form = Account()
+    form_account = Account()
+    form_add_beneficiary = AddBenef()
+
     current_account = Client.query.filter_by(client_id=current_user.client_id).first()
     client = {
         "firstName": current_account.firstName,
@@ -198,23 +197,40 @@ def clientInterface():
         "phone": current_account.phone,
         "address": current_account.address
     }
-    if form.validate_on_submit():
+    if form_account.validate_on_submit():
         client_to_update = Client.query.get(current_user.client_id)
-        client_to_update.firstName = form.firstName.data
-        client_to_update.lastName = form.lastName.data
-        client_to_update.email = form.email.data
-        client_to_update.phone = form.phone.data
-        client_to_update.address = form.address.data
+        client_to_update.firstName = form_account.firstName.data
+        client_to_update.lastName = form_account.lastName.data
+        client_to_update.email = form_account.email.data
+        client_to_update.phone = form_account.phone.data
+        client_to_update.address = form_account.address.data
         db.session.commit()
-
-        # Selecting the beneficiareis:
-        benefs = Beneficiaries.query.filter_by(client_id=1).all()
-        if len(benefs) == 0 or benefs is None:
-            print("rah khawi")
-        else:
-            print(benefs)
         return redirect(url_for("clientInterface"))
-    return render_template("client/clientInterface.html", current_user=current_user, form=form, client=client)
+
+    if form_add_beneficiary.validate_on_submit():
+        pass
+
+    benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
+    user_benefs = []
+    for benef in benefs:
+        cl = Client.query.filter_by(client_id=benef.beneficiary_id).first()
+        user_benefs.append({
+            "benefId": cl.client_id,
+            "fName": cl.firstName,
+            "lName": cl.lastName,
+            "rib": cl.rib
+        })
+    return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
+                           form_benef=form_add_beneficiary, client=client, benefs=user_benefs)
+
+
+@login_required
+@app.route("/deleteBeneficiary/<int:benef_id>", methods=['GET', 'POST'])
+def delete_benef(benef_id):
+    benef_to_delete = Beneficiaries.query.filter_by(beneficiary_id=benef_id).one()
+    db.session.delete(benef_to_delete)
+    db.session.commit()
+    return redirect(url_for("clientInterface"))
 
 
 @app.route("/logout")
@@ -225,4 +241,10 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    if "--setup" in sys.argv:
+        with app.app_context():
+            db.create_all()
+            db.session.commit()
+            print("Database tables created")
+    else:
+        app.run(debug=True)
