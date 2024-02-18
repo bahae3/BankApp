@@ -208,7 +208,20 @@ def clientInterface():
         return redirect(url_for("clientInterface"))
 
     if form_add_beneficiary.validate_on_submit():
-        pass
+        rib = form_add_beneficiary.rib.data
+        existing_account = Client.query.filter_by(rib=rib).first()
+        if existing_account:
+            new_benef = Beneficiaries(
+                client_id=current_user.client_id,
+                beneficiary_id=existing_account.client_id
+            )
+            db.session.add(new_benef)
+            db.session.commit()
+            flash("Account added successfully.")
+        else:
+            # I suppose that people can have beneficiaries from only my bank
+            flash("This account doesn't exist.", "error")
+        # return redirect(url_for("clientInterface"))
 
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
