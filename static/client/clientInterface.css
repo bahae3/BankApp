@@ -293,3 +293,13 @@
 .benef-add:hover {
   background-color: #4BC811;
 }
+
+/* 
+this is the styling of the add a beneficiary section
+at first it's not gonna be displayed, but onclick it will be displayed
+ */
+.benef-add-data{
+  width: 200px;
+  height: 260px;
+  margin: auto;
+}

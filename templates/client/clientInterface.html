@@ -34,128 +34,103 @@
                 <h2 class="account-title">Account information</h2>
                 <div class="account-form">
                     <form action="{{ url_for('clientInterface') }}" method="post">
-                        {{ form.csrf_token }}
+                        {{ form_account.csrf_token }}
                         <div class="label-input">
-                          {{ form.firstName.label(class="account-label") }}
-                          {{ form.firstName(class="account-input", value=client['firstName']) }}
+                            {{ form_account.firstName.label(class="account-label") }}
+                            {{ form_account.firstName(class="account-input", value=client['firstName']) }}
                         </div>
 
                         <div class="label-input">
-                          {{ form.lastName.label(class="account-label") }}
-                          {{ form.lastName(class="account-input", value=client['lastName']) }}
+                            {{ form_account.lastName.label(class="account-label") }}
+                            {{ form_account.lastName(class="account-input", value=client['lastName']) }}
                         </div>
 
                         <div class="label-input">
-                          <label class="account-label">Account number: </label>
-                          <p class="account-rib">{{ client['rib'] }}</p>
-                        </div>
-
-
-                        <div class="label-input">
-                          {{ form.email.label(class="account-label") }}
-                          {{ form.email(class="account-input", value=client['email']) }}
+                            <label class="account-label">Account number: </label>
+                            <p class="account-rib">{{ client['rib'] }}</p>
                         </div>
 
 
                         <div class="label-input">
-                          {{ form.phone.label(class="account-label") }}
-                          {{ form.phone(class="account-input", value=client['phone']) }}
+                            {{ form_account.email.label(class="account-label") }}
+                            {{ form_account.email(class="account-input", value=client['email']) }}
                         </div>
 
 
                         <div class="label-input">
-                          {{ form.address.label(class="account-label") }}
-                          {{ form.address(class="account-input", value=client['address']) }}
+                            {{ form_account.phone.label(class="account-label") }}
+                            {{ form_account.phone(class="account-input", value=client['phone']) }}
                         </div>
 
+
+                        <div class="label-input">
+                            {{ form_account.address.label(class="account-label") }}
+                            {{ form_account.address(class="account-input", value=client['address']) }}
+                        </div>
 
 
                         <a href="#" class="change-password">Change password</a>
 
-                        {{ form.update(class="account-update") }}
+                        {{ form_account.update(class="account-update") }}
                     </form>
                 </div>
             </div>
 
             <div id="balance" class="balance-section" style="display: none;">
-              <h2 class="balance-title">
-                Hello
-                {% if client['gender'] == 'Man' %}
-                  Mr.
-                {% else %}
-                  Mrs.
-                {% endif %}
-                {{ client['lastName'] }} {{ client['firstName'] }}
-              </h2>
+                <h2 class="balance-title">
+                    Hello
+                    {% if client['gender'] == 'Man' %}
+                    Mr.
+                    {% else %}
+                    Mrs.
+                    {% endif %}
+                    {{ client['lastName'] }} {{ client['firstName'] }}
+                </h2>
 
-              <div class="balance-data">
-                <h3 class="balance-title3">Account number:</h3>
-                <p class="balance-p">{{ client['rib'] }}</p>
-                <hr class="balance-line">
-                <h3 class="balance-title3">Your balance:</h3>
-                <p class="balance-p">€ {{ client['balance'] }}</p>
-              </div>
+                <div class="balance-data">
+                    <h3 class="balance-title3">Account number:</h3>
+                    <p class="balance-p">{{ client['rib'] }}</p>
+                    <hr class="balance-line">
+                    <h3 class="balance-title3">Your balance:</h3>
+                    <p class="balance-p">€ {{ client['balance'] }}</p>
+                </div>
             </div>
 
             <div id="benef" class="benef-section" style="display: none;">
-              <h2 class="benef-title">Beneficiaries</h2>
+                <h2 class="benef-title">Beneficiaries</h2>
 
-              <h3 class="benef-username">
-                {% if client['gender'] == 'Man' %}
-                  Mr.
-                {% else %}
-                  Mrs.
-                {% endif %}
-                {{ client['lastName'] }} {{ client['firstName'] }}
-              </h3>
-              <p class="benef-p">{{ client['rib'] }}</p>
+                <h3 class="benef-username">
+                    {% if client['gender'] == 'Man' %}
+                    Mr.
+                    {% else %}
+                    Mrs.
+                    {% endif %}
+                    {{ client['lastName'] }} {{ client['firstName'] }}
+                </h3>
+                <p class="benef-p">{{ client['rib'] }}</p>
 
-              <hr class="benef-hr">
-
-              <div class="all-benef">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
                 <hr class="benef-hr">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
-                <hr class="benef-hr">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
-                <hr class="benef-hr">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
-                <hr class="benef-hr">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
-                <hr class="benef-hr">
-                <div class="benef-user">
-                  <h3 class="benef-user-h3">BAHAE ASKARY</h3>
-                  <p class="benef-user-p">5210568415654756</p>
-                  <a href="#" class="benef-delete delete">Delete</a>
-                </div>
-              </div>
 
-              <a href="#" class="benef-add">Add beneficiary</a>
+                <div class="all-benef">
+                    {% for benef in benefs %}
+                        <div class="benef-user">
+                            <h3 class="benef-user-h3">{{ benef['lName'] + ' ' + benef['fName'] }}</h3>
+                            <p class="benef-user-p">{{ benef['rib'] }}</p>
+                            <a href="{{ url_for('delete_benef', benef_id=benef['benefId']) }}"
+                               class="benef-delete delete">Delete</a>
+                        </div>
+                    {% if not loop.last %}
+                        <hr class="benef-hr">
+                    {% endif %}
+                    {% endfor %}
+                </div>
 
-              <div class="benef-add-data">
+                <a href="#" class="benef-add">Add beneficiary</a>
 
-              </div>
-                
+                <div class="benef-add-data">
+
+                </div>
+
 
             </div>
 
@@ -163,18 +138,20 @@
     </div>
 
     <div class="bottom-section">
-      <div class="download-links">
-          <div class="download-left">
-              <h3 class="download-title">Download Bahae Bank Mobile via</h3>
-              <a href="https://play.google.com" target="_blank"><img src="static/client/img/playstore.png" alt="Play Store"
-                                                                     class="download-img"></a>
-              <a href="https://www.apple.com/app-store/" target="_blank"><img src="static/client/img/appstore.png"
-                                                                              alt="App Store" class="download-img"></a>
-          </div>
-          <div class="download-right">
-              <img src="static/client/img/logobank.png" alt="Bank Logo" class="download-logo">
-          </div>
-      </div>
+        <div class="download-links">
+            <div class="download-left">
+                <h3 class="download-title">Download Bahae Bank Mobile via</h3>
+                <a href="https://play.google.com" target="_blank"><img src="static/client/img/playstore.png"
+                                                                       alt="Play Store"
+                                                                       class="download-img"></a>
+                <a href="https://www.apple.com/app-store/" target="_blank"><img src="static/client/img/appstore.png"
+                                                                                alt="App Store"
+                                                                                class="download-img"></a>
+            </div>
+            <div class="download-right">
+                <img src="static/client/img/logobank.png" alt="Bank Logo" class="download-logo">
+            </div>
+        </div>
     </div>
 </div>
 
