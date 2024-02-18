@@ -227,7 +227,7 @@
   font-weight: 700;
 }
 
-.benef-title{
+.benef-title, .benef-nobenef{
   font-weight: 900;
   font-size: 40px;
   color: #007bff;
@@ -263,6 +263,7 @@
   margin-bottom: 45px;
   padding: 19px 0;
   width: 50%;
+  transition: filter 0.3s ease-in-out;
 }
 
 .benef-user-h3{
@@ -288,6 +289,7 @@
   color: #fff;
   text-decoration: none;
   transition: background-color 0.4s ease;
+  transition: filter 0.3s ease-in-out;
 }
 
 .benef-add:hover {
@@ -298,8 +300,81 @@
 this is the styling of the add a beneficiary section
 at first it's not gonna be displayed, but onclick it will be displayed
  */
-.benef-add-data{
-  width: 200px;
-  height: 260px;
-  margin: auto;
+.benef-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.benef-add-data {
+  display: none;
+  position: absolute;
+  padding: 22px;
+  background-color: #f1f1f1;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  width: 300px;
+  height: 160px;
+  top: 240px;
+  right: 400px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #555;
+}
+
+.benef-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.input-label {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.benef-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.benef-button:hover {
+  background-color:#4BC811;
+}
+
+/* this will be added to addBenef.js */
+.unscrollable {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.unscrollable * {
+  pointer-events: none;
 }
