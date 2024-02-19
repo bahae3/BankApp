@@ -32,3 +32,9 @@ class Account(FlaskForm):
 class AddBenef(FlaskForm):
     rib = StringField("Account number: ", validators=[DataRequired()])
     add = SubmitField("Add beneficiary")
+
+
+class TransferMoney(FlaskForm):
+    amount = StringField("Amount: ", validators=[DataRequired()])
+    rib = StringField("Account number: ", validators=[DataRequired()])
+    send = SubmitField("Send")
