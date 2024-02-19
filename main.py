@@ -2,7 +2,7 @@ import sys
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from forms import Signup, Login, Account, AddBenef
+from forms import Signup, Login, Account, AddBenef, TransferMoney
 import random
 
 # Creating the application
@@ -185,8 +185,9 @@ def login():
 def clientInterface():
     form_account = Account()
     form_add_beneficiary = AddBenef()
+    form_transfer = TransferMoney()
 
-    # Account and Balance sections
+    ## Account and Balance sections
     current_account = Client.query.filter_by(client_id=current_user.client_id).first()
     client = {
         "firstName": current_account.firstName,
@@ -208,7 +209,7 @@ def clientInterface():
         db.session.commit()
         return redirect(url_for("clientInterface"))
 
-    # Beneficiary section
+    ## Beneficiary section
     if form_add_beneficiary.validate_on_submit():
         rib = form_add_beneficiary.rib.data
         existing_account = Client.query.filter_by(rib=rib).first()
@@ -219,7 +220,12 @@ def clientInterface():
             )
             db.session.add(new_benef)
             db.session.commit()
+            flash("Account added successfully.")
+        else:
+            # Suppose that only user from same bank should be benefs with each other
+            flash("This account doesn't exist.")
 
+    # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
     for benef in benefs:
@@ -230,8 +236,18 @@ def clientInterface():
             "lName": cl.lastName,
             "rib": cl.rib
         })
+
+        ## Transfer money section
+        if form_transfer.validate_on_submit():
+            pass
+            # current_client = Client.query.get(current_user.client_id)
+            # amount = form_transfer.amount.data
+            # benef_id = request.form.get('transfer_select')
+            # if float(amount) > current_client.balance:
+            #     pass
+
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
-                           form_benef=form_add_beneficiary, client=client, benefs=user_benefs)
+                           form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client, benefs=user_benefs)
 
 
 @login_required
