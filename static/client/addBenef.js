@@ -8,7 +8,7 @@ const open_add_benef = (event) => {
     event.preventDefault();
     if(all_benef_section){
         all_benef_section.style.filter = "blur(1.5px)";
-        all_benef_section.classList.toggle("unscrollable");
+        // all_benef_section.classList.toggle("unscrollable");
     }
     add_btn.style.filter = "blur(1.5px)";
     add_btn.classList.toggle("unscrollable");
@@ -22,7 +22,7 @@ const hide_add_benef = () => {
 
     if(all_benef_section){
         all_benef_section.style.filter = "blur(0)";
-        all_benef_section.classList.remove("unscrollable");
+        // all_benef_section.classList.remove("unscrollable");
     }
 
     benef_add_data.style.display = "none";
