@@ -129,8 +129,7 @@
                   <h2 class="benef-nobenef">You curretly don't have any beneficiary</h2>
                 {% endif %}
 
-                <a href="#" class="benef-add">Add beneficiary</a>
-
+                <a href="#" class="benef-add">Add beneficiary</a><br>
                 
                 <div class="benef-add-data">
                   <button class="close-btn">&times;</button>
@@ -141,22 +140,30 @@
                       {{ form_benef.rib(class="input-label") }}
 
                       {{ form_benef.add(class="benef-button") }}
-
-                      {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                              {% if message == "This account doesn't exist." %}
-                                <em class="flash-message">{{ message }}</em>
-                              {% elif message == "Account added successfully." %}
-                                <em class="flash-message", style="color: springgreen;">{{ message }}</em>
-                              {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                      {% endwith %}
                   </form>
                 </div>
 
 
+            </div>
+
+            <div id="transfer" class="transfer-section"  style="display: none;">
+                Transfer
+            </div>
+
+            <div id="deposit" class="withdraw-section" style="display: none;">
+                Deposit
+            </div>
+
+            <div id="withdraw" class="withdraw-section" style="display: none;">
+                Withdraw
+            </div>
+
+            <div id="loans" class="loans-section" style="display: none;">
+                Loans
+            </div>
+
+            <div id="card" class="card-section" style="display: none;">
+                Card
             </div>
 
         </div>
