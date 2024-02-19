@@ -1,5 +1,5 @@
 import sys
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from forms import Signup, Login, Account, AddBenef
@@ -186,6 +186,7 @@ def clientInterface():
     form_account = Account()
     form_add_beneficiary = AddBenef()
 
+    # Account and Balance sections
     current_account = Client.query.filter_by(client_id=current_user.client_id).first()
     client = {
         "firstName": current_account.firstName,
@@ -207,6 +208,7 @@ def clientInterface():
         db.session.commit()
         return redirect(url_for("clientInterface"))
 
+    # Beneficiary section
     if form_add_beneficiary.validate_on_submit():
         rib = form_add_beneficiary.rib.data
         existing_account = Client.query.filter_by(rib=rib).first()
@@ -217,11 +219,6 @@ def clientInterface():
             )
             db.session.add(new_benef)
             db.session.commit()
-            flash("Account added successfully.")
-        else:
-            # I suppose that people can have beneficiaries from only my bank
-            flash("This account doesn't exist.", "error")
-        # return redirect(url_for("clientInterface"))
 
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
