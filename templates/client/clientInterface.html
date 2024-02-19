@@ -129,7 +129,19 @@
                   <h2 class="benef-nobenef">You curretly don't have any beneficiary</h2>
                 {% endif %}
 
-                <a href="#" class="benef-add">Add beneficiary</a><br>
+                <a href="#" class="benef-add">Add beneficiary</a>
+                
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message == "This account doesn't exist." %}
+                                <p class="flash-error">{{ message }}</p>
+                            {% else %}
+                                <p class="flash-success">{{ message }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 
                 <div class="benef-add-data">
                   <button class="close-btn">&times;</button>
@@ -147,7 +159,27 @@
             </div>
 
             <div id="transfer" class="transfer-section"  style="display: none;">
-                Transfer
+                <h2 class="transfer-title">Transfer money</h2>
+                <div class="transfer-form">
+                    <h3 class="transfer-title3">As fast as light ⚡</h3>
+                    <form action="{{ url_for('clientInterface') }}" method="post">
+                        {{ form_transfer.csrf_token }}
+
+                        {{ form_transfer.amount.label(class="transfer-label") }}
+                        {{ form_transfer.amount(class="transfer-input") }}
+                        
+
+                        <label class="transfer-label">Account number: </label>
+                        <select name="transfer_select" class="transfer-label">
+                            {% for acc in benefs %}
+                                <option value="{{ acc['benefId'] }}">{{ acc['lName'] }} {{ acc['fName'] }} <span class="transfer-rib">{{ acc['rib'] }}</span></option>
+                            {% endfor %}
+                        </select>
+
+                        {{ form_transfer.send(class="transfer-button") }}
+                        <a href="#" class="transfer-button" data-target="benef">Add beneficiary</a>
+                    </form>
+                </div>
             </div>
 
             <div id="deposit" class="withdraw-section" style="display: none;">

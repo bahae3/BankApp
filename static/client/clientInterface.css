@@ -296,6 +296,19 @@
   background-color: #4BC811;
 }
 
+.flash-success, .flash-error{
+  font-style: italic;
+  font-weight: 400;
+}
+
+.flash-error{
+  color: red;
+}
+
+.flash-success{
+  color: #4BC811;
+}
+
 /* 
 this is the styling of the add a beneficiary section
 at first it's not gonna be displayed, but onclick it will be displayed
@@ -378,3 +391,5 @@ at first it's not gonna be displayed, but onclick it will be displayed
 .unscrollable * {
   pointer-events: none;
 }
+
+/* Styling the transfer section */
