@@ -210,21 +210,6 @@ def clientInterface():
         return redirect(url_for("clientInterface"))
 
     ## Beneficiary section
-    if form_add_beneficiary.validate_on_submit():
-        rib = form_add_beneficiary.rib.data
-        existing_account = Client.query.filter_by(rib=rib).first()
-        if existing_account:
-            new_benef = Beneficiaries(
-                client_id=current_user.client_id,
-                beneficiary_id=existing_account.client_id
-            )
-            db.session.add(new_benef)
-            db.session.commit()
-            flash("Account added successfully.")
-        else:
-            # Suppose that only user from same bank should be benefs with each other
-            flash("This account doesn't exist.")
-
     # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
@@ -237,14 +222,30 @@ def clientInterface():
             "rib": cl.rib
         })
 
-        ## Transfer money section
-        if form_transfer.validate_on_submit():
-            pass
-            # current_client = Client.query.get(current_user.client_id)
-            # amount = form_transfer.amount.data
-            # benef_id = request.form.get('transfer_select')
-            # if float(amount) > current_client.balance:
-            #     pass
+    if form_add_beneficiary.validate_on_submit():
+        rib = form_add_beneficiary.rib.data
+        benef_account = Client.query.filter_by(rib=rib).first()
+        if benef_account:
+            new_benef = Beneficiaries(
+                client_id=current_user.client_id,
+                beneficiary_id=benef_account.client_id
+            )
+            db.session.add(new_benef)
+            db.session.commit()
+            flash("Account added successfully.")
+        else:
+            # Suppose that only user from same bank should be benefs with each other
+            flash("This account doesn't exist.")
+
+
+    ## Transfer money section
+    if form_transfer.validate_on_submit():
+        pass
+        # current_client = Client.query.get(current_user.client_id)
+        # amount = form_transfer.amount.data
+        # benef_id = request.form.get('transfer_select')
+        # if float(amount) > current_client.balance:
+        #     pass
 
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
                            form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client, benefs=user_benefs)
