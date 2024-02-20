@@ -165,21 +165,30 @@
                     <form action="{{ url_for('clientInterface') }}" method="post">
                         {{ form_transfer.csrf_token }}
 
-                        {{ form_transfer.amount.label(class="transfer-label") }}
-                        {{ form_transfer.amount(class="transfer-input") }}
-                        
+                        <div class="transfer-div">
+                            {{ form_transfer.amount.label(class="transfer-label") }}
+                            {{ form_transfer.amount(class="transfer-input") }}
+                        </div>
 
-                        <label class="transfer-label">Account number: </label>
-                        <select name="transfer_select" class="transfer-label">
-                            {% for acc in benefs %}
-                                <option value="{{ acc['benefId'] }}">{{ acc['lName'] }} {{ acc['fName'] }} <span class="transfer-rib">{{ acc['rib'] }}</span></option>
-                            {% endfor %}
-                        </select>
+                        <div class="transfer-div">
+                            <label class="transfer-label">Account number: </label>
+                            <select name="transfer_select" class="transfer-select">
+                                {% for acc in benefs %}
+                                    <option value="{{ acc['benefId'] }}">{{ acc['lName'] }} {{ acc['fName'] }}: {{ acc['rib'] }}</option>
+                                    {% if not loop.last %}
+                                    <hr>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
 
                         {{ form_transfer.send(class="transfer-button") }}
-                        <a href="#" class="transfer-button" data-target="benef">Add beneficiary</a>
                     </form>
                 </div>
+
+                <p class="transfer-add-benef">Do you need to add a new beneficiary? 
+                    <a href="#" class="left-link" data-target="benef">Click here</a>
+                </p>
             </div>
 
             <div id="deposit" class="withdraw-section" style="display: none;">
