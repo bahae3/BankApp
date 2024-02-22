@@ -204,7 +204,16 @@
             </div>
 
             <div id="card" class="card-section" style="display: none;">
-                Card
+                <h2 class="transfer-title">Card information</h2>
+                <h3>
+                {% if client['gender'] == 'Man' %}
+                    Mr.
+                {% else %}
+                    Mrs.
+                {% endif %}
+                {{ client['lastName'] }} {{ client['firstName'] }}
+                </h3>
+
             </div>
 
         </div>
