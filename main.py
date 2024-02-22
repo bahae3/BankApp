@@ -1,3 +1,4 @@
+import datetime
 import sys
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
@@ -246,6 +247,28 @@ def clientInterface():
         # benef_id = request.form.get('transfer_select')
         # if float(amount) > current_client.balance:
         #     pass
+
+    ## Card information
+    card_number = random.randint(1111111111111111, 9999999999999999)
+    expiration_date = datetime.date.today()
+    years_to_add = expiration_date.year + 10
+    expiration_date = expiration_date.replace(year=years_to_add).strftime('%m/%Y')
+    cvc_code = random.randint(111, 999)
+
+    client_card = Card(
+        client_id=current_user.client_id,
+        number=card_number,
+        expiration_date=expiration_date,
+        cvc_code=cvc_code
+    )
+
+    db.session.add(client_card)
+    db.session.commit()
+
+
+
+
+
 
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
                            form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client, benefs=user_benefs)
