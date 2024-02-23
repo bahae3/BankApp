@@ -3,6 +3,8 @@ import sys
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from sqlalchemy import Date, cast, func
+
 from forms import Signup, Login, Account, AddBenef, TransferMoney
 import random
 
@@ -54,7 +56,7 @@ class Card(db.Model, UserMixin):
     # relation to client id
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
     number = db.Column(db.Integer, nullable=False, unique=True)
-    expiration_date = db.Column(db.Date, nullable=False)
+    expiration_date = db.Column(db.String, nullable=False)
     cvc_code = db.Column(db.Integer, nullable=False)
 
     def __init__(self, client_id, number, expiration_date, cvc_code):
@@ -144,6 +146,7 @@ def signup():
     form = Signup()
     if form.validate_on_submit():
         rib = random.randint(1111111111111111, 9999999999999999)
+        ## Inserting data into Client table from form
         new_client = Client(
             rib=rib,
             firstName=form.firstName.data,
@@ -155,6 +158,8 @@ def signup():
             address=form.address.data,
             phone=form.phone.data
         )
+
+
         db.session.add(new_client)
         db.session.commit()
         return redirect(url_for('login'))
@@ -168,9 +173,29 @@ def login():
         email = form.email.data
         password = form.password.data
         existing_account = Client.query.filter_by(email=email).first()
+
         if existing_account:
             if existing_account.password == password:
                 login_user(existing_account)
+
+                ## Card information (generated)
+                card_number = random.randint(1111111111111111, 9999999999999999)
+                expiration_date = datetime.date.today()
+                years_to_add = expiration_date.year + 10
+                expiration_date = expiration_date.replace(year=years_to_add).strftime('%m/%Y')
+                exp_date = func.DATE(expiration_date)
+                cvc_code = random.randint(111, 999)
+
+                client_card = Card(
+                    client_id=current_user.client_id,
+                    number=card_number,
+                    expiration_date=exp_date,
+                    cvc_code=cvc_code
+                )
+
+                db.session.add(client_card)
+                db.session.commit()
+
                 return redirect(url_for("clientInterface"))
             else:
                 flash('Wrong password. Try again!')
@@ -248,22 +273,7 @@ def clientInterface():
         # if float(amount) > current_client.balance:
         #     pass
 
-    ## Card information
-    card_number = random.randint(1111111111111111, 9999999999999999)
-    expiration_date = datetime.date.today()
-    years_to_add = expiration_date.year + 10
-    expiration_date = expiration_date.replace(year=years_to_add).strftime('%m/%Y')
-    cvc_code = random.randint(111, 999)
 
-    client_card = Card(
-        client_id=current_user.client_id,
-        number=card_number,
-        expiration_date=expiration_date,
-        cvc_code=cvc_code
-    )
-
-    db.session.add(client_card)
-    db.session.commit()
 
 
 
