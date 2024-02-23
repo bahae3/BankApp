@@ -126,6 +126,9 @@ class Admin(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
+with app.app_context():
+    db.create_all()
+
 # Flask login
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -159,7 +162,6 @@ def signup():
             phone=form.phone.data
         )
 
-
         db.session.add(new_client)
         db.session.commit()
         return redirect(url_for('login'))
@@ -179,22 +181,23 @@ def login():
                 login_user(existing_account)
 
                 ## Card information (generated)
-                card_number = random.randint(1111111111111111, 9999999999999999)
-                expiration_date = datetime.date.today()
-                years_to_add = expiration_date.year + 10
-                expiration_date = expiration_date.replace(year=years_to_add).strftime('%m/%Y')
-                exp_date = func.DATE(expiration_date)
-                cvc_code = random.randint(111, 999)
+                card = Card.query.filter_by(client_id=current_user.client_id).first()
+                if not card:
+                    card_number = random.randint(1111111111111111, 9999999999999999)
+                    expiration_date = datetime.date.today()
+                    years_to_add = expiration_date.year + 10
+                    expiration_date = str(expiration_date.replace(year=years_to_add).strftime('%m/%Y'))
+                    cvc_code = random.randint(111, 999)
 
-                client_card = Card(
-                    client_id=current_user.client_id,
-                    number=card_number,
-                    expiration_date=exp_date,
-                    cvc_code=cvc_code
-                )
+                    client_card = Card(
+                        client_id=current_user.client_id,
+                        number=card_number,
+                        expiration_date=expiration_date,
+                        cvc_code=cvc_code
+                    )
 
-                db.session.add(client_card)
-                db.session.commit()
+                    db.session.add(client_card)
+                    db.session.commit()
 
                 return redirect(url_for("clientInterface"))
             else:
@@ -263,7 +266,6 @@ def clientInterface():
             # Suppose that only user from same bank should be benefs with each other
             flash("This account doesn't exist.")
 
-
     ## Transfer money section
     if form_transfer.validate_on_submit():
         pass
@@ -273,15 +275,9 @@ def clientInterface():
         # if float(amount) > current_client.balance:
         #     pass
 
-
-
-
-
-
-
-
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
-                           form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client, benefs=user_benefs)
+                           form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client,
+                           benefs=user_benefs)
 
 
 @login_required
@@ -301,10 +297,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    if "--setup" in sys.argv:
-        with app.app_context():
-            db.create_all()
-            db.session.commit()
-            print("Database tables created")
-    else:
-        app.run(debug=True)
+    app.run(debug=True)
