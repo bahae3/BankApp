@@ -478,3 +478,56 @@ at first it's not gonna be displayed, but onclick it will be displayed
   text-decoration: underline !important;
 }
 
+/* Card section styling */
+.card-section{
+  font-family: "Lato", sans-serif;
+}
+
+.card-title, .card-title3{
+  margin: 31px auto 25px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 40px;
+  color: #007bff;
+}
+
+.card-title3{
+  margin: 7px auto;
+  font-size: 29.5px;
+}
+
+.card-info{
+  margin: 30px auto;
+  width: 390px;
+  border-left: 2px solid #007bff;
+  border-right: 2px solid #007bff;
+  border-bottom: 2px solid #007bff;
+  padding: 10px 30px 15px 45px;
+}
+
+.card-element{
+  margin-left: 5px;
+  width: 150px;
+  display: inline-block;
+  font-size: 19px;
+}
+
+.card-p{
+  margin-left: 20px;
+  display: inline-block;
+  font-size: 17px;
+  color: #007;
+}
+
+.card-lastelement{
+  text-align: center;
+  font-size: 24px;
+}
+
+.card-twoP{
+  float: right;
+}
+
+.card-information{
+  color: red;
+}
