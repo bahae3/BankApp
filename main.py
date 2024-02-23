@@ -275,9 +275,17 @@ def clientInterface():
         # if float(amount) > current_client.balance:
         #     pass
 
+    ## Card section (retrieve information)
+    card = Card.query.filter_by(client_id=current_user.client_id).first()
+    print(card)
+    print(card.client_id)
+    print(card.expiration_date)
+    print(card.cvc_code)
+    print(card.number)
+
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
                            form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client,
-                           benefs=user_benefs)
+                           benefs=user_benefs, card=card)
 
 
 @login_required
