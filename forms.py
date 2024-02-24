@@ -28,6 +28,10 @@ class Account(FlaskForm):
     address = StringField("Address: ", validators=[DataRequired()])
     update = SubmitField("Update")
 
+class AccountPassword(FlaskForm):
+    new_password = PasswordField("New password: ", validators=[DataRequired()])
+    change = SubmitField("Change password")
+
 
 class AddBenef(FlaskForm):
     rib = StringField("Account number: ", validators=[DataRequired()])
