@@ -1,11 +1,8 @@
 import datetime
-import sys
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from sqlalchemy import Date, cast, func
-
-from forms import Signup, Login, Account, AddBenef, TransferMoney
+from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney
 import random
 
 # Creating the application
@@ -213,6 +210,7 @@ def login():
 @login_required
 def clientInterface():
     form_account = Account()
+    form_account_passwd = AccountPassword()
     form_add_beneficiary = AddBenef()
     form_transfer = TransferMoney()
 
@@ -238,7 +236,14 @@ def clientInterface():
         db.session.commit()
         return redirect(url_for("clientInterface"))
 
-    ## Beneficiary section
+    if form_account_passwd.validate_on_submit():
+        new_password_form = form_account_passwd.new_password.data
+
+        new_password = db.session.query(Client).get(current_user.client_id)
+        new_password.password = new_password_form
+        db.session.commit()
+
+        ## Beneficiary section
     # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
@@ -277,15 +282,10 @@ def clientInterface():
 
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
-    print(card)
-    print(card.client_id)
-    print(card.expiration_date)
-    print(card.cvc_code)
-    print(card.number)
 
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
-                           form_benef=form_add_beneficiary, form_transfer=form_transfer, client=client,
-                           benefs=user_benefs, card=card)
+                           form_account_passwd=form_account_passwd, form_benef=form_add_beneficiary,
+                           form_transfer=form_transfer, client=client, benefs=user_benefs, card=card)
 
 
 @login_required
