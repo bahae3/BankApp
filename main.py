@@ -2,6 +2,7 @@ import datetime
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney
 import random
 
@@ -146,6 +147,12 @@ def signup():
     form = Signup()
     if form.validate_on_submit():
         rib = random.randint(1111111111111111, 9999999999999999)
+        # Hashing the password, for more security
+        password = generate_password_hash(
+            form.password.data,
+            method='pbkdf2:sha256',
+            salt_length=8
+        )
         ## Inserting data into Client table from form
         new_client = Client(
             rib=rib,
@@ -154,7 +161,7 @@ def signup():
             gender=form.gender.data,
             balance=0.00,
             email=form.email.data,
-            password=form.password.data,
+            password=password,
             address=form.address.data,
             phone=form.phone.data
         )
@@ -174,7 +181,7 @@ def login():
         existing_account = Client.query.filter_by(email=email).first()
 
         if existing_account:
-            if existing_account.password == password:
+            if check_password_hash(existing_account.password, password):
                 login_user(existing_account)
 
                 ## Card information (generated)
@@ -243,7 +250,7 @@ def clientInterface():
         new_password.password = new_password_form
         db.session.commit()
 
-        ## Beneficiary section
+    ## Beneficiary section
     # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs = []
