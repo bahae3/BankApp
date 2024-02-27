@@ -156,13 +156,13 @@ def signup():
         ## Inserting data into Client table from form
         new_client = Client(
             rib=rib,
-            firstName=form.firstName.data,
-            lastName=form.lastName.data,
+            firstName=form.firstName.data.capitalize(),
+            lastName=form.lastName.data.capitalize(),
             gender=form.gender.data,
             balance=0.00,
             email=form.email.data,
             password=password,
-            address=form.address.data,
+            address=form.address.data.capitalize(),
             phone=form.phone.data
         )
 
