@@ -28,6 +28,7 @@ class Account(FlaskForm):
     address = StringField("Address: ", validators=[DataRequired()])
     update = SubmitField("Update")
 
+
 class AccountPassword(FlaskForm):
     new_password = PasswordField("New password: ", validators=[DataRequired()])
     change = SubmitField("Change password")
@@ -39,5 +40,15 @@ class AddBenef(FlaskForm):
 
 
 class TransferMoney(FlaskForm):
+    amount = StringField("Amount: ", validators=[DataRequired()])
+    send = SubmitField("Send")
+
+
+class DepositMoney(FlaskForm):
+    amount = StringField("Amount: ", validators=[DataRequired()])
+    send = SubmitField("Send")
+
+
+class WithdrawMoney(FlaskForm):
     amount = StringField("Amount: ", validators=[DataRequired()])
     send = SubmitField("Send")
