@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney
+from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney, DepositMoney
 import random
 
 # Creating the application
@@ -220,6 +220,7 @@ def clientInterface():
     form_account_passwd = AccountPassword()
     form_add_beneficiary = AddBenef()
     form_transfer = TransferMoney()
+    form_deposit = DepositMoney()
 
     ## Account and Balance sections
     current_account = Client.query.filter_by(client_id=current_user.client_id).first()
@@ -287,12 +288,17 @@ def clientInterface():
         # if float(amount) > current_client.balance:
         #     pass
 
+    ## Deposit money section
+    if form_deposit.validate_on_submit():
+        pass
+
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
 
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
                            form_account_passwd=form_account_passwd, form_benef=form_add_beneficiary,
-                           form_transfer=form_transfer, client=client, benefs=user_benefs, card=card)
+                           form_transfer=form_transfer, form_deposit=form_deposit, client=client, benefs=user_benefs,
+                           card=card)
 
 
 @login_required
