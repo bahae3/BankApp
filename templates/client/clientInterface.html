@@ -204,8 +204,32 @@
                 </p>
             </div>
 
-            <div id="deposit" class="withdraw-section" style="display: none;">
-                Deposit
+            <div id="deposit" class="deposit-section" style="display: none;">
+                <h2 class="deposit-title">Beneficiaries</h2>
+                
+                <h3 class="deposit-username">
+                    {% if client['gender'] == 'Man' %}
+                    Mr.
+                    {% else %}
+                    Mrs.
+                    {% endif %}
+                    {{ client['lastName'] }} {{ client['firstName'] }}
+                </h3>
+
+                <h4 class="deposit-rib">{{ client['rib'] }}</h4>
+
+                <div class="desposit-form">
+                    <form action="{{ url_for('clientInterface') }}" method="post">
+                        {{ form_deposit.csrf_token }}
+                        
+                        {{ form_deposit.amount.label(class="deposit-label") }}
+                        {{ form_deposit.amount(class="deposit-input") }}
+                        
+                        {{ form_deposit.deposit(class="deposit-button") }}
+                    </form>
+                </div>
+
+                <h3 class="deposit-msg">You should wait for admin approval.</h3>
             </div>
 
             <div id="withdraw" class="withdraw-section" style="display: none;">
