@@ -313,14 +313,14 @@
 this is the styling of the add a beneficiary section
 at first it's not gonna be displayed, but onclick it will be displayed
  */
-.benef-section {
+.benef-section, .account-section {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.benef-add-data {
+.benef-add-data, .account-change-password {
   display: none;
   position: absolute;
   padding: 22px;
@@ -333,7 +333,7 @@ at first it's not gonna be displayed, but onclick it will be displayed
   right: 400px;
 }
 
-.close-btn {
+.close-btn, .close-btn-account {
   position: absolute;
   top: 6px;
   right: 10px;
@@ -344,7 +344,7 @@ at first it's not gonna be displayed, but onclick it will be displayed
   cursor: pointer;
 }
 
-.close-btn:hover {
+.close-btn, .close-btn-account:hover {
   color: #555;
 }
 
