@@ -46,5 +46,5 @@ class TransferMoney(FlaskForm):
 
 class DepositMoney(FlaskForm):
     amount = StringField("Amount: ", validators=[DataRequired()])
-    send = SubmitField("Deposit")
+    deposit = SubmitField("Deposit")
 
