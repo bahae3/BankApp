@@ -196,6 +196,17 @@
                         </div>
 
                         {{ form_transfer.send(class="transfer-button") }}
+                        
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message == "You don't have enough money!" %}
+                                    <p class="flash-error-transfer">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
                     </form>
                 </div>
 
