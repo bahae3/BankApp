@@ -478,6 +478,14 @@ at first it's not gonna be displayed, but onclick it will be displayed
   text-decoration: underline !important;
 }
 
+.flash-error-transfer{
+  font-style: italic;
+  font-weight: 400;
+  color: red;
+  text-align: center;
+  margin-left: -38px;
+}
+
 
 /* Deposit section style */
 .deposit-section{
