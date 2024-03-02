@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -294,16 +294,19 @@ def clientInterface():
 
     ## Transfer money section
     if form_transfer.validate_on_submit():
-        pass
-        # current_client = Client.query.get(current_user.client_id)
-        # amount = form_transfer.amount.data
-        # benef_id = request.form.get('transfer_select')
-        # if float(amount) > current_client.balance:
-        #     pass
+        benef_id = request.form.get('transfer_select')
+        current_client = Client.query.get(current_user.client_id)
+        client_to_have_money = Client.query.get(benef_id)
+        amount = float(form_transfer.amount.data)
+        if amount < current_client.balance:
+            current_client.balance -= amount
+            client_to_have_money += amount
+            db.session.commit()
 
     ## Deposit money section
     if form_deposit.validate_on_submit():
-        pass
+        amount = form_deposit.amount.data
+        deposit = Deposit.query.filter_by(client_id=current_user.client_id).first()
 
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
