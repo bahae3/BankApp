@@ -124,6 +124,19 @@ class Admin(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
+class Deposit(db.Model, UserMixin):
+    __tablename__ = "deposit"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    accepted_or_not = db.Column(db.Boolean, nullable=False)
+
+    def __init__(self, client_id, amount, accepted_or_not):
+        self.client_id = client_id
+        self.amount = amount
+        self.accepted_or_not = accepted_or_not
+
+
 with app.app_context():
     db.create_all()
 
