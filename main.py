@@ -297,10 +297,11 @@ def clientInterface():
         benef_id = request.form.get('transfer_select')
         current_client = Client.query.get(current_user.client_id)
         client_to_have_money = Client.query.get(benef_id)
+
         amount = float(form_transfer.amount.data)
         if amount < current_client.balance:
             current_client.balance -= amount
-            client_to_have_money += amount
+            client_to_have_money.balance += amount
             db.session.commit()
 
     ## Deposit money section
