@@ -267,15 +267,21 @@ def clientInterface():
     ## Beneficiary section
     # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
-    user_benefs = []
+    user_benefs_with_duplicates = []
     for benef in benefs:
         cl = Client.query.filter_by(client_id=benef.beneficiary_id).first()
-        user_benefs.append({
+        user_benefs_with_duplicates.append({
             "benefId": cl.client_id,
             "fName": cl.firstName,
             "lName": cl.lastName,
             "rib": cl.rib
         })
+    user_benefs = list(
+        {
+            dictionary['benefId']: dictionary
+            for dictionary in user_benefs_with_duplicates
+        }.values()
+    )
 
     if form_add_beneficiary.validate_on_submit():
         rib = form_add_beneficiary.rib.data
