@@ -244,7 +244,36 @@
             </div>
 
             <div id="withdraw" class="withdraw-section" style="display: none;">
-                Withdraw
+                <h2 class="withdraw-title">Withdraw transactions</h2>
+                
+                <h3 class="withdraw-username">
+                    {% if client['gender'] == 'Man' %}
+                    Mr.
+                    {% else %}
+                    Mrs.
+                    {% endif %}
+                    {{ client['lastName'] }} {{ client['firstName'] }}
+                </h3>
+                
+                <h4 class="withdraw-rib">{{ client['rib'] }}</h4>
+
+                {% if not withdraw %}
+                <div class="withdraw-transactions">
+                    {% for action in withdraw %}
+                        <div class="withdraw-action">
+                            <p class="withdraw-date">{{ action.date }}</p>
+                            <div class="withdraw-descamount">
+                                <p class="withdraw-description">{{ action.description }}</p>
+                                <p class="withdraw-amount">-{{ action.amount }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <div class="withdraw-no-transactions">
+                    <p class="withdraw-text">You haven't made a purchase yet.</p>
+                </div>
+                {% endif %}
+
             </div>
 
             <div id="loans" class="loans-section" style="display: none;">
