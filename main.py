@@ -319,7 +319,9 @@ def clientInterface():
 
 
     ## Withdraw money section
-    withdraw_transactions = Transaction.query.filter_by(client_id=current_user.client_id, transaction_type=["Withdraw", "Transfer"]).all()
+    withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id, Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
+    for i in withdraw_transactions:
+        print(f"{i.transaction_type} and : {i.amount}")
 
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
