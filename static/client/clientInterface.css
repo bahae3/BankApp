@@ -580,8 +580,13 @@ at first it's not gonna be displayed, but onclick it will be displayed
   color: #007bff;
 }
 
+.card-title{
+  margin-bottom: 15px;
+}
+
 .card-title3 {
-  margin: 7px auto;
+  color: #007;
+  margin-top: 0;
   font-size: 29.5px;
 }
 
