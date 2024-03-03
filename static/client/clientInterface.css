@@ -488,12 +488,12 @@ at first it's not gonna be displayed, but onclick it will be displayed
 
 
 /* Deposit section style */
-.deposit-section{
+.deposit-section, .withdraw-section{
   font-family: "Lato", sans-serif;
   font-weight: 700;
 }
 
-.deposit-title{
+.deposit-title, .withdraw-title{
   /* margin: 31px auto 25px; */
   font-weight: 900;
   font-size: 40px;
@@ -501,14 +501,14 @@ at first it's not gonna be displayed, but onclick it will be displayed
   text-align: center;
 }
 
-.deposit-username{
+.deposit-username, .withdraw-username{
   margin-bottom: 4px;
   font-size: 23px;
   color: #007bff;
   text-align: center;
 }
 
-.deposit-rib{
+.deposit-rib, .withdraw-rib{
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 17px;
@@ -565,6 +565,50 @@ at first it's not gonna be displayed, but onclick it will be displayed
   letter-spacing: 0.8px;
   color: #007;
 }
+
+/* Withdraw section styling */
+.withdraw-transactions{
+  width: 50%;
+  height: 400px;
+  overflow-y: auto;
+  margin: 25px auto;
+}
+
+.withdraw-action{
+  border: 0.5px solid lightgray;
+  padding: 6px 35px;
+}
+
+.withdraw-date{
+  color: #007bff;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.withdraw-descamount{
+  display: flex;
+  justify-content: space-between;
+}
+
+.withdraw-description{
+  color:#555;
+  width: 80%;
+  overflow-x: clip;
+}
+
+
+.withdraw-amount{
+  color: red;
+}
+
+.withdraw-text{
+  text-align: center;
+  color: #007bff;
+  font-size: 32px;
+  margin-top: 120px;
+}
+
+
 
 /* Card section styling */
 .card-section {
