@@ -1,4 +1,6 @@
 import datetime
+from pprint import pprint
+
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
@@ -84,10 +86,10 @@ class Transaction(db.Model, UserMixin):
     transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # relation to client id
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.String, nullable=False)
     # type is: deposit - withdrawal - transfer
     transaction_type = db.Column(db.String, nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.Integer, nullable=False)
 
     def __init__(self, client_id, date, transaction_type, amount, description):
@@ -278,8 +280,7 @@ def clientInterface():
         })
     user_benefs = list(
         {
-            dictionary['benefId']: dictionary
-            for dictionary in user_benefs_with_duplicates
+            dictionary['benefId']: dictionary for dictionary in user_benefs_with_duplicates
         }.values()
     )
 
@@ -316,13 +317,17 @@ def clientInterface():
         amount = form_deposit.amount.data
         deposit = Deposit.query.filter_by(client_id=current_user.client_id).first()
 
+
+    ## Withdraw money section
+    withdraw_transactions = Transaction.query.filter_by(client_id=current_user.client_id, transaction_type=["Withdraw", "Transfer"]).all()
+
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
 
     return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
                            form_account_passwd=form_account_passwd, form_benef=form_add_beneficiary,
                            form_transfer=form_transfer, form_deposit=form_deposit, client=client, benefs=user_benefs,
-                           card=card)
+                           card=card, withdraw=withdraw_transactions)
 
 
 @login_required
