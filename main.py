@@ -306,22 +306,32 @@ def clientInterface():
         client_to_have_money = Client.query.get(benef_id)
         amount = float(form_transfer.amount.data)
         if amount <= current_client.balance:
+            # Transaction type
+            transaction = Transaction(
+                client_id=current_user.client_id,
+                date=str(datetime.datetime.today().strftime("%d/%m/%Y")),
+                transaction_type="Transfer",
+                amount=amount,
+                description="Description"
+            )
+            db.session.add(transaction)
+
             current_client.balance -= amount
             client_to_have_money.balance += amount
             db.session.commit()
+            print("Safi ra dazet")
         else:
             flash("You don't have enough money!")
+            print("Waalo madaztch")
 
     ## Deposit money section
     if form_deposit.validate_on_submit():
         amount = form_deposit.amount.data
         deposit = Deposit.query.filter_by(client_id=current_user.client_id).first()
 
-
     ## Withdraw money section
-    withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id, Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
-    for i in withdraw_transactions:
-        print(f"{i.transaction_type} and : {i.amount}")
+    withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id,
+                                                     Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
 
     ## Card section (retrieve information)
     card = Card.query.filter_by(client_id=current_user.client_id).first()
