@@ -223,7 +223,7 @@ body{
 
 /* footer styling */
 footer {
-    background-color: #278664;
+    background-color: #f1f1f1;
     color: #fff;
     text-align: center;
 }
@@ -231,7 +231,7 @@ footer {
 /* more infos/links styling */
 .more-links {
   display: flex;
-  background-color: #3c9273;
+  background-color: #f9f9f9;
   padding-top: 30px;
 }
 
@@ -241,6 +241,7 @@ footer {
 }
 
 .link-title {
+  color: #007;
   margin-bottom: 20px; /* Add margin below titles for spacing */
   font-family: sans-serif;
   font-size: 24px;
@@ -261,7 +262,7 @@ ul, ul li {
   font-weight: 400;
   font-style: normal;
   font-size: 22px;
-  color: #007;
+  color: #007bff;
   margin: 0 56px;
   text-decoration: none;
   transition: color 0.5s ease;
@@ -269,7 +270,7 @@ ul, ul li {
 
 
 .footer-link:hover{
-  color: #fff;
+  color: #007;
 }
 
 .footer-download{
@@ -297,6 +298,7 @@ ul, ul li {
 }
 
 .fa-brands{
+  color: #000;
     transition: color 0.3s ease;
 }
 
@@ -318,6 +320,7 @@ ul, ul li {
 
 
 .footer-subheading {
+  color: #000;
     margin-top: 25px;
     font-size: 22px;
     opacity: 0.8;
