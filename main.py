@@ -305,6 +305,7 @@ def clientInterface():
         current_client = Client.query.get(current_user.client_id)
         client_to_have_money = Client.query.get(benef_id)
         amount = float(form_transfer.amount.data)
+        description = form_transfer.description.data
         if amount <= current_client.balance:
             # Transaction type
             transaction = Transaction(
@@ -312,7 +313,7 @@ def clientInterface():
                 date=str(datetime.datetime.today().strftime("%d/%m/%Y")),
                 transaction_type="Transfer",
                 amount=amount,
-                description="Description"
+                description=description
             )
             db.session.add(transaction)
 
