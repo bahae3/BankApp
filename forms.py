@@ -41,6 +41,7 @@ class AddBenef(FlaskForm):
 
 class TransferMoney(FlaskForm):
     amount = StringField("Amount: ", validators=[DataRequired()])
+    description = StringField("Description: ", validators=[DataRequired()])
     send = SubmitField("Send")
 
 
