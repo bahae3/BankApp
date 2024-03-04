@@ -195,6 +195,11 @@
                             </select>
                         </div>
 
+                        <div class="transfer-div">
+                            {{ form_transfer.description.label(class="transfer-label") }}
+                            {{ form_transfer.description(class="transfer-input") }}
+                        </div>
+
                         {{ form_transfer.send(class="transfer-button") }}
                         
                         {% with messages = get_flashed_messages() %}
