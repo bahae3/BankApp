@@ -1,12 +1,10 @@
-import datetime
-from pprint import pprint
-
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney, DepositMoney
 import random
+import datetime
 
 # Creating the application
 app = Flask(__name__)
@@ -231,24 +229,13 @@ def login():
 @app.route("/clientInterface", methods=['GET', 'POST'])
 @login_required
 def clientInterface():
-    form_account = Account()
-    form_account_passwd = AccountPassword()
-    form_add_beneficiary = AddBenef()
-    form_transfer = TransferMoney()
-    form_deposit = DepositMoney()
+    return render_template("client/clientInterface.html", current_user=current_user)
 
-    ## Account and Balance sections
-    current_account = Client.query.filter_by(client_id=current_user.client_id).first()
-    client = {
-        "firstName": current_account.firstName,
-        "lastName": current_account.lastName,
-        "rib": current_account.rib,
-        "gender": current_account.gender,
-        "balance": current_account.balance,
-        "email": current_account.email,
-        "phone": current_account.phone,
-        "address": current_account.address
-    }
+
+@login_required
+@app.route("/Account", methods=['GET', 'POST'])
+def account():
+    form_account = Account()
     if form_account.validate_on_submit():
         client_to_update = Client.query.get(current_user.client_id)
         client_to_update.firstName = form_account.firstName.data
@@ -257,15 +244,30 @@ def clientInterface():
         client_to_update.phone = form_account.phone.data
         client_to_update.address = form_account.address.data
         db.session.commit()
-        return redirect(url_for("clientInterface"))
+        return redirect(url_for("account"))
 
+    form_account_passwd = AccountPassword()
     if form_account_passwd.validate_on_submit():
         new_password_form = form_account_passwd.new_password.data
 
         new_password = db.session.query(Client).get(current_user.client_id)
         new_password.password = new_password_form
         db.session.commit()
+        return redirect(url_for("account"))
+    return render_template("client/components/yourAccount.html", client=current_user, form_account=form_account,
+                           form_account_passwd=form_account_passwd)
 
+
+@login_required
+@app.route("/balance")
+def balance():
+    return render_template("client/components/balance.html", client=current_user)
+
+
+@login_required
+@app.route("/beneficiaries", methods=['GET', 'POST'])
+def benefs():
+    form_add_beneficiary = AddBenef()
     ## Beneficiary section
     # This is to retrieve all benefs from db and show it in the website, benef section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
@@ -298,7 +300,30 @@ def clientInterface():
         else:
             # Suppose that only user from same bank should be benefs with each other
             flash("This account doesn't exist.")
+    return render_template("client/components/beneficiaries.html", client=current_user, form_benef=form_add_beneficiary,
+                           benefs=user_benefs)
 
+
+@login_required
+@app.route("/transfer_money", methods=['GET', 'POST'])
+def transfer():
+    form_transfer = TransferMoney()
+    ##Benefs to be shown in transfer section
+    benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
+    user_benefs_with_duplicates = []
+    for benef in benefs:
+        cl = Client.query.filter_by(client_id=benef.beneficiary_id).first()
+        user_benefs_with_duplicates.append({
+            "benefId": cl.client_id,
+            "fName": cl.firstName,
+            "lName": cl.lastName,
+            "rib": cl.rib
+        })
+    user_benefs = list(
+        {
+            dictionary['benefId']: dictionary for dictionary in user_benefs_with_duplicates
+        }.values()
+    )
     ## Transfer money section
     if form_transfer.validate_on_submit():
         benef_id = request.form.get('transfer_select')
@@ -324,23 +349,43 @@ def clientInterface():
         else:
             flash("You don't have enough money!")
             print("Waalo madaztch")
+    return render_template("client/components/transferMoney.html", form_transfer=form_transfer, benefs=user_benefs)
 
+
+@login_required
+@app.route("/deposit_money", methods=['GET', 'POST'])
+def deposit():
+    form_deposit = DepositMoney()
     ## Deposit money section
     if form_deposit.validate_on_submit():
         amount = form_deposit.amount.data
         deposit = Deposit.query.filter_by(client_id=current_user.client_id).first()
 
+    return render_template("client/components/depositMoney.html", client=current_user, form_deposit=form_deposit)
+
+
+@login_required
+@app.route("/withdraw_money", methods=['GET', 'POST'])
+def withdraw():
     ## Withdraw money section
     withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id,
                                                      Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
 
-    ## Card section (retrieve information)
-    card = Card.query.filter_by(client_id=current_user.client_id).first()
+    return render_template("client/components/withdrawMoney.html", client=current_user, withdraw=withdraw_transactions)
 
-    return render_template("client/clientInterface.html", current_user=current_user, form_account=form_account,
-                           form_account_passwd=form_account_passwd, form_benef=form_add_beneficiary,
-                           form_transfer=form_transfer, form_deposit=form_deposit, client=client, benefs=user_benefs,
-                           card=card, withdraw=withdraw_transactions)
+
+@login_required
+@app.route("/loans", methods=['GET', 'POST'])
+def loans():
+    return render_template("client/components/loans.html")
+
+
+@login_required
+@app.route("/card_information")
+def card():
+    ## Card section (retrieve information)
+    card_info = Card.query.filter_by(client_id=current_user.client_id).first()
+    return render_template("client/components/card.html", client=current_user, card=card_info)
 
 
 @login_required
