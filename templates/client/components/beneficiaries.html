@@ -1,0 +1,115 @@
+{% include 'client/header.html' %}
+
+<div class="container">
+    <div class="top-section">
+        <div class="logo-and-title">
+            <img
+                    src="static/client/img/logobank.png"
+                    alt="Bank Logo"
+                    class="first-logo"
+            />
+            <h2 class="first-title">
+                The bank that <span class="everyone-word">everyone</span>needs.
+            </h2>
+        </div>
+    </div>
+
+    <div class="middle-section">
+        <div class="left-section">
+            <a href="{{ url_for('clientInterface') }}" class="left-link">Home</a>
+            <a href="{{ url_for('account') }}" class="left-link">Your account</a>
+            <a href="{{ url_for('balance') }}" class="left-link">Balance</a>
+            <a href="{{ url_for('benefs') }}" class="left-link">Beneficiaries</a>
+            <a href="{{ url_for('transfer') }}" class="left-link">Transfer money</a>
+            <a href="{{ url_for('deposit') }}" class="left-link">Deposit money</a>
+            <a href="{{ url_for('withdraw') }}" class="left-link">Withdraw money</a>
+            <a href="{{ url_for('loans') }}" class="left-link">Your loans</a>
+            <a href="{{ url_for('card') }}" class="left-link">Card information</a>
+        </div>
+
+        <div class="right-section">
+            <div id="benef" class="benef-section">
+                <h2 class="benef-title">Beneficiaries</h2>
+
+                <h3 class="benef-username">
+                    {% if client['gender'] == 'Man' %} Mr. {% else %} Mrs. {% endif %} {{
+                    client['lastName'] }} {{ client['firstName'] }}
+                </h3>
+                <p class="benef-p">{{ client['rib'] }}</p>
+
+                <hr class="benef-hr"/>
+
+                {% if benefs %}
+                <div class="all-benef">
+                    {% for benef in benefs %}
+                    <div class="benef-user">
+                        <h3 class="benef-user-h3">
+                            {{ benef['lName'] + ' ' + benef['fName'] }}
+                        </h3>
+                        <p class="benef-user-p">{{ benef['rib'] }}</p>
+                        <a
+                                href="{{ url_for('delete_benef', benef_id=benef['benefId']) }}"
+                                class="benef-delete delete"
+                        >Delete</a
+                        >
+                    </div>
+                    {% if not loop.last %}
+                    <hr class="benef-hr"/>
+                    {% endif %} {% endfor %}
+                </div>
+                {% else %}
+                <h2 class="benef-nobenef">You curretly don't have any beneficiary</h2>
+                {% endif %}
+
+                <a href="#" class="benef-add">Add beneficiary</a>
+
+                {% with messages = get_flashed_messages() %} {% if messages %} {% for
+                message in messages %} {% if message == "This account doesn't exist." %}
+                <p class="flash-error">{{ message }}</p>
+                {% else %}
+                <p class="flash-success">{{ message }}</p>
+                {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+                <div class="benef-add-data">
+                    <button class="close-btn">&times;</button>
+                    <form action="{{ url_for('clientInterface') }}" method="post">
+                        {{ form_benef.csrf_token }} {{
+                        form_benef.rib.label(class="benef-label") }} {{
+                        form_benef.rib(class="input-label") }} {{
+                        form_benef.add(class="benef-button") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <div class="download-links">
+            <div class="download-left">
+                <h3 class="download-title">Download Bahae Bank Mobile via</h3>
+                <a href="https://play.google.com" target="_blank"
+                ><img
+                        src="static/client/img/playstore.png"
+                        alt="Play Store"
+                        class="download-img"
+                /></a>
+                <a href="https://www.apple.com/app-store/" target="_blank"
+                ><img
+                        src="static/client/img/appstore.png"
+                        alt="App Store"
+                        class="download-img"
+                /></a>
+            </div>
+            <div class="download-right">
+                <img
+                        src="static/client/img/logobank.png"
+                        alt="Bank Logo"
+                        class="download-logo"
+                />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% include 'client/footer.html' %}

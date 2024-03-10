@@ -1,0 +1,117 @@
+{% include 'client/header.html' %}
+
+<div class="container">
+  <div class="top-section">
+    <div class="logo-and-title">
+      <img
+        src="static/client/img/logobank.png"
+        alt="Bank Logo"
+        class="first-logo"
+      />
+      <h2 class="first-title">
+        The bank that <span class="everyone-word">everyone</span>needs.
+      </h2>
+    </div>
+  </div>
+
+  <div class="middle-section">
+    <div class="left-section">
+      <a href="{{ url_for('clientInterface') }}" class="left-link">Home</a>
+      <a href="{{ url_for('account') }}" class="left-link">Your account</a>
+      <a href="{{ url_for('balance') }}" class="left-link">Balance</a>
+      <a href="{{ url_for('benefs') }}" class="left-link">Beneficiaries</a>
+      <a href="{{ url_for('transfer') }}" class="left-link">Transfer money</a>
+      <a href="{{ url_for('deposit') }}" class="left-link">Deposit money</a>
+      <a href="{{ url_for('withdraw') }}" class="left-link">Withdraw money</a>
+      <a href="{{ url_for('loans') }}" class="left-link">Your loans</a>
+      <a href="{{ url_for('card') }}" class="left-link">Card information</a>
+    </div>
+
+    <div class="right-section">
+      <div id="account" class="account-section">
+        <h2 class="account-title">Account information</h2>
+        <div class="account-form">
+          <form action="{{ url_for('account') }}" method="post">
+            {{ form_account.csrf_token }}
+            <div class="label-input">
+              {{ form_account.firstName.label(class="account-label") }} {{
+              form_account.firstName(class="account-input",
+              value=client['firstName']) }}
+            </div>
+
+            <div class="label-input">
+              {{ form_account.lastName.label(class="account-label") }} {{
+              form_account.lastName(class="account-input",
+              value=client['lastName']) }}
+            </div>
+
+            <div class="label-input">
+              <label class="account-label">Account number: </label>
+              <p class="account-rib">{{ client['rib'] }}</p>
+            </div>
+
+            <div class="label-input">
+              {{ form_account.email.label(class="account-label") }} {{
+              form_account.email(class="account-input", value=client['email'])
+              }}
+            </div>
+
+            <div class="label-input">
+              {{ form_account.phone.label(class="account-label") }} {{
+              form_account.phone(class="account-input", value=client['phone'])
+              }}
+            </div>
+
+            <div class="label-input">
+              {{ form_account.address.label(class="account-label") }} {{
+              form_account.address(class="account-input",
+              value=client['address']) }}
+            </div>
+
+            <a href="#" class="change-password">Change password</a>
+
+            {{ form_account.update(class="account-update") }}
+          </form>
+        </div>
+
+        <div class="account-change-password">
+          <button class="close-btn-account">&times;</button>
+          <form action="{{ url_for('account') }}" method="post">
+            {{ form_account_passwd.csrf_token }} {{
+            form_account_passwd.new_password.label(class="benef-label") }} {{
+            form_account_passwd.new_password(class="input-label") }} {{
+            form_account_passwd.change(class="benef-button") }}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-section">
+    <div class="download-links">
+      <div class="download-left">
+        <h3 class="download-title">Download Bahae Bank Mobile via</h3>
+        <a href="https://play.google.com" target="_blank"
+          ><img
+            src="static/client/img/playstore.png"
+            alt="Play Store"
+            class="download-img"
+        /></a>
+        <a href="https://www.apple.com/app-store/" target="_blank"
+          ><img
+            src="static/client/img/appstore.png"
+            alt="App Store"
+            class="download-img"
+        /></a>
+      </div>
+      <div class="download-right">
+        <img
+          src="static/client/img/logobank.png"
+          alt="Bank Logo"
+          class="download-logo"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'client/footer.html' %}

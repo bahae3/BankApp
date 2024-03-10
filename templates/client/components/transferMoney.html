@@ -1,0 +1,104 @@
+{% include 'client/header.html' %}
+
+<div class="container">
+  <div class="top-section">
+    <div class="logo-and-title">
+      <img
+        src="static/client/img/logobank.png"
+        alt="Bank Logo"
+        class="first-logo"
+      />
+      <h2 class="first-title">
+        The bank that <span class="everyone-word">everyone</span>needs.
+      </h2>
+    </div>
+  </div>
+
+  <div class="middle-section">
+    <div class="left-section">
+      <a href="{{ url_for('clientInterface') }}" class="left-link">Home</a>
+      <a href="{{ url_for('account') }}" class="left-link">Your account</a>
+      <a href="{{ url_for('balance') }}" class="left-link">Balance</a>
+      <a href="{{ url_for('benefs') }}" class="left-link">Beneficiaries</a>
+      <a href="{{ url_for('transfer') }}" class="left-link">Transfer money</a>
+      <a href="{{ url_for('deposit') }}" class="left-link">Deposit money</a>
+      <a href="{{ url_for('withdraw') }}" class="left-link">Withdraw money</a>
+      <a href="{{ url_for('loans') }}" class="left-link">Your loans</a>
+      <a href="{{ url_for('card') }}" class="left-link">Card information</a>
+    </div>
+
+    <div class="right-section">
+      <div id="transfer" class="transfer-section">
+        <h2 class="transfer-title">Transfer money</h2>
+        <div class="transfer-form">
+          <h3 class="transfer-title3">As fast as light ⚡</h3>
+          <form action="{{ url_for('clientInterface') }}" method="post">
+            {{ form_transfer.csrf_token }}
+
+            <div class="transfer-div">
+              {{ form_transfer.amount.label(class="transfer-label") }} {{
+              form_transfer.amount(class="transfer-input") }}
+            </div>
+
+            <div class="transfer-div">
+              <label class="transfer-label">Account number: </label>
+              <select name="transfer_select" class="transfer-select">
+                {% for acc in benefs %}
+                <option value="{{ acc['benefId'] }}">
+                  {{ acc['lName'] }} {{ acc['fName'] }}: {{ acc['rib'] }}
+                </option>
+                {% if not loop.last %}
+                <hr />
+                {% endif %} {% endfor %}
+              </select>
+            </div>
+
+            <div class="transfer-div">
+              {{ form_transfer.description.label(class="transfer-label") }} {{
+              form_transfer.description(class="transfer-input") }}
+            </div>
+
+            {{ form_transfer.send(class="transfer-button") }} {% with messages =
+            get_flashed_messages() %} {% if messages %} {% for message in
+            messages %} {% if message == "You don't have enough money!" %}
+            <p class="flash-error-transfer">{{ message }}</p>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
+          </form>
+        </div>
+
+        <p class="transfer-add-benef">
+          Do you need to add a new beneficiary?
+          <a href="#" class="left-link" data-target="benef">Click here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="download-links">
+      <div class="download-left">
+        <h3 class="download-title">Download Bahae Bank Mobile via</h3>
+        <a href="https://play.google.com" target="_blank"
+          ><img
+            src="static/client/img/playstore.png"
+            alt="Play Store"
+            class="download-img"
+        /></a>
+        <a href="https://www.apple.com/app-store/" target="_blank"
+          ><img
+            src="static/client/img/appstore.png"
+            alt="App Store"
+            class="download-img"
+        /></a>
+      </div>
+      <div class="download-right">
+        <img
+          src="static/client/img/logobank.png"
+          alt="Bank Logo"
+          class="download-logo"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'client/footer.html' %}
