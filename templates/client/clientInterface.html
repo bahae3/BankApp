@@ -1,333 +1,72 @@
 {% include 'client/header.html' %}
 
 <div class="container">
-    <div class="top-section">
-        <div class="logo-and-title">
-            <img src="static/client/img/logobank.png" alt="Bank Logo" class="first-logo">
-            <h2 class="first-title">The bank that <span class="everyone-word">everyone</span>needs.</h2>
-        </div>
+  <div class="top-section">
+    <div class="logo-and-title">
+      <img
+        src="static/client/img/logobank.png"
+        alt="Bank Logo"
+        class="first-logo"
+      />
+      <h2 class="first-title">
+        The bank that <span class="everyone-word">everyone</span>needs.
+      </h2>
+    </div>
+  </div>
+
+  <div class="middle-section">
+    <div class="left-section">
+      <a href="{{ url_for('clientInterface') }}" class="left-link">Home</a>
+      <a href="{{ url_for('account') }}" class="left-link">Your account</a>
+      <a href="{{ url_for('balance') }}" class="left-link">Balance</a>
+      <a href="{{ url_for('benefs') }}" class="left-link">Beneficiaries</a>
+      <a href="{{ url_for('transfer') }}" class="left-link">Transfer money</a>
+      <a href="{{ url_for('deposit') }}" class="left-link">Deposit money</a>
+      <a href="{{ url_for('withdraw') }}" class="left-link">Withdraw money</a>
+      <a href="{{ url_for('loans') }}" class="left-link">Your loans</a>
+      <a href="{{ url_for('card') }}" class="left-link">Card information</a>
     </div>
 
-
-    <div class="middle-section">
-        <div class="left-section">
-            <a href="#" class="left-link" data-target="home">Home</a>
-            <a href="#" class="left-link" data-target="account">Your account</a>
-            <a href="#" class="left-link" data-target="balance">Balance</a>
-            <a href="#" class="left-link" data-target="benef">Beneficiaries</a>
-            <a href="#" class="left-link" data-target="transfer">Transfer money</a>
-            <a href="#" class="left-link" data-target="deposit">Deposit money</a>
-            <a href="#" class="left-link" data-target="withdraw">Withdraw money</a>
-            <a href="#" class="left-link" data-target="loans">Your loans</a>
-            <a href="#" class="left-link" data-target="card">Card information</a>
-        </div>
-
-        <div class="right-section">
-            <div id="home" class="home-section">
-                <h2 class="home-title biggest-title">Choosing our bank was the right choice!</h2>
-                <h3 class="home-title">You can easily deposit your money 📥.</h3>
-                <h3 class="home-title">You can quickly transfer money 📤.</h3>
-                <h3 class="home-title">And we will keep your money safe and secure 🔐.</h3>
-            </div>
-
-            <div id="account" class="account-section" style="display: none;">
-                <h2 class="account-title">Account information</h2>
-                <div class="account-form">
-                    <form action="{{ url_for('clientInterface') }}" method="post">
-                        {{ form_account.csrf_token }}
-                        <div class="label-input">
-                            {{ form_account.firstName.label(class="account-label") }}
-                            {{ form_account.firstName(class="account-input", value=client['firstName']) }}
-                        </div>
-
-                        <div class="label-input">
-                            {{ form_account.lastName.label(class="account-label") }}
-                            {{ form_account.lastName(class="account-input", value=client['lastName']) }}
-                        </div>
-
-                        <div class="label-input">
-                            <label class="account-label">Account number: </label>
-                            <p class="account-rib">{{ client['rib'] }}</p>
-                        </div>
-
-
-                        <div class="label-input">
-                            {{ form_account.email.label(class="account-label") }}
-                            {{ form_account.email(class="account-input", value=client['email']) }}
-                        </div>
-
-
-                        <div class="label-input">
-                            {{ form_account.phone.label(class="account-label") }}
-                            {{ form_account.phone(class="account-input", value=client['phone']) }}
-                        </div>
-
-
-                        <div class="label-input">
-                            {{ form_account.address.label(class="account-label") }}
-                            {{ form_account.address(class="account-input", value=client['address']) }}
-                        </div>
-
-
-                        <a href="#" class="change-password">Change password</a>
-
-                        {{ form_account.update(class="account-update") }}
-                    </form>
-                </div>
-
-                <div class="account-change-password">
-                    <button class="close-btn-account">&times;</button>
-                    <form action="{{ url_for('clientInterface') }}" method="post">
-                        {{ form_account_passwd.csrf_token }}
-                    
-                        {{ form_account_passwd.new_password.label(class="benef-label") }}
-                        {{ form_account_passwd.new_password(class="input-label") }}
-                    
-                        {{ form_account_passwd.change(class="benef-button") }}
-                    </form>
-                </div>
-
-            </div>
-
-            <div id="balance" class="balance-section" style="display: none;">
-                <h2 class="balance-title">
-                    Hello
-                    {% if client['gender'] == 'Man' %}
-                    Mr.
-                    {% else %}
-                    Mrs.
-                    {% endif %}
-                    {{ client['lastName'] }} {{ client['firstName'] }}
-                </h2>
-
-                <div class="balance-data">
-                    <h3 class="balance-title3">Account number:</h3>
-                    <p class="balance-p">{{ client['rib'] }}</p>
-                    <hr class="balance-line">
-                    <h3 class="balance-title3">Your balance:</h3>
-                    <p class="balance-p">€ {{ client['balance'] }}</p>
-                </div>
-            </div>
-
-            <div id="benef" class="benef-section" style="display: none;">
-                <h2 class="benef-title">Beneficiaries</h2>
-
-                <h3 class="benef-username">
-                    {% if client['gender'] == 'Man' %}
-                      Mr.
-                    {% else %}
-                      Mrs.
-                    {% endif %}
-                    {{ client['lastName'] }} {{ client['firstName'] }}
-                </h3>
-                <p class="benef-p">{{ client['rib'] }}</p>
-
-                <hr class="benef-hr">
-
-                {% if benefs %}
-                  <div class="all-benef">
-                      {% for benef in benefs %}
-                          <div class="benef-user">
-                              <h3 class="benef-user-h3">{{ benef['lName'] + ' ' + benef['fName'] }}</h3>
-                              <p class="benef-user-p">{{ benef['rib'] }}</p>
-                              <a href="{{ url_for('delete_benef', benef_id=benef['benefId']) }}"
-                                class="benef-delete delete">Delete</a>
-                          </div>
-                      {% if not loop.last %}
-                          <hr class="benef-hr">
-                      {% endif %}
-                      {% endfor %}
-                  </div>
-                {% else %}
-                  <h2 class="benef-nobenef">You curretly don't have any beneficiary</h2>
-                {% endif %}
-
-                <a href="#" class="benef-add">Add beneficiary</a>
-                
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            {% if message == "This account doesn't exist." %}
-                                <p class="flash-error">{{ message }}</p>
-                            {% else %}
-                                <p class="flash-success">{{ message }}</p>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                
-                <div class="benef-add-data">
-                  <button class="close-btn">&times;</button>
-                  <form action="{{ url_for('clientInterface') }}" method="post">
-                      {{ form_benef.csrf_token }}
-
-                      {{ form_benef.rib.label(class="benef-label") }}
-                      {{ form_benef.rib(class="input-label") }}
-
-                      {{ form_benef.add(class="benef-button") }}
-                  </form>
-                </div>
-
-
-            </div>
-
-            <div id="transfer" class="transfer-section"  style="display: none;">
-                <h2 class="transfer-title">Transfer money</h2>
-                <div class="transfer-form">
-                    <h3 class="transfer-title3">As fast as light ⚡</h3>
-                    <form action="{{ url_for('clientInterface') }}" method="post">
-                        {{ form_transfer.csrf_token }}
-
-                        <div class="transfer-div">
-                            {{ form_transfer.amount.label(class="transfer-label") }}
-                            {{ form_transfer.amount(class="transfer-input") }}
-                        </div>
-
-                        <div class="transfer-div">
-                            <label class="transfer-label">Account number: </label>
-                            <select name="transfer_select" class="transfer-select">
-                                {% for acc in benefs %}
-                                    <option value="{{ acc['benefId'] }}">{{ acc['lName'] }} {{ acc['fName'] }}: {{ acc['rib'] }}</option>
-                                    {% if not loop.last %}
-                                    <hr>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="transfer-div">
-                            {{ form_transfer.description.label(class="transfer-label") }}
-                            {{ form_transfer.description(class="transfer-input") }}
-                        </div>
-
-                        {{ form_transfer.send(class="transfer-button") }}
-                        
-                        {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {% if message == "You don't have enough money!" %}
-                                    <p class="flash-error-transfer">{{ message }}</p>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
-
-                    </form>
-                </div>
-
-                <p class="transfer-add-benef">Do you need to add a new beneficiary? 
-                    <a href="#" class="left-link" data-target="benef">Click here</a>
-                </p>
-            </div>
-
-            <div id="deposit" class="deposit-section" style="display: none;">
-                <h2 class="deposit-title">Deposit money</h2>
-                
-                <h3 class="deposit-username">
-                    {% if client['gender'] == 'Man' %}
-                    Mr.
-                    {% else %}
-                    Mrs.
-                    {% endif %}
-                    {{ client['lastName'] }} {{ client['firstName'] }}
-                </h3>
-
-                <h4 class="deposit-rib">{{ client['rib'] }}</h4>
-
-                <div class="deposit-form">
-                    <form action="{{ url_for('clientInterface') }}" method="post">
-                        {{ form_deposit.csrf_token }}
-                        
-                        {{ form_deposit.amount.label(class="deposit-label") }}
-                        {{ form_deposit.amount(class="deposit-input") }}
-                        
-                        {{ form_deposit.deposit(class="deposit-button") }}
-                    </form>
-                </div>
-
-                <h3 class="deposit-msg">You should wait for admin approval.</h3>
-            </div>
-
-            <div id="withdraw" class="withdraw-section" style="display: none;">
-                <h2 class="withdraw-title">Withdraw transactions</h2>
-                
-                <h3 class="withdraw-username">
-                    {% if client['gender'] == 'Man' %}
-                    Mr.
-                    {% else %}
-                    Mrs.
-                    {% endif %}
-                    {{ client['lastName'] }} {{ client['firstName'] }}
-                </h3>
-                
-                <h4 class="withdraw-rib">{{ client['rib'] }}</h4>
-
-                {% if not withdraw %}
-                <div class="withdraw-transactions">
-                    {% for action in withdraw %}
-                        <div class="withdraw-action">
-                            <p class="withdraw-date">{{ action.date }}</p>
-                            <div class="withdraw-descamount">
-                                <p class="withdraw-description">{{ action.description }}</p>
-                                <p class="withdraw-amount">-{{ action.amount }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                <div class="withdraw-no-transactions">
-                    <p class="withdraw-text">You haven't made a purchase yet.</p>
-                </div>
-                {% endif %}
-
-            </div>
-
-            <div id="loans" class="loans-section" style="display: none;">
-                Loans
-            </div>
-
-            <div id="card" class="card-section" style="display: none;">
-                <h2 class="card-title">Card information</h2>
-                <h3 class="card-title3">
-                {% if client['gender'] == 'Man' %}
-                    Mr.
-                {% else %}
-                    Mrs.
-                {% endif %}
-                {{ client['lastName'] }} {{ client['firstName'] }}
-                </h3>
-
-                <div class="card-info">
-                    <h3 class="card-element">Number <span class="card-twoP">:</span> </h3>
-                    <p class="card-p">{{ card.number }}</p>
-                    <h3 class="card-element">Expiration date <span class="card-twoP">:</span> </h3>
-                    <p class="card-p">{{ card.expiration_date }}</p>
-                    <h3 class="card-element">CVC <span class="card-twoP">:</span> </h3>
-                    <p class="card-p">{{ card.cvc_code }}</p>
-                    <h3 class="card-lastelement">Keep these <span class="card-information">information</span> secret 🔐</h3>
-                </div>
-
-            </div>
-
-        </div>
+    <div class="right-section">
+      <div id="home" class="home-section">
+        <h2 class="home-title biggest-title">
+          Choosing our bank was the right choice!
+        </h2>
+        <h3 class="home-title">You can easily deposit your money 📥.</h3>
+        <h3 class="home-title">You can quickly transfer money 📤.</h3>
+        <h3 class="home-title">
+          And we will keep your money safe and secure 🔐.
+        </h3>
+      </div>
     </div>
+  </div>
 
-    <div class="bottom-section">
-        <div class="download-links">
-            <div class="download-left">
-                <h3 class="download-title">Download Bahae Bank Mobile via</h3>
-                <a href="https://play.google.com" target="_blank"><img src="static/client/img/playstore.png"
-                                                                       alt="Play Store"
-                                                                       class="download-img"></a>
-                <a href="https://www.apple.com/app-store/" target="_blank"><img src="static/client/img/appstore.png"
-                                                                                alt="App Store"
-                                                                                class="download-img"></a>
-            </div>
-            <div class="download-right">
-                <img src="static/client/img/logobank.png" alt="Bank Logo" class="download-logo">
-            </div>
-        </div>
+  <div class="bottom-section">
+    <div class="download-links">
+      <div class="download-left">
+        <h3 class="download-title">Download Bahae Bank Mobile via</h3>
+        <a href="https://play.google.com" target="_blank"
+          ><img
+            src="static/client/img/playstore.png"
+            alt="Play Store"
+            class="download-img"
+        /></a>
+        <a href="https://www.apple.com/app-store/" target="_blank"
+          ><img
+            src="static/client/img/appstore.png"
+            alt="App Store"
+            class="download-img"
+        /></a>
+      </div>
+      <div class="download-right">
+        <img
+          src="static/client/img/logobank.png"
+          alt="Bank Logo"
+          class="download-logo"
+        />
+      </div>
     </div>
+  </div>
 </div>
-
 
 {% include 'client/footer.html' %}
