@@ -1,3 +1,6 @@
+*{
+  font-family: "Lato", sans-serif;
+}
 /* styling of the home page of authenticated account */
 /* container styling */
 .container {
@@ -39,7 +42,6 @@
 
 .first-title{
   margin: 0;
-  font-family: "Lato", sans-serif;
   font-weight: 700;
   font-size: 40px;
   margin-left: 15px;
@@ -57,7 +59,6 @@
 /* left side */
 .left-section{
   width: 15%;
-  border-right: 2px solid #007bff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -66,7 +67,6 @@
 
 .left-link{
   font-size: 22px;
-  font-family: "Lato", sans-serif;
   font-weight: 700;
   text-decoration: none;
   margin: 14px 0;
@@ -87,7 +87,6 @@
 .home-title{
   color: #007bff;
   font-size: 28px;
-  font-family: "Lato", sans-serif;
   font-weight: 700;
   margin-left: 50px;
 }
@@ -102,8 +101,8 @@
 /* account section style */
 .account-section {
     font-size: 19px;
-    font-family: "Lato", sans-serif;
     font-weight: 400;
+    border-left: 2px solid #007bff;
 }
 
 .account-title{
@@ -127,7 +126,6 @@
 }
 
 
-
 .account-label {
   font-size: 20px;
   margin-bottom: 4px;
@@ -139,7 +137,6 @@
   width: 80%;
   border: 1px solid #007bff;
   padding: 10px;
-  font-family: "Lato", sans-serif;
   font-size: 15px;
 }
 
@@ -161,8 +158,35 @@
   text-decoration: underline;
 }
 
+.account-change-password {
+  display: none;
+  position: absolute;
+  padding: 22px;
+  background-color: #f1f1f1;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  width: 300px;
+  height: 160px;
+  top: 68rem;
+  right: 26rem;
+}
+
+.close-btn-account {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+
+.close-btn-account:hover {
+  color: #555;
+}
+
 .account-update {
-    font-family: "Lato", sans-serif;
     font-weight: 700;
     font-size: 17px;
     letter-spacing: 1px;
@@ -184,7 +208,6 @@
 .balance-section{
   margin: 5px auto;
   text-align: center;
-  font-family: "Lato", sans-serif;
   font-weight: 700;
 }
 
@@ -221,9 +244,9 @@
 
 /* beneficiaries section style */
 .benef-section{
+  position: relative;
   margin: 5px auto;
   text-align: center;
-  font-family: "Lato", sans-serif;
   font-weight: 700;
 }
 
@@ -309,18 +332,12 @@
   color: #4BC811;
 }
 
-/* 
+/*
 this is the styling of the add a beneficiary section
 at first it's not gonna be displayed, but onclick it will be displayed
  */
-.benef-section, .account-section {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.benef-add-data, .account-change-password {
+.benef-add-data {
   display: none;
   position: absolute;
   padding: 22px;
@@ -333,7 +350,7 @@ at first it's not gonna be displayed, but onclick it will be displayed
   right: 400px;
 }
 
-.close-btn, .close-btn-account {
+.close-btn {
   position: absolute;
   top: 6px;
   right: 10px;
@@ -344,7 +361,7 @@ at first it's not gonna be displayed, but onclick it will be displayed
   cursor: pointer;
 }
 
-.close-btn, .close-btn-account:hover {
+.close-btn:hover {
   color: #555;
 }
 
@@ -394,7 +411,6 @@ at first it's not gonna be displayed, but onclick it will be displayed
 
 /* Styling the transfer section */
 .transfer-section{
-  font-family: "Lato", sans-serif;
   font-weight: 700;
 }
 
@@ -435,7 +451,6 @@ at first it's not gonna be displayed, but onclick it will be displayed
   width: 80%;
   border: 1px solid #007bff;
   padding: 10px;
-  font-family: "Lato", sans-serif;
   font-size: 15px;
 }
 
@@ -444,7 +459,6 @@ at first it's not gonna be displayed, but onclick it will be displayed
 }
 
 .transfer-button{
-  font-family: "Lato", sans-serif;
   font-weight: 700;
   font-size: 17px;
   letter-spacing: 1px;
@@ -489,7 +503,6 @@ at first it's not gonna be displayed, but onclick it will be displayed
 
 /* Deposit section style */
 .deposit-section, .withdraw-section{
-  font-family: "Lato", sans-serif;
   font-weight: 700;
 }
 
@@ -536,12 +549,10 @@ at first it's not gonna be displayed, but onclick it will be displayed
   width: 80%;
   border: 1px solid #007bff;
   padding: 10px;
-  font-family: "Lato", sans-serif;
   font-size: 15px;
 }
 
 .deposit-button {
-  font-family: "Lato", sans-serif;
   font-weight: 700;
   font-size: 17px;
   letter-spacing: 1px;
@@ -611,10 +622,6 @@ at first it's not gonna be displayed, but onclick it will be displayed
 
 
 /* Card section styling */
-.card-section {
-  font-family: "Lato", sans-serif;
-}
-
 .card-title,
 .card-title3 {
   margin: 31px auto 25px;
