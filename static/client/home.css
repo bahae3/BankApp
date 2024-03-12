@@ -123,6 +123,7 @@ body{
   text-align: center;
   background-color: #007bff;
   color: #fff;
+  cursor: default;
   font-size: 25px;
   font-family: "Lato", sans-serif;
   font-weight: 700;
