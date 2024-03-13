@@ -28,10 +28,40 @@
     </div>
 
     <div class="right-section">
-      <div id="loans" class="loans-section">Loans</div>
+      <div id="loans" class="loans-section">
+        <div id="benef" class="benef-section">
+          <h2 class="benef-title">Loans</h2>
+
+          <h3 class="benef-username">
+            {% if client['gender'] == 'Man' %} Mr. {% else %} Mrs. {% endif %}
+            {{ client['lastName'] }} {{ client['firstName'] }}
+          </h3>
+          <p class="benef-p">{{ client['rib'] }}</p>
+
+          <hr class="benef-hr" />
+
+          {% if loans %}
+          <div class="all-benef">
+            {% for loan in loans %}
+            <div class="benef-user">
+              <h3 class="benef-user-h3">
+                {{ loan['amount'] }} {{ loan['term'] }}
+              </h3>
+              <p class="benef-user-p">{{ loan['monthly_return_amount'] }}</p>
+            </div>
+            {% if not loop.last %}
+            <hr class="benef-hr" />
+            {% endif %} {% endfor %}
+          </div>
+          {% else %}
+          <h2 class="benef-nobenef">You curretly don't have any loans on.</h2>
+          {% endif %}
+
+          <a href="#" class="benef-add">Ask for loan</a>
+        </div>
+      </div>
     </div>
   </div>
-
   <div class="bottom-section">
     <div class="download-links">
       <div class="download-left">
