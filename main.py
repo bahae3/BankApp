@@ -375,9 +375,14 @@ def withdraw():
 
 
 @login_required
-@app.route("/loans", methods=['GET', 'POST'])
+@app.route("/loans")
 def loans():
-    return render_template("client/components/loans.html")
+    all_loans = Loan.query.filter_by(client_id=current_user.client_id).all()
+    print(type(all_loans))
+    print(len(all_loans))
+    for loan in all_loans:
+        print(loan)
+    return render_template("client/components/loans.html", client=current_user, loans=all_loans)
 
 
 @login_required
