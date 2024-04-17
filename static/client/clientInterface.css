@@ -619,7 +619,63 @@ at first it's not gonna be displayed, but onclick it will be displayed
   margin-top: 120px;
 }
 
+/* Loans section styling */
 
+.loan-add-data {
+  height: auto;
+}
+
+.loan-label, .months-label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.loan-input, .months-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.loan-button {
+  display: inline-block;
+  width: 91%;
+  padding: 12px;
+  margin-top: 10px;
+  margin-right: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.loan-button:hover {
+  background-color: #4BC811;
+}
+
+#month-info-text, #loans-info-text{
+    display: none;
+    position: absolute;
+    top: 105px;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#loans-info-text{
+  top: 177px;
+  left: 22px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
 /* Card section styling */
 .card-title,
