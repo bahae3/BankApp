@@ -49,3 +49,8 @@ class DepositMoney(FlaskForm):
     amount = StringField("Amount: ", validators=[DataRequired()])
     deposit = SubmitField("Deposit")
 
+
+class Loans(FlaskForm):
+    loan = StringField("Loan amount: ", validators=[DataRequired()])
+    months = StringField("Months: ", validators=[DataRequired()])
+    ask_for_loan = SubmitField("Ask for loan")
