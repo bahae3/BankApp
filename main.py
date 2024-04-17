@@ -1,142 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
+from flask import render_template, redirect, url_for, flash, request
+
+from db_models import *
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import Signup, Login, Account, AccountPassword, AddBenef, TransferMoney, DepositMoney
+from forms import *
 import random
 import datetime
 
-# Creating the application
-app = Flask(__name__)
-app.config['SECRET_KEY'] = "bahae03"
-
-# Connect to database
-app.app_context().push()
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bahaebank.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-
-# Creating tables
-# Client table
-class Client(db.Model, UserMixin):
-    __tablename__ = "clients"
-    client_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    rib = db.Column(db.Integer, nullable=False, unique=True)
-    lastName = db.Column(db.String, nullable=False)
-    firstName = db.Column(db.String, nullable=False)
-    gender = db.Column(db.String, nullable=False)
-    balance = db.Column(db.Float, nullable=False)
-    email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
-    address = db.Column(db.String, nullable=False)
-    phone = db.Column(db.String, nullable=False)
-
-    def get_id(self):
-        return str(self.client_id)
-
-    def __init__(self, rib, lastName, firstName, gender, balance, email, password, address, phone):
-        self.rib = rib
-        self.lastName = lastName
-        self.firstName = firstName
-        self.gender = gender
-        self.balance = balance
-        self.email = email
-        self.password = password
-        self.address = address
-        self.phone = phone
-
-
-# Card table
-class Card(db.Model, UserMixin):
-    __tablename__ = "cards"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # relation to client id
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    number = db.Column(db.Integer, nullable=False, unique=True)
-    expiration_date = db.Column(db.String, nullable=False)
-    cvc_code = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, client_id, number, expiration_date, cvc_code):
-        self.client_id = client_id
-        self.number = number
-        self.expiration_date = expiration_date
-        self.cvc_code = cvc_code
-
-
-# Beneficiaries table
-class Beneficiaries(db.Model, UserMixin):
-    __tablename__ = "beneficiaries"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # the actual client (who's logged-in) that will choose his beneficiaries
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    # one of the beneficiaries that the logged-in client has chosen
-    beneficiary_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-
-    def __init__(self, client_id, beneficiary_id):
-        self.client_id = client_id
-        self.beneficiary_id = beneficiary_id
-
-
-# Transactions table
-class Transaction(db.Model, UserMixin):
-    __tablename__ = "transactions"
-    transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # relation to client id
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    date = db.Column(db.String, nullable=False)
-    # type is: deposit - withdrawal - transfer
-    transaction_type = db.Column(db.String, nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    description = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, client_id, date, transaction_type, amount, description):
-        self.client_id = client_id
-        self.date = date
-        self.transaction_type = transaction_type
-        self.amount = amount
-        self.description = description
-
-
-# Loans table
-class Loan(db.Model, UserMixin):
-    # let's consider the interest is 0%
-    __tablename__ = "loans"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-    # term is time to return the money monthly (e.i.: 24 months...)
-    term = db.Column(db.Integer, nullable=False)
-    monthly_return_amount = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, client_id, amount, term, monthly_return_amount):
-        self.client_id = client_id
-        self.amount = amount
-        self.term = term
-        self.monthly_return_amount = monthly_return_amount
-
-
-# Admin table
-class Admin(db.Model, UserMixin):
-    __tablename__ = "admin"
-    id_admin = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
-
-
-class Deposit(db.Model, UserMixin):
-    __tablename__ = "deposit"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
-    accepted_or_not = db.Column(db.Boolean, nullable=False)
-
-    def __init__(self, client_id, amount, accepted_or_not):
-        self.client_id = client_id
-        self.amount = amount
-        self.accepted_or_not = accepted_or_not
-
-
+# Creaing the tables of the database from db_models.py
 with app.app_context():
     db.create_all()
 
@@ -270,9 +141,9 @@ def benefs():
     form_add_beneficiary = AddBenef()
     ## Beneficiary section
     # This is to retrieve all benefs from db and show it in the website, benef section
-    benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
+    benefics = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs_with_duplicates = []
-    for benef in benefs:
+    for benef in benefics:
         cl = Client.query.filter_by(client_id=benef.beneficiary_id).first()
         user_benefs_with_duplicates.append({
             "benefId": cl.client_id,
@@ -288,8 +159,18 @@ def benefs():
 
     if form_add_beneficiary.validate_on_submit():
         rib = form_add_beneficiary.rib.data
+        # This is to check if the rib already exists in the client table
         benef_account = Client.query.filter_by(rib=rib).first()
         if benef_account:
+            # This to check if current client already has a beneficiary with that rib, to avoid duplications
+            benefics = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
+
+            for benef in benefics:
+                query_result = Beneficiaries.query.filter_by(client_id=current_user.client_id,
+                                                             beneficiary_id=benef.beneficiary_id).first()
+                if query_result:
+                    flash("This beneficiary already exists")
+                    return redirect(url_for("benefs"))
             new_benef = Beneficiaries(
                 client_id=current_user.client_id,
                 beneficiary_id=benef_account.client_id
@@ -297,6 +178,7 @@ def benefs():
             db.session.add(new_benef)
             db.session.commit()
             flash("Account added successfully.")
+            return redirect(url_for("benefs"))
         else:
             # Suppose that only user from same bank should be benefs with each other
             flash("This account doesn't exist.")
@@ -377,12 +259,15 @@ def withdraw():
 @login_required
 @app.route("/loans")
 def loans():
+    form_loan = Loans()
+    if form_loan.validate_on_submit():
+        pass
     all_loans = Loan.query.filter_by(client_id=current_user.client_id).all()
     print(type(all_loans))
     print(len(all_loans))
     for loan in all_loans:
         print(loan)
-    return render_template("client/components/loans.html", client=current_user, loans=all_loans)
+    return render_template("client/components/loans.html", client=current_user, form_loan=form_loan, loans=all_loans)
 
 
 @login_required
@@ -399,7 +284,7 @@ def delete_benef(benef_id):
     benef_to_delete = Beneficiaries.query.filter_by(beneficiary_id=benef_id).one()
     db.session.delete(benef_to_delete)
     db.session.commit()
-    return redirect(url_for("clientInterface"))
+    return redirect(url_for("benefs"))
 
 
 @app.route("/logout")
