@@ -608,8 +608,12 @@ at first it's not gonna be displayed, but onclick it will be displayed
 }
 
 
-.withdraw-amount{
+.negative-transaction{
   color: red;
+}
+
+.positive-transaction{
+  color: green;
 }
 
 .withdraw-text{
