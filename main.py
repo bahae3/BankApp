@@ -206,6 +206,7 @@ def transfer():
             dictionary['benefId']: dictionary for dictionary in user_benefs_with_duplicates
         }.values()
     )
+
     ## Transfer money section
     if form_transfer.validate_on_submit():
         benef_id = request.form.get('transfer_select')
@@ -227,10 +228,9 @@ def transfer():
             current_client.balance -= amount
             client_to_have_money.balance += amount
             db.session.commit()
-            print("Safi ra dazet")
         else:
-            flash("You don't have enough money!")
-            print("Waalo madaztch")
+            flash("You don't have enough money! Check your balance.")
+        return redirect(url_for("transfer"))
     return render_template("client/components/transferMoney.html", form_transfer=form_transfer, benefs=user_benefs)
 
 
@@ -259,6 +259,7 @@ def withdraw():
 @login_required
 @app.route("/loans")
 def loans():
+    ## Loan money section
     form_loan = Loans()
     if form_loan.validate_on_submit():
         pass
