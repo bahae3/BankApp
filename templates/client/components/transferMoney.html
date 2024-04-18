@@ -32,7 +32,7 @@
         <h2 class="transfer-title">Transfer money</h2>
         <div class="transfer-form">
           <h3 class="transfer-title3">As fast as light ⚡</h3>
-          <form action="{{ url_for('clientInterface') }}" method="post">
+          <form action="{{ url_for('transfer') }}" method="post">
             {{ form_transfer.csrf_token }}
 
             <div class="transfer-div">
