@@ -22,13 +22,13 @@
       <a href="{{ url_for('benefs') }}" class="left-link">Beneficiaries</a>
       <a href="{{ url_for('transfer') }}" class="left-link">Transfer money</a>
       <a href="{{ url_for('deposit') }}" class="left-link">Deposit money</a>
-      <a href="{{ url_for('withdraw') }}" class="left-link">Withdraw money</a>
+      <a href="{{ url_for('transactions') }}" class="left-link">Transactions</a>
       <a href="{{ url_for('loans') }}" class="left-link">Your loans</a>
       <a href="{{ url_for('card') }}" class="left-link">Card information</a>
     </div>
 
     <div class="right-section">
-      <div id="card" class="card-section">
+      <div class="card-section">
         <h2 class="card-title">Card information</h2>
         <h3 class="card-title3">
           {% if client['gender'] == 'Man' %} Mr. {% else %} Mrs. {% endif %} {{
