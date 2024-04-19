@@ -80,14 +80,16 @@ class Transaction(db.Model, UserMixin):
     transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # relation to client id
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
+    benef_id = db.Column(db.Integer, db.ForeignKey('beneficiaries.beneficiary_id'), nullable=False)
     date = db.Column(db.String, nullable=False)
     # type is: deposit - withdrawal - transfer
     transaction_type = db.Column(db.String, nullable=False)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, client_id, date, transaction_type, amount, description):
+    def __init__(self, client_id, benef_id, date, transaction_type, amount, description):
         self.client_id = client_id
+        self.benef_id = benef_id
         self.date = date
         self.transaction_type = transaction_type
         self.amount = amount
