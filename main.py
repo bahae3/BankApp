@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, flash, request
-
 from db_models import *
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -218,6 +217,7 @@ def transfer():
             # Transaction type
             transaction = Transaction(
                 client_id=current_user.client_id,
+                benef_id=client_to_have_money.client_id,
                 date=str(datetime.datetime.today().strftime("%d/%m/%Y")),
                 transaction_type="Transfer",
                 amount=amount,
@@ -247,13 +247,13 @@ def deposit():
 
 
 @login_required
-@app.route("/withdraw_money", methods=['GET', 'POST'])
-def withdraw():
+@app.route("/transactions", methods=['GET', 'POST'])
+def transactions():
     ## Withdraw money section
     withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id,
                                                      Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
 
-    return render_template("client/components/withdrawMoney.html", client=current_user, withdraw=withdraw_transactions)
+    return render_template("client/components/transactions.html", client=current_user, withdraw=withdraw_transactions)
 
 
 @login_required
