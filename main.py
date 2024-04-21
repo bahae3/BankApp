@@ -161,13 +161,15 @@ def benefs():
         # This is to check if the rib already exists in the client table
         benef_account = Client.query.filter_by(rib=rib).first()
         if benef_account:
-            # This to check if current client already has a beneficiary with that rib, to avoid duplications
+            if benef_account.client_id == current_user.client_id:
+                flash("You can't add yourself as a beneficiary.")
+                return redirect(url_for("benefs"))
+            # This is to check if current client already has a beneficiary with that rib, to avoid duplications
             benefics = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
-
             for benef in benefics:
                 query_result = Beneficiaries.query.filter_by(client_id=current_user.client_id,
                                                              beneficiary_id=benef.beneficiary_id).first()
-                if query_result:
+                if query_result.beneficiary_id == benef_account.client_id:
                     flash("This beneficiary already exists")
                     return redirect(url_for("benefs"))
             new_benef = Beneficiaries(
