@@ -1,0 +1,11 @@
+/* Admin first section before login styling */
+.admin-section {
+    height: 15px;
+    text-align: center;
+    margin: 9.89rem auto;
+}
+
+.admin-section-title {
+    font-size: 2.5rem;
+    margin-top: -15px;
+}

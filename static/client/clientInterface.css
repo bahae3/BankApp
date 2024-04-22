@@ -681,6 +681,15 @@ at first it's not gonna be displayed, but onclick it will be displayed
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+#loans-info, #months-info{
+  opacity: 0.7;
+}
+
+#loans-info:hover, #months-info:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 /* Card section styling */
 .card-title,
 .card-title3 {
