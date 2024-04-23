@@ -126,7 +126,7 @@ class Deposit(db.Model, UserMixin):
     __tablename__ = "deposit"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
     accepted_or_not = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, client_id, amount, accepted_or_not):
