@@ -1,0 +1,37 @@
+{% include 'admin/header_admin.html' %} 
+
+<div class="form-container login-container">
+    <h1 class="form-title login-title">Log in.</h1>
+    <div class="form">
+        <form action="{{ url_for('admin_login') }}" method="POST">
+            {{ form.csrf_token }}
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-input") }}
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                    <em class="flash-message">{{ message }}</em>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-input") }}
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                    <em class="flash-message">{{ message }}</em>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <p class="show-password">Show password</p>
+
+            {{ form.login(class="form-button") }}
+        </form>
+    </div>
+</div>
+
+{% include 'admin/footer_admin.html' %}
