@@ -43,6 +43,17 @@ class Client(db.Model, UserMixin):
         self.phone = phone
 
 
+# Admin table
+class Admin(db.Model, UserMixin):
+    __tablename__ = "admin"
+    id_admin = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+
+    def get_id(self):
+        return str(self.id_admin)
+
+
 # Card table
 class Card(db.Model, UserMixin):
     __tablename__ = "cards"
@@ -112,14 +123,6 @@ class Loan(db.Model, UserMixin):
         self.amount = amount
         self.term = term
         self.monthly_return_amount = monthly_return_amount
-
-
-# Admin table
-class Admin(db.Model, UserMixin):
-    __tablename__ = "admin"
-    id_admin = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
 
 
 class Deposit(db.Model, UserMixin):
