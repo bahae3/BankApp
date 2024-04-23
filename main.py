@@ -16,8 +16,19 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader
-def load_user(client_id):
-    return db.session.get(Client, int(client_id))
+def load_user(user_id):
+    # Load Client by user_id if exists
+    client = db.session.get(Client, int(user_id))
+    if client:
+        return client
+
+    # Load Admin by user_id if exists
+    admin = db.session.query(Admin, int(user_id))
+    if admin:
+        return admin
+
+    # If user_id does not correspond to either Client or Admin, return None
+    return None
 
 
 @app.route("/")
@@ -93,13 +104,13 @@ def login():
         else:
             flash('Wrong email. Try again!')
             return redirect(url_for('login'))
-    return render_template("client/login.html", form=form, current_user=current_user)
+    return render_template("client/login.html", form=form)
 
 
 @app.route("/clientInterface", methods=['GET', 'POST'])
 @login_required
 def clientInterface():
-    return render_template("client/clientInterface.html", current_user=current_user)
+    return render_template("client/components/clientInterface.html", current_user=current_user)
 
 
 @login_required
@@ -160,7 +171,8 @@ def benefs():
         rib = form_add_beneficiary.rib.data
         # This is to check if the rib already exists in the client table
         benef_account = Client.query.filter_by(rib=rib).first()
-        if benef_account:
+        if benef_account:  # if it exists
+            # The current user can't add himself as a beneficiary
             if benef_account.client_id == current_user.client_id:
                 flash("You can't add yourself as a beneficiary.")
                 return redirect(url_for("benefs"))
@@ -169,9 +181,12 @@ def benefs():
             for benef in benefics:
                 query_result = Beneficiaries.query.filter_by(client_id=current_user.client_id,
                                                              beneficiary_id=benef.beneficiary_id).first()
+                # Here to check if the beneficiary already exists
                 if query_result.beneficiary_id == benef_account.client_id:
                     flash("This beneficiary already exists")
                     return redirect(url_for("benefs"))
+
+            # After all conditions above, we are ready to stock the data in the db, if possible
             new_benef = Beneficiaries(
                 client_id=current_user.client_id,
                 beneficiary_id=benef_account.client_id
@@ -191,7 +206,7 @@ def benefs():
 @app.route("/transfer_money", methods=['GET', 'POST'])
 def transfer():
     form_transfer = TransferMoney()
-    ##Benefs to be shown in transfer section
+    # Benefs to be shown in transfer section
     benefs = Beneficiaries.query.filter_by(client_id=current_user.client_id).all()
     user_benefs_with_duplicates = []
     for benef in benefs:
@@ -242,9 +257,16 @@ def deposit():
     form_deposit = DepositMoney()
     ## Deposit money section
     if form_deposit.validate_on_submit():
+        client_id = current_user.client_id
         amount = form_deposit.amount.data
-        deposit = Deposit.query.filter_by(client_id=current_user.client_id).first()
+        accepted_or_not = False
 
+        deposit_transaction = Deposit(client_id=client_id,
+                                      amount=float(amount),
+                                      accepted_or_not=accepted_or_not)
+        db.session.add(deposit_transaction)
+        db.session.commit()
+        return redirect(url_for("deposit"))
     return render_template("client/components/depositMoney.html", client=current_user, form_deposit=form_deposit)
 
 
@@ -290,8 +312,62 @@ def delete_benef(benef_id):
     return redirect(url_for("benefs"))
 
 
-@app.route("/logout")
+# This is the admin section
+@app.route("/admin_auth")
+def admin_auth():
+    return render_template("admin/admin_section.html")
+
+
+@app.route("/admin_login", methods=["GET", "POST"])
+def admin_login():
+    form = Login()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        existing_account = Admin.query.filter_by(email=email).first()
+
+        if existing_account:
+            if existing_account.password == password:
+                login_user(existing_account)
+                return redirect(url_for("home_admin"))
+
+            else:
+                flash('Wrong password. Try again!')
+                return redirect(url_for('admin_login'))
+        else:
+            flash('Wrong email. Try again!')
+            return redirect(url_for('admin_login'))
+    return render_template("admin/components/login_admin.html", form=form)
+
+
+@app.route("/admin_home")
+def home_admin():
+    return render_template("admin/components/home_admin.html")
+
+
+@app.route("/admin_clients")
+def clients_admin():
+    all_clients = Client.query.all()
+    return render_template("admin/components/clients_admin.html", clients=all_clients)
+
+
+@app.route("/admin_deposits", methods=["GET", "POST"])
+def deposits_admin():
+    return render_template("admin/components/deposits_admin.html")
+
+
+@app.route("/admin_loans_requested", methods=["GET", "POST"])
+def loan_requests():
+    return render_template("admin/components/loan_requests.html")
+
+
+@app.route("/admin_active_loans", methods=["GET", "POST"])
+def active_loans():
+    return render_template("admin/components/active_loans.html")
+
+
 @login_required
+@app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("home"))
