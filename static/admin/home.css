@@ -9,3 +9,54 @@
     font-size: 2.5rem;
     margin-top: -15px;
 }
+
+/* After logging in */
+/* Home section*/
+.admin-section-auth {
+    height: 15px;
+    text-align: center;
+    margin: 9.39rem auto;
+}
+
+/* Clients section */
+.clients {
+    text-align: center;
+    color: #007bff;
+    margin: 2.5rem auto;
+}
+
+.all-benef {
+    background-color: #F5F5F5;
+    overflow-y: auto;
+    height: 350px;
+    margin: auto;
+    margin-bottom: 45px;
+    padding: 20px 55px;
+    width: 38%;
+    /* transition: filter 0.3s ease-in-out; */
+}
+
+.benef-user-h3 {
+    margin: 0 auto;
+    color: #007bff;
+}
+
+.benef-user-p {
+    margin-top: 5px;
+    color: #007;
+}
+
+.clients-hr {
+    border: none;
+    color: #007bff;
+    width: 100%;
+}
+
+.benef-delete {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.benef-delete:hover {
+    text-decoration: underline;
+}
