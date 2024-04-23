@@ -57,7 +57,6 @@
         {% else %}
         <div class="all-benef">
           {% for benef in benefs %}
-          <div class="benef-user">
             <h3 class="benef-user-h3">
               {{ benef['lName'] + ' ' + benef['fName'] }}
             </h3>
@@ -67,7 +66,6 @@
               class="benef-delete delete"
               >Delete</a
             >
-          </div>
           {% if not loop.last %}
           <hr class="benef-hr" />
           {% endif %} {% endfor %}

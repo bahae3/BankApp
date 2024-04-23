@@ -1,5 +1,23 @@
-{% include 'admin_auth/header_admin.html' %}
+{% include 'admin/header_admin.html' %}
 
-clients admin
+<h1 class="clients">All of the clients</h1>
+<div class="all-benef">
+{% for benef in clients %}
+    <h3 class="benef-user-h3">
+        {% if benef.gender == "Man" %}
+        Mr. {{ benef.lastName + '  ' + benef.firstName }}
+        {% else %}
+        Mrs. {{ benef.lastName + '  ' + benef.firstName }}
+        {% endif %}
+    </h3>
+    <p class="benef-user-p">{{ benef.rib }}</p>
+    <a
+        href="{{ url_for('delete_benef', benef_id=benef.client_id) }}"
+        class="benef-delete delete">Suspend account</a>
+    {% if not loop.last %}
+    <hr class="clients-hr" />
+    {% endif %}
+{% endfor %}
+</div>
 
-{% include 'admin_auth/footer_admin.html' %}
+{% include 'admin/footer_admin.html' %}
