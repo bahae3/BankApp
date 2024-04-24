@@ -1,23 +1,24 @@
 {% include 'admin/header_admin.html' %}
 
 <h1 class="clients">All of the clients</h1>
-<div class="all-benef">
-{% for benef in clients %}
-    <h3 class="benef-user-h3">
-        {% if benef.gender == "Man" %}
-        Mr. {{ benef.lastName + '  ' + benef.firstName }}
-        {% else %}
-        Mrs. {{ benef.lastName + '  ' + benef.firstName }}
-        {% endif %}
+<div class="all-clients">
+  {% for benef in clients %}
+  <div class="clients-info">
+    <h3 class="clients-name">
+      {% if benef.gender == "Man" %} Mr. {{ benef.lastName + ' ' +
+      benef.firstName }} {% else %} Mrs. {{ benef.lastName + ' ' +
+      benef.firstName }} {% endif %}
     </h3>
-    <p class="benef-user-p">{{ benef.rib }}</p>
+    <p class="clients-rib">{{ benef.rib }}</p>
     <a
-        href="{{ url_for('delete_benef', benef_id=benef.client_id) }}"
-        class="benef-delete delete">Suspend account</a>
-    {% if not loop.last %}
-    <hr class="clients-hr" />
-    {% endif %}
-{% endfor %}
+      href="{{ url_for('delete_benef', benef_id=benef.client_id) }}"
+      class="clients-suspend"
+      >Suspend account</a
+    >
+  </div>
+  {% if not loop.last %}
+  <hr class="clients-hr" />
+  {% endif %} {% endfor %}
 </div>
 
 {% include 'admin/footer_admin.html' %}
