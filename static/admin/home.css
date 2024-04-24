@@ -25,23 +25,28 @@
     margin: 2.5rem auto;
 }
 
-.all-benef {
+.all-clients {
+    border-top: 0.2rem black solid;
     background-color: #F5F5F5;
     overflow-y: auto;
     height: 350px;
     margin: auto;
     margin-bottom: 45px;
-    padding: 20px 55px;
+    padding: 20px 36px;
     width: 38%;
-    /* transition: filter 0.3s ease-in-out; */
 }
 
-.benef-user-h3 {
+.clients-info{
+    padding: 0 1rem;
+}
+
+
+.clients-name {
     margin: 0 auto;
     color: #007bff;
 }
 
-.benef-user-p {
+.clients-rib {
     margin-top: 5px;
     color: #007;
 }
@@ -52,11 +57,11 @@
     width: 100%;
 }
 
-.benef-delete {
-    color: #007bff;
+.clients-suspend {
+    color: #DC143C;
     text-decoration: none;
 }
 
-.benef-delete:hover {
+.clients-suspend:hover {
     text-decoration: underline;
 }
