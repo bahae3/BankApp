@@ -340,27 +340,67 @@ def admin_login():
     return render_template("admin/components/login_admin.html", form=form)
 
 
+@login_required
 @app.route("/admin_home")
 def home_admin():
     return render_template("admin/components/home_admin.html")
 
 
+@login_required
 @app.route("/admin_clients")
 def clients_admin():
     all_clients = Client.query.all()
     return render_template("admin/components/clients_admin.html", clients=all_clients)
 
 
+@login_required
+@app.route("/delete_client/<int:client_id>", methods=['GET', 'POST'])
+def delete_client(client_id):
+    try:
+        client_to_delete = Client.query.filter_by(client_id=client_id).first()
+        if client_to_delete:
+            db.session.delete(client_to_delete)
+
+            card_to_delete = Card.query.filter_by(client_id=client_id).first()
+            if card_to_delete:
+                db.session.delete(card_to_delete)
+
+            benefs_to_delete = Beneficiaries.query.filter_by(client_id=client_id).all()
+            for benef in benefs_to_delete:
+                db.session.delete(benef)
+
+            deposits_to_delete = Deposit.query.filter_by(client_id=client_id).all()
+            for deposit in deposits_to_delete:
+                db.session.delete(deposit)
+
+            loans_to_delete = Loan.query.filter_by(client_id=client_id).all()
+            for loan in loans_to_delete:
+                db.session.delete(loan)
+
+            transactions_to_delete = Transaction.query.filter_by(client_id=client_id).all()
+            for transaction in transactions_to_delete:
+                db.session.delete(transaction)
+
+            db.session.commit()
+            flash("User deleted successfully")
+    except NoResultFound:
+        flash("This user doesn't exist")
+    return redirect(url_for("clients_admin"))
+
+
+@login_required
 @app.route("/admin_deposits", methods=["GET", "POST"])
 def deposits_admin():
     return render_template("admin/components/deposits_admin.html")
 
 
+@login_required
 @app.route("/admin_loans_requested", methods=["GET", "POST"])
 def loan_requests():
     return render_template("admin/components/loan_requests.html")
 
 
+@login_required
 @app.route("/admin_active_loans", methods=["GET", "POST"])
 def active_loans():
     return render_template("admin/components/active_loans.html")
