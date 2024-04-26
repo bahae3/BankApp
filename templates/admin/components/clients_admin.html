@@ -2,16 +2,16 @@
 
 <h1 class="clients">All of the clients</h1>
 <div class="all-clients">
-  {% for benef in clients %}
+  {% for client in clients %}
   <div class="clients-info">
     <h3 class="clients-name">
-      {% if benef.gender == "Man" %} Mr. {{ benef.lastName + ' ' +
-      benef.firstName }} {% else %} Mrs. {{ benef.lastName + ' ' +
-      benef.firstName }} {% endif %}
+      {% if client.gender == "Man" %} Mr. {{ client.lastName + ' ' +
+      client.firstName }} {% else %} Mrs. {{ client.lastName + ' ' +
+      client.firstName }} {% endif %}
     </h3>
-    <p class="clients-rib">{{ benef.rib }}</p>
+    <p class="clients-rib">{{ client.rib }}</p>
     <a
-      href="{{ url_for('delete_benef', benef_id=benef.client_id) }}"
+      href="{{ url_for('delete_client', client_id=client.client_id) }}"
       class="clients-suspend"
       >Suspend account</a
     >
@@ -20,5 +20,7 @@
   <hr class="clients-hr" />
   {% endif %} {% endfor %}
 </div>
-
-{% include 'admin/footer_admin.html' %}
+{% with messages = get_flashed_messages() %} {% if messages %} {% for message in
+messages %}
+<p class="client-deleted">{{message}}</p>
+{% endfor %} {% endif %} {% endwith %} {% include 'admin/footer_admin.html' %}
