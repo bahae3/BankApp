@@ -65,3 +65,10 @@
 .clients-suspend:hover {
     text-decoration: underline;
 }
+
+.client-deleted{
+    color: red;
+    margin-top: 10px;
+    font-style: italic;
+    text-align: center;
+}
