@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm.exc import NoResultFound
 from flask_login import UserMixin
 
 # Creating the application
@@ -117,12 +118,14 @@ class Loan(db.Model, UserMixin):
     # term is time to return the money monthly (e.i.: 24 months...)
     term = db.Column(db.Integer, nullable=False)
     monthly_return_amount = db.Column(db.Integer, nullable=False)
+    accepted_or_not = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, client_id, amount, term, monthly_return_amount):
+    def __init__(self, client_id, amount, term, monthly_return_amount, accepted_or_not):
         self.client_id = client_id
         self.amount = amount
         self.term = term
         self.monthly_return_amount = monthly_return_amount
+        self.accepted_or_not = accepted_or_not
 
 
 class Deposit(db.Model, UserMixin):
