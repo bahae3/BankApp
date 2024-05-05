@@ -48,7 +48,17 @@
 
 .clients-rib {
     margin-top: 5px;
+    margin-bottom: 2px;
     color: #007;
+}
+
+.clients-amount{
+    margin-top: 4px;
+    color: #007;
+}
+
+.clients-amount span {
+    color: red;
 }
 
 .clients-hr {
@@ -57,18 +67,54 @@
     width: 100%;
 }
 
-.clients-suspend {
-    color: #DC143C;
+.clients-suspend{
+    color:#DC143C;
     text-decoration: none;
 }
 
-.clients-suspend:hover {
+.clients-suspend:hover{
     text-decoration: underline;
 }
 
 .client-deleted{
     color: red;
-    margin-top: 10px;
+    margin-bottom: 10px;
     font-style: italic;
     text-align: center;
+}
+
+/* This is for accept deposit button in deposit section */
+.clients-accept{
+    background-color: #4BC811;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-right: 0.4rem;
+    width: 2.9rem;
+    text-align: center;
+    transition: background-color 0.5s ease;
+}
+
+.clients-accept:hover {
+    background-color: green;
+}
+
+.clients-reject {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+    width: 2.9rem;
+    text-align: center;
+    transition: background-color 0.5s ease;
+}
+
+.clients-reject:hover {
+    background-color: #DC143C;
 }
