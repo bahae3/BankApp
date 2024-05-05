@@ -48,21 +48,26 @@ def signup():
             salt_length=8
         )
         ## Inserting data into Client table from form
-        new_client = Client(
-            rib=rib,
-            firstName=form.firstName.data.capitalize(),
-            lastName=form.lastName.data.capitalize(),
-            gender=form.gender.data,
-            balance=0.00,
-            email=form.email.data,
-            password=password,
-            address=form.address.data.capitalize(),
-            phone=form.phone.data
-        )
+        try:
+            new_client = Client(
+                rib=rib,
+                firstName=form.firstName.data.capitalize(),
+                lastName=form.lastName.data.capitalize(),
+                gender=form.gender.data,
+                balance=0.00,
+                email=form.email.data,
+                password=password,
+                address=form.address.data.capitalize(),
+                phone=form.phone.data
+            )
 
-        db.session.add(new_client)
-        db.session.commit()
-        return redirect(url_for('login'))
+            db.session.add(new_client)
+            db.session.commit()
+            return redirect(url_for('login'))
+        except IntegrityError:
+            flash("Email or Phone number already taken.")
+            return redirect(url_for('signup'))
+
     return render_template("client/signup.html", form=form, current_user=current_user)
 
 
@@ -245,6 +250,7 @@ def transfer():
             current_client.balance -= amount
             client_to_have_money.balance += amount
             db.session.commit()
+            flash("Money transferred successfully.")
         else:
             flash("You don't have enough money! Check your balance.")
         return redirect(url_for("transfer"))
@@ -397,7 +403,9 @@ def deposits_admin():
 @login_required
 @app.route("/admin_loans_requested", methods=["GET", "POST"])
 def loan_requests():
-    return render_template("admin/components/loan_requests.html")
+    all_loans = Loan.query.all()
+
+    return render_template("admin/components/loan_requests.html", loans=all_loans)
 
 
 @login_required
