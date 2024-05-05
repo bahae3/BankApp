@@ -60,9 +60,11 @@
 
             {{ form_transfer.send(class="transfer-button") }} {% with messages =
             get_flashed_messages() %} {% if messages %} {% for message in
-            messages %}
+            messages %} {% if message == "Money transferred successfully." %}
+            <p class="flash-success-transfer">{{ message }}</p>
+            {% else %}
             <p class="flash-error-transfer">{{ message }}</p>
-            {% endfor %} {% endif %} {% endwith %}
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
           </form>
         </div>
 

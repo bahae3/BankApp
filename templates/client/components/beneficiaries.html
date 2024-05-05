@@ -57,15 +57,15 @@
         {% else %}
         <div class="all-benef">
           {% for benef in benefs %}
-            <h3 class="benef-user-h3">
-              {{ benef['lName'] + ' ' + benef['fName'] }}
-            </h3>
-            <p class="benef-user-p">{{ benef['rib'] }}</p>
-            <a
-              href="{{ url_for('delete_benef', benef_id=benef['benefId']) }}"
-              class="benef-delete delete"
-              >Delete</a
-            >
+          <h3 class="benef-user-h3">
+            {{ benef['lName'] + ' ' + benef['fName'] }}
+          </h3>
+          <p class="benef-user-p">{{ benef['rib'] }}</p>
+          <a
+            href="{{ url_for('delete_benef', benef_id=benef['benefId']) }}"
+            class="benef-delete delete"
+            >Delete</a
+          >
           {% if not loop.last %}
           <hr class="benef-hr" />
           {% endif %} {% endfor %}
@@ -77,7 +77,8 @@
         <a href="#" class="benef-add">Add beneficiary</a>
 
         {% with messages = get_flashed_messages() %} {% if messages %} {% for
-        message in messages %} {% if message == "This account doesn't exist." %}
+        message in messages %} {% if message == "This account doesn't exist." or
+        message == "You can't add yourself as a beneficiary." %}
         <p class="flash-error">{{ message }}</p>
         {% else %}
         <p class="flash-success">{{ message }}</p>

@@ -1,41 +1,37 @@
 {% include 'client/header.html' %}
 
 <div class="form-container">
-    <h1 class="form-title">Sign up, and join us!</h1>
-    <div class="form">
-        <form action="{{ url_for('signup') }}" method="POST">
-            {{ form.csrf_token }}
+  <h1 class="form-title">Sign up, and join us!</h1>
+  <div class="form">
+    <form action="{{ url_for('signup') }}" method="POST">
+      {{ form.csrf_token }} {{ form.firstName.label(class="form-label") }} {{
+      form.firstName(class="form-input") }} {{
+      form.lastName.label(class="form-label") }} {{
+      form.lastName(class="form-input") }} {{
+      form.gender.label(class="form-label") }} {{
+      form.gender(class="form-input") }} {{ form.email.label(class="form-label")
+      }} {{ form.email(class="form-input") }} {{
+      form.password.label(class="form-label") }} {{
+      form.password(class="form-input") }}
+      <p class="show-password">Show password</p>
 
-            {{ form.firstName.label(class="form-label") }}
-            {{ form.firstName(class="form-input") }}
-
-            {{ form.lastName.label(class="form-label") }}
-            {{ form.lastName(class="form-input") }}
-
-            {{ form.gender.label(class="form-label") }}
-            {{ form.gender(class="form-input") }}
-
-            {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-input") }}
-
-            {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-input") }}
-            <p class="show-password">Show password</p>
-
-            {{ form.phone.label(class="form-label") }}
-            {{ form.phone(class="form-input") }}
-
-            {{ form.address.label(class="form-label") }}
-            {{ form.address(class="form-input") }}
-
-            {{ form.signup(class="form-button") }}
-        </form>
-    </div>
-    <div class="bottom-text">
-      <p class="haveaccount">Already have an account? Click here to
+      {{ form.phone.label(class="form-label") }} {{
+      form.phone(class="form-input") }} {{
+      form.address.label(class="form-label") }} {{
+      form.address(class="form-input") }} {% with messages =
+      get_flashed_messages() %} {% if messages %} {% for message in messages %}
+      <p class="flash-message">{{message}}</p>
+      {% endfor %} {% endif %} {% endwith %} {{ form.signup(class="form-button")
+      }}
+    </form>
+  </div>
+  <div class="bottom-text">
+    <p class="haveaccount">
+      Already have an account? Click here to
       <a href="{{ url_for('login') }}" class="form-link">Log in</a>
-      .</p>
-    </div>
+      .
+    </p>
+  </div>
 </div>
 
 {% include 'client/footer.html' %}
