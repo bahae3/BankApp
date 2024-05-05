@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin
 
 # Creating the application
@@ -27,7 +28,7 @@ class Client(db.Model, UserMixin):
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
-    phone = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=False, unique=True)
 
     def get_id(self):
         return str(self.client_id)
@@ -114,7 +115,7 @@ class Loan(db.Model, UserMixin):
     __tablename__ = "loans"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
     # term is time to return the money monthly (e.i.: 24 months...)
     term = db.Column(db.Integer, nullable=False)
     monthly_return_amount = db.Column(db.Integer, nullable=False)
