@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound, UnmappedInstanceError
 from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin
 
@@ -93,7 +93,7 @@ class Transaction(db.Model, UserMixin):
     transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # relation to client id
     client_id = db.Column(db.Integer, db.ForeignKey('clients.client_id'), nullable=False)
-    benef_id = db.Column(db.Integer, db.ForeignKey('beneficiaries.beneficiary_id'), nullable=False)
+    benef_id = db.Column(db.Integer, db.ForeignKey('beneficiaries.beneficiary_id'), nullable=True)
     date = db.Column(db.String, nullable=False)
     # type is: deposit - withdrawal - transfer
     transaction_type = db.Column(db.String, nullable=False)
