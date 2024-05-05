@@ -500,6 +500,13 @@ at first it's not gonna be displayed, but onclick it will be displayed
   margin-left: -38px;
 }
 
+.flash-success-transfer{
+  font-style: italic;
+    font-weight: 400;
+  color: #4BC811;
+  margin-left: 20px;
+}
+
 
 /* Deposit section style */
 .deposit-section, .withdraw-section{
