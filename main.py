@@ -264,8 +264,10 @@ def deposit():
         client_id = current_user.client_id
         amount = form_deposit.amount.data
 
+        # Deposit table
         deposit_transaction = Deposit(client_id=client_id,
                                       amount=float(amount))
+
         db.session.add(deposit_transaction)
         db.session.commit()
         return redirect(url_for("deposit"))
@@ -277,19 +279,32 @@ def deposit():
 def transactions():
     ## Withdraw money section
     withdraw_transactions = Transaction.query.filter(Transaction.client_id == current_user.client_id,
-                                                     Transaction.transaction_type.in_(["Withdraw", "Transfer"])).all()
+                                                     Transaction.transaction_type.in_(
+                                                         ["Withdraw", "Transfer", "Deposit", "Loan"])).all()
 
     return render_template("client/components/transactions.html", client=current_user, withdraw=withdraw_transactions)
 
 
 @login_required
-@app.route("/loans")
+@app.route("/loans", methods=["GET", "POST"])
 def loans():
     ## Loan money section
     form_loan = Loans()
     if form_loan.validate_on_submit():
-        pass
-    all_loans = Loan.query.filter_by(client_id=current_user.client_id).all()
+        amount = float(form_loan.loan.data)
+        months = int(form_loan.months.data)
+        loan_request = Loan(
+            client_id=current_user.client_id,
+            amount=amount,
+            term=months,
+            monthly_return_amount=int(amount / months),
+            accepted_or_not=False
+        )
+        db.session.add(loan_request)
+        db.session.commit()
+        return redirect(url_for('loans'))
+
+    all_loans = Loan.query.filter_by(client_id=current_user.client_id, accepted_or_not=True).all()
     print(type(all_loans))
     print(len(all_loans))
     for loan in all_loans:
@@ -409,6 +424,8 @@ def deposits_admin():
             current_client = Client.query.filter_by(client_id=client_id).first()
             # The actual deposit, i got it with its id
             deposit_to_delete = Deposit.query.get(deposit_id)
+
+            # Transaction table
             transaction = Transaction(
                 client_id=int(client_id),
                 benef_id=None,
@@ -425,7 +442,6 @@ def deposits_admin():
 
         elif acceptance == '0':
             deposit_to_delete = Deposit.query.get(int(deposit_id))
-            # if deposit_to_delete:
             db.session.delete(deposit_to_delete)
             db.session.commit()
             return redirect(url_for("deposits_admin"))
@@ -436,15 +452,43 @@ def deposits_admin():
 @login_required
 @app.route("/admin_loans_requested", methods=["GET", "POST"])
 def loan_requests():
-    all_loans = Loan.query.all()
+    all_loans = db.session.query(Loan, Client).join(Client).all()
+
+    acceptance = request.args.get('acceptance')
+    loan_id = request.args.get('loan_id')
+    client_id = request.args.get('client_id')
+    amount = request.args.get('amount')
+
+    if acceptance is not None and loan_id is not None and client_id is not None and amount is not None:
+        if acceptance == '1':
+            # The actual client that asked for the loan
+            current_client = Client.query.filter_by(client_id=int(client_id)).first()
+
+            # I update the accepted_or_not from False to True
+            loan_to_update = Loan.query.filter_by(id=int(loan_id)).first()
+            loan_to_update.accepted_or_not = True
+            current_client.balance += float(amount)
+
+            # Transaction table
+            transaction = Transaction(
+                client_id=int(client_id),
+                benef_id=None,
+                date=str(datetime.datetime.today().strftime("%d/%m/%Y")),
+                transaction_type="Deposit",
+                amount=float(amount),
+                description="The admin accepted the loan."
+            )
+            db.session.add(transaction)
+            db.session.commit()
+            return redirect(url_for("loan_requests"))
+
+        elif acceptance == '0':
+            loan_to_delete = Loan.query.get(int(loan_id))
+            db.session.delete(loan_to_delete)
+            db.session.commit()
+            return redirect(url_for("loan_requests"))
 
     return render_template("admin/components/loan_requests.html", loans=all_loans)
-
-
-@login_required
-@app.route("/admin_active_loans", methods=["GET", "POST"])
-def active_loans():
-    return render_template("admin/components/active_loans.html")
 
 
 @login_required
