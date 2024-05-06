@@ -118,3 +118,9 @@
 .clients-reject:hover {
     background-color: #DC143C;
 }
+
+.deposit-title, .client-title{
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 6.98rem;
+}
