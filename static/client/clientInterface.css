@@ -256,6 +256,19 @@
   color: #007bff;
 }
 
+.loans-noloan{
+  margin-bottom: 0.5rem;
+}
+
+/* this class is in loan section */
+.loans-noloan-2{
+  -webkit-text-stroke: 2px #007bff;
+  font-weight: 700;
+  font-size: 27px;
+  color: white;
+  margin-top: 1.4rem;
+}
+
 .benef-username{
   margin-bottom: 4px;
   font-size: 23px;
@@ -609,11 +622,18 @@ at first it's not gonna be displayed, but onclick it will be displayed
 }
 
 .withdraw-description{
+  font-size: 0.9rem;
   color:#555;
   width: 80%;
   overflow-x: clip;
 }
 
+.withdraw-type {
+  margin-bottom: 0;
+  /* color: #555; */
+  width: 80%;
+  overflow-x: clip;
+}
 
 .negative-transaction{
   color: red;

@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bahae Bank - Admin</title>
     <!-- The icon image -->
-    <link rel="icon" href="static/client/img/iconbank.png">
+    <link rel="icon" href="static/client/img/iconbank.png" />
 
     <!-- CSS file -->
-    <link rel="stylesheet" href="static/admin/home.css">
+    <link rel="stylesheet" href="static/admin/home.css" />
     <!-- This link below styles the very first page of the admin before logging in, the home page -->
-    <link rel="stylesheet" href="static/client/home.css">
+    <link rel="stylesheet" href="static/client/home.css" />
     <!-- This link below styles the login form for the admin -->
-    <link rel="stylesheet" href="static/client/forms.css">
+    <link rel="stylesheet" href="static/client/forms.css" />
 
     <!-- font link -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-      rel="stylesheet">
+      rel="stylesheet"
+    />
 
     <!-- social media icons links -->
-    <script src="https://kit.fontawesome.com/a7aad111ea.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/a7aad111ea.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  
+
   <body>
     <header>
       <div class="first-head">
@@ -43,8 +47,9 @@
         <a href="{{ url_for('home_admin') }}" class="menu-head">Home</a>
         <a href="{{ url_for('clients_admin') }}" class="menu-head">Clients</a>
         <a href="{{ url_for('deposits_admin') }}" class="menu-head">Deposits</a>
-        <a href="{{ url_for('loan_requests') }}" class="menu-head">Loan requests</a>
-        <a href="{{ url_for('active_loans') }}" class="menu-head">Active loans</a>
+        <a href="{{ url_for('loan_requests') }}" class="menu-head"
+          >Loan requests</a
+        >
         <a href="{{ url_for('logout') }}" class="head-button">Log out</a>
         {% else %}
         <a href="{{ url_for('admin_auth') }}" class="menu-head">Home</a>
@@ -52,4 +57,5 @@
         {% endif %}
       </div>
     </header>
-  
+  </body>
+</html>

@@ -45,16 +45,21 @@
             {% for loan in loans %}
             <div class="benef-user">
               <h3 class="benef-user-h3">
-                {{ loan['amount'] }} {{ loan['term'] }}
+                Amount: €{{ loan.amount }} | Term: {{ loan.term }} months
               </h3>
-              <p class="benef-user-p">{{ loan['monthly_return_amount'] }}</p>
+              <p class="benef-user-p">
+                You should return: €{{ loan.monthly_return_amount }}/month
+              </p>
             </div>
             {% if not loop.last %}
             <hr class="benef-hr" />
             {% endif %} {% endfor %}
           </div>
           {% else %}
-          <h2 class="benef-nobenef">You curretly don't have any loans on.</h2>
+          <h2 class="benef-nobenef loans-noloan">
+            You curretly don't have any loans on.
+          </h2>
+          <h4 class="loans-noloan-2">You should wait for admin approval.</h4>
           {% endif %}
 
           <a href="#" class="benef-add">Ask for loan</a>

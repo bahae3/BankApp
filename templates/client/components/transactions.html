@@ -29,7 +29,7 @@
 
     <div class="right-section">
       <div class="withdraw-section">
-        <h2 class="withdraw-title">Withdraw transactions</h2>
+        <h2 class="withdraw-title">Transactions</h2>
 
         <h3 class="withdraw-username">
           {% if client['gender'] == 'Man' %} Mr. {% else %} Mrs. {% endif %} {{
@@ -43,6 +43,9 @@
           {% for action in withdraw %}
           <div class="withdraw-action">
             <p class="withdraw-date">{{ action.date }}</p>
+            <p class="withdraw-type">
+              Transaction type: {{ action.transaction_type }}
+            </p>
             <div class="withdraw-descamount">
               <p class="withdraw-description">{{ action.description }}</p>
               {% if action.transaction_type == "Transfer" or
