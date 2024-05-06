@@ -118,6 +118,8 @@ class Loan(db.Model, UserMixin):
     amount = db.Column(db.Float, nullable=False)
     # term is time to return the money monthly (e.i.: 24 months...)
     term = db.Column(db.Integer, nullable=False)
+
+    # Change monthly return amount from INT to FLOAT
     monthly_return_amount = db.Column(db.Integer, nullable=False)
     accepted_or_not = db.Column(db.Boolean, nullable=False)
 
