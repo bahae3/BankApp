@@ -1,6 +1,7 @@
 {% include 'admin/header_admin.html' %}
 
 <h1 class="clients">All of the clients</h1>
+{% if clients %}
 <div class="all-clients">
   {% for client in clients %}
   <div class="clients-info">
@@ -23,4 +24,6 @@
 {% with messages = get_flashed_messages() %} {% if messages %} {% for message in
 messages %}
 <p class="client-deleted">{{message}}</p>
-{% endfor %} {% endif %} {% endwith %} {% include 'admin/footer_admin.html' %}
+{% endfor %} {% endif %} {% endwith %} {% else %}
+<h2 class="client-title">There is no client yet.</h2>
+{% endif %} {% include 'admin/footer_admin.html' %}
