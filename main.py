@@ -21,12 +21,10 @@ def load_user(user_id):
     client = db.session.get(Client, int(user_id))
     if client:
         return client
-
     # Load Admin by user_id if exists
-    admin = db.session.query(Admin, int(user_id))
+    admin = db.session.get(Admin, int(user_id))
     if admin:
         return admin
-
     # If user_id does not correspond to either Client or Admin, return None
     return None
 
@@ -265,11 +263,9 @@ def deposit():
     if form_deposit.validate_on_submit():
         client_id = current_user.client_id
         amount = form_deposit.amount.data
-        accepted_or_not = False
 
         deposit_transaction = Deposit(client_id=client_id,
-                                      amount=float(amount),
-                                      accepted_or_not=accepted_or_not)
+                                      amount=float(amount))
         db.session.add(deposit_transaction)
         db.session.commit()
         return redirect(url_for("deposit"))
@@ -349,7 +345,7 @@ def admin_login():
 @login_required
 @app.route("/admin_home")
 def home_admin():
-    return render_template("admin/components/home_admin.html")
+    return render_template("admin/components/home_admin.html", current_user=current_user)
 
 
 @login_required
@@ -397,7 +393,44 @@ def delete_client(client_id):
 @login_required
 @app.route("/admin_deposits", methods=["GET", "POST"])
 def deposits_admin():
-    return render_template("admin/components/deposits_admin.html")
+    # I have 2 tables joined here (deposit and clients tables)
+    all_deposits = db.session.query(Deposit, Client).join(Client).all()
+
+    # Now these variables are None because we didn't GET any data retrieved
+    acceptance = request.args.get('acceptance')
+    deposit_id = request.args.get('deposit_id')
+    client_id = request.args.get('client_id')
+    amount = request.args.get('amount')
+
+    # After the admin clicks on a button, weather accept or reject
+    if acceptance is not None and deposit_id is not None and client_id is not None and amount is not None:
+        if acceptance == '1':
+            # The actual client that asked for the deposit
+            current_client = Client.query.filter_by(client_id=client_id).first()
+            # The actual deposit, i got it with its id
+            deposit_to_delete = Deposit.query.get(deposit_id)
+            transaction = Transaction(
+                client_id=int(client_id),
+                benef_id=None,
+                date=str(datetime.datetime.today().strftime("%d/%m/%Y")),
+                transaction_type="Deposit",
+                amount=float(amount),
+                description="The admin accepted the deposit."
+            )
+            db.session.add(transaction)
+            current_client.balance += float(amount)
+            db.session.delete(deposit_to_delete)
+            db.session.commit()
+            return redirect(url_for("deposits_admin"))
+
+        elif acceptance == '0':
+            deposit_to_delete = Deposit.query.get(int(deposit_id))
+            # if deposit_to_delete:
+            db.session.delete(deposit_to_delete)
+            db.session.commit()
+            return redirect(url_for("deposits_admin"))
+
+    return render_template("admin/components/deposits_admin.html", deposit=all_deposits)
 
 
 @login_required
