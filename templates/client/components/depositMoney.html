@@ -39,7 +39,7 @@
         <h4 class="deposit-rib">{{ client['rib'] }}</h4>
 
         <div class="deposit-form">
-          <form action="{{ url_for('clientInterface') }}" method="post">
+          <form action="{{ url_for('deposit') }}" method="post">
             {{ form_deposit.csrf_token }} {{
             form_deposit.amount.label(class="deposit-label") }} {{
             form_deposit.amount(class="deposit-input") }} {{
