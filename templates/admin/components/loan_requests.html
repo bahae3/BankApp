@@ -1,5 +1,35 @@
 {% include 'admin/header_admin.html' %}
 
-loans requested
-
-{% include 'admin/footer_admin.html' %}
+<h1 class="clients">All of the loan requests</h1>
+{% if loans %}
+<div class="all-clients">
+  {% for loan, client in loans %} {% if loan.accepted_or_not == False %}
+  <div class="clients-info">
+    <h3 class="clients-name">
+      {% if client.gender == "Man" %} Mr. {{ client.lastName + ' ' +
+      client.firstName }} {% else %} Mrs. {{ client.lastName + ' ' +
+      client.firstName }} {% endif %}
+    </h3>
+    <p class="clients-rib">{{ client.rib }}</p>
+    <p class="clients-amount">
+      Loan amount: <span>€{{ loan.amount }}</span> | Term:
+      <span>{{ loan.term }}</span> months.
+    </p>
+    <a
+      href="{{ url_for('loan_requests', loan_id=loan.id, acceptance=1, client_id=client.client_id, amount=loan.amount) }}"
+      class="clients-accept"
+      >Accept</a
+    >
+    <a
+      href="{{ url_for('loan_requests', loan_id=loan.id, acceptance=0, client_id=client.client_id, amount=loan.amount) }}"
+      class="clients-reject"
+      >Reject</a
+    >
+  </div>
+  {% if not loop.last %}
+  <hr class="clients-hr" />
+  {% endif %}{% endif %} {% endfor %}
+</div>
+{% else %}
+<h2 class="deposit-title">There is no loan request yet.</h2>
+{% endif %} {% include 'admin/footer_admin.html' %}
