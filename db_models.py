@@ -1,16 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm.exc import NoResultFound, UnmappedInstanceError
-from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin
+from SecretKeys import *
 
 # Creating the application
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "bahae03"
+app.config['SECRET_KEY'] = SECRET_KEY
 
 # Connect to database
 app.app_context().push()
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///bahaebank.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
