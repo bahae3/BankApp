@@ -6,6 +6,7 @@
 - **Front-end**: HTML5, CSS3, JavaScript
 - **Back-end**: Python
 - **Database**: SQLite
+- **Templating Engine**: Jinja
 
 ## 🚀 Framework
 - **Flask**: A lightweight Python web framework for building web applications.
