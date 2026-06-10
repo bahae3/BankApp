@@ -143,4 +143,4 @@ BankApp/
 ```
 
 ---
-*Designed & Developed for a modern, secure web experience.*
+*Designed & Developed for a modern, secure web experience. With <3 by Bahae*
