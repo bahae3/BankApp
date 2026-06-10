@@ -1,0 +1,169 @@
+/* =============================================================
+   ADMIN LAYOUT — Sidebar + Main (red-accented variant)
+   ============================================================= */
+@import "../../../styles/variables.css";
+
+/* ── Layout shell ───────────────────────────────────────────── */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg-alt);
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+}
+
+/* ── Sidebar ────────────────────────────────────────────────── */
+.admin-sidebar {
+  width: var(--sidebar-width-admin);
+  min-height: 100vh;
+  background: rgba(255,255,255,0.02);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-4);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.admin-sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: var(--space-5);
+}
+
+.admin-sidebar__icon {
+  font-size: 1.5rem;
+}
+
+.admin-sidebar__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-admin);
+}
+
+/* ── Navigation ─────────────────────────────────────────────── */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.65rem var(--space-4);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--text-subtle);
+  transition: background var(--transition-normal), color var(--transition-normal);
+  border: 1px solid transparent;
+}
+
+.admin-nav-item:hover {
+  background: var(--color-admin-bg);
+  color: var(--color-admin);
+}
+
+.admin-nav-item--active {
+  background: var(--color-admin-bg);
+  color: var(--color-admin);
+  border-color: var(--color-admin-border);
+}
+
+.admin-nav-item__icon {
+  font-size: 1rem;
+  width: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Logout ─────────────────────────────────────────────────── */
+.admin-sidebar__logout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0.65rem var(--space-4);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition: background var(--transition-normal);
+  text-align: left;
+}
+
+.admin-sidebar__logout:hover {
+  background: rgba(239,68,68,0.2);
+}
+
+/* ── Main content ───────────────────────────────────────────── */
+.admin-main {
+  flex: 1;
+  padding: var(--space-10);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* Admin page header */
+.admin-page-header {
+  margin-bottom: var(--space-8);
+}
+
+.admin-page-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.admin-page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+/* Admin table wrapper */
+.admin-table-wrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Admin spinner — red tint */
+.spinner--admin {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 3px solid var(--color-admin-bg);
+  border-top-color: var(--color-admin);
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 64rem) {
+  .admin-main { padding: var(--space-8); }
+}
+
+@media (max-width: 48rem) {
+  .admin-layout   { flex-direction: column; }
+  .admin-sidebar  { display: none; }  /* hidden on mobile for simplicity */
+  .admin-main     { padding: var(--space-4); }
+}

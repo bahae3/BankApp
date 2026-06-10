@@ -1,0 +1,33 @@
+.beneficiary-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.beneficiary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-hover);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+}
+
+.beneficiary-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.beneficiary-item__name {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.beneficiary-item__rib {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
