@@ -15,7 +15,7 @@ export default function Balance() {
         <div className="glass-card balance-card balance-card--primary">
           <p className="balance-card__label">Available Balance</p>
           <p className="balance-card__value">
-            {user?.balance?.toFixed(2)} <span className="balance-card__currency">DZD</span>
+            {user?.balance?.toFixed(2)} <span className="balance-card__currency">MAD</span>
           </p>
         </div>
         <div className="glass-card balance-card balance-card--secondary">

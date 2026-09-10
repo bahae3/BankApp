@@ -14,6 +14,7 @@
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .page-subtitle {
@@ -29,7 +30,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
-  backdrop-filter: var(--backdrop);
+  box-shadow: var(--shadow-card-sm);
 }
 
 .glass-card__title {
@@ -37,14 +38,15 @@
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--space-5);
+  letter-spacing: -0.01em;
 }
 
 /* ── Spinner ────────────────────────────────────────────────── */
 .spinner {
   width: 2.5rem;        /* 40px */
   height: 2.5rem;
-  border: 3px solid rgba(167, 139, 250, 0.2);
-  border-top-color: var(--color-primary-light);
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
   border-radius: var(--radius-full);
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
@@ -106,8 +108,8 @@
 }
 
 .alert--info {
-  background: rgba(96,165,250,0.07);
-  border: 1px solid rgba(96,165,250,0.15);
+  background: var(--color-blue-glow);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   color: var(--color-blue);
 }
 
@@ -125,16 +127,16 @@
 }
 
 .badge--green  { background: var(--color-success-bg);  color: var(--color-success-text);  border: 1px solid var(--color-success-border); }
-.badge--blue   { background: var(--color-blue-glow);   color: var(--color-blue);          border: 1px solid rgba(96,165,250,0.3); }
+.badge--blue   { background: var(--color-blue-glow);   color: var(--color-blue);          border: 1px solid rgba(56, 189, 248, 0.2); }
 .badge--red    { background: var(--color-danger-bg);   color: var(--color-danger-text);   border: 1px solid var(--color-danger-border); }
 .badge--yellow { background: var(--color-warning-bg);  color: var(--color-warning-text);  border: 1px solid var(--color-warning-border); }
-.badge--purple { background: rgba(124,58,237,0.15);    color: var(--color-primary-light); border: 1px solid rgba(124,58,237,0.3); }
+.badge--purple { background: var(--color-primary-glow); color: var(--color-primary-light); border: 1px solid rgba(59, 130, 246, 0.3); }
 
 /* ── Data table ─────────────────────────────────────────────── */
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
 }
 
 .data-table th {
@@ -151,8 +153,8 @@
 
 .data-table td {
   padding: var(--space-4);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  color: var(--text-subtle);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--text-secondary);
   vertical-align: middle;
 }
 
@@ -176,67 +178,67 @@
   justify-content: center;
   gap: var(--space-2);
   padding: 0.6rem 1.25rem;
-  border: none;
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   font-weight: 600;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal), background var(--transition-normal);
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
   min-height: 2.375rem; /* 38px */
   white-space: nowrap;
 }
 
 .btn:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
 }
 
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
 /* Variants */
 .btn--primary {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 4px 12px var(--color-primary-glow);
 }
 
 .btn--primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--color-primary-glow);
+  background: var(--color-primary-dark);
 }
 
 .btn--danger {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
-  border: 1px solid var(--color-danger-border);
+  background: var(--color-danger);
+  color: #fff;
 }
 
 .btn--danger:hover:not(:disabled) {
-  background: rgba(239,68,68,0.2);
+  background: #dc2626;
 }
 
 .btn--success {
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
-  border: 1px solid var(--color-success-border);
+  background: var(--color-success);
+  color: #fff;
 }
 
 .btn--success:hover:not(:disabled) {
-  background: rgba(34,197,94,0.2);
+  background: #059669;
 }
 
 .btn--ghost {
   background: transparent;
-  color: var(--color-primary-light);
-  border: 1px solid rgba(167,139,250,0.25);
+  color: var(--text-primary);
+  border: 1px solid var(--color-border);
 }
 
 .btn--ghost:hover:not(:disabled) {
-  background: rgba(167,139,250,0.08);
+  background: var(--color-surface-hover);
 }
 
 /* Full-width modifier */
-.btn--full { width: 100%; padding: 0.875rem; font-size: var(--font-size-md); }
+.btn--full { width: 100%; padding: 0.875rem; font-size: var(--font-size-base); }
 
 /* ── Inner page form ─────────────────────────────────────────── */
 /*  Used for forms inside the authenticated layout (not auth pages) */
@@ -249,52 +251,50 @@
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
 }
 
 .form-field__label {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  color: var(--text-subtle);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .form-field__input,
 .form-field__select {
   width: 100%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--color-border-light);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 0.7rem var(--space-4);
+  padding: 0.65rem var(--space-4);
   color: var(--text-primary);
   font-size: var(--font-size-base);
   font-family: var(--font-sans);
   outline: none;
-  transition: border-color var(--transition-normal), background var(--transition-normal);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
   box-sizing: border-box;
 }
 
 .form-field__input::placeholder {
-  color: var(--text-muted);
+  color: var(--text-subtle);
 }
 
 .form-field__input:focus,
 .form-field__select:focus {
   border-color: var(--color-primary-light);
-  background: rgba(167,139,250,0.08);
+  box-shadow: 0 0 0 1px var(--color-primary-light);
 }
 
 .form-field__select option {
-  background: #1a1a2e;
+  background: var(--color-bg);
   color: var(--text-primary);
 }
 
 /* ── Loan preview info box ─────────────────────────────────── */
 .loan-preview {
   padding: var(--space-3) var(--space-4);
-  background: rgba(167,139,250,0.06);
-  border: 1px solid rgba(167,139,250,0.15);
+  background: var(--color-primary-glow);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   color: var(--color-primary-light);
@@ -321,3 +321,160 @@
 @media (max-width: 48rem) {     /* 768px */
   .page-title { font-size: var(--font-size-2xl); }
 }
+
+/* ── Deposit page layout ─────────────────────────────────────── */
+.deposit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 80rem) {          /* 1280px — stack form full-width */
+  .deposit-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .deposit-form-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 48rem) {          /* 768px — single column */
+  .deposit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Deposit list items ──────────────────────────────────────── */
+.deposit-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  /* ── Scrollable list ─────────────────────────────────────── */
+  max-height: 22rem;          /* ~352px — shows ~4 items before scrolling */
+  overflow-y: auto;
+  padding-right: var(--space-2); /* space for the scrollbar */
+  scroll-behavior: smooth;
+
+  /* Custom scrollbar — WebKit (Chrome, Edge, Safari) */
+  scrollbar-width: thin;                       /* Firefox */
+  scrollbar-color: var(--color-border) transparent; /* Firefox */
+}
+
+/* WebKit scrollbar track */
+.deposit-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.deposit-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* WebKit scrollbar thumb */
+.deposit-list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-normal);
+}
+
+.deposit-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-light);
+}
+
+/* Fade-out gradient at bottom to hint at more content */
+.deposit-list-wrapper {
+  position: relative;
+}
+
+.deposit-list-wrapper::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+/* Show the fade only when the list is scrollable (has overflow) */
+.deposit-list-wrapper.is-scrollable::after {
+  opacity: 1;
+}
+
+
+.deposit-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  transition: background var(--transition-normal);
+}
+
+.deposit-item:hover {
+  background: var(--color-surface-hover);
+}
+
+.deposit-item--pending {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.deposit-item--approved {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.deposit-item__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.deposit-item__icon {
+  font-size: 1.25rem;
+}
+
+.deposit-item--pending  .deposit-item__icon { color: var(--color-warning); }
+.deposit-item--approved .deposit-item__icon { color: var(--color-success); }
+
+.deposit-item__amount {
+  margin: 0;
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+}
+
+.deposit-item__label {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ── Deposit empty state ─────────────────────────────────────── */
+.deposit-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-10) 0;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: var(--font-size-sm);
+}
+
+.deposit-empty__icon {
+  font-size: 2rem;
+  color: var(--text-muted);
+}
+
+.deposit-empty__icon--success {
+  color: var(--color-success);
+}
+

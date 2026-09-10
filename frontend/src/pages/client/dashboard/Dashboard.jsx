@@ -11,13 +11,13 @@ export default function Dashboard() {
   return (
     <ClientLayout>
       <div className="page-header">
-        <h1 className="page-title">{greeting}, {user?.first_name} 👋</h1>
+        <h1 className="page-title">{greeting}, {user?.first_name} <span className="material-symbols-outlined" style={{ verticalAlign: 'bottom', fontSize: 'inherit' }}>waving_hand</span></h1>
         <p className="page-subtitle">Here's an overview of your account</p>
       </div>
 
       <div className="grid-auto dashboard-cards">
         {[
-          { icon: "pi-wallet", label: "Current Balance", value: `${user?.balance?.toFixed(2)} DZD`, borderClass: "border-purple" },
+          { icon: "pi-wallet", label: "Current Balance", value: `${user?.balance?.toFixed(2)} MAD`, borderClass: "border-purple" },
           { icon: "pi-credit-card", label: "RIB", value: user?.rib, borderClass: "border-blue" },
           { icon: "pi-envelope", label: "Email", value: user?.email, borderClass: "border-green" },
           { icon: "pi-phone", label: "Phone", value: user?.phone, borderClass: "border-yellow" },

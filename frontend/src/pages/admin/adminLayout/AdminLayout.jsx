@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { useTheme } from "../../../context/ThemeContext";
 import "./AdminLayout.css";
 
 const adminNav = [
@@ -11,6 +12,7 @@ const adminNav = [
 
 export default function AdminLayout({ children }) {
   const { logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   return (
@@ -31,9 +33,16 @@ export default function AdminLayout({ children }) {
             </NavLink>
           ))}
         </nav>
-        <button id="admin-logout-btn" className="admin-sidebar__logout" onClick={() => { logout(); navigate("/admin/login"); }}>
-          <i className="pi pi-sign-out"></i> Logout
-        </button>
+        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <button className="admin-sidebar__logout" onClick={toggleTheme} style={{ color: 'var(--text-secondary)' }}>
+            <i className={`pi ${theme === 'dark' ? 'pi-sun' : 'pi-moon'}`}></i> 
+            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+          </button>
+          
+          <button id="admin-logout-btn" className="admin-sidebar__logout" onClick={() => { logout(); navigate("/admin/login"); }} style={{ marginTop: 0 }}>
+            <i className="pi pi-sign-out"></i> Logout
+          </button>
+        </div>
       </aside>
       <main className="admin-main">{children}</main>
     </div>

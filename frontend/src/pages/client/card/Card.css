@@ -14,12 +14,12 @@
   padding: var(--space-6);
   box-sizing: border-box;
   position: relative;
-  box-shadow: 0 25px 50px rgba(124, 58, 237, 0.4);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  color: #fff;
+  color: var(--text-primary);
   transform-style: preserve-3d;
 }
 
@@ -80,7 +80,8 @@
 }
 
 .virtual-card__cvc-box {
-  background: rgba(0,0,0,0.3);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   padding: var(--space-3) var(--space-8);
   border-radius: var(--radius-sm);
   text-align: center;

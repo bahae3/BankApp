@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { SocketProvider } from "./context/SocketContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // Auth pages
@@ -24,9 +27,15 @@ import ClientsAdmin from "./pages/admin/clientsAdmin/ClientsAdmin";
 import DepositsAdmin from "./pages/admin/depositsAdmin/DepositsAdmin";
 import LoanRequestsAdmin from "./pages/admin/loanRequestsAdmin/LoanRequestsAdmin";
 
-export default function App() {
+/**
+ * Inner wrapper — has access to AuthContext so it can thread
+ * user/role/updateBalance down into SocketProvider.
+ */
+function AppWithSocket() {
+  const { user, role, updateBalance } = useAuth();
+
   return (
-    <AuthProvider>
+    <SocketProvider user={user} role={role} onBalanceUpdate={updateBalance}>
       <BrowserRouter>
         <Routes>
           {/* Public */}
@@ -56,6 +65,16 @@ export default function App() {
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </SocketProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <AppWithSocket />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

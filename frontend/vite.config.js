@@ -10,6 +10,12 @@ export default defineConfig({
         target: "http://localhost:5000",
         changeOrigin: true,
       },
+      // Proxy Socket.IO through Vite so it's same-origin (no CORS, cookies work)
+      "/socket.io": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        ws: true,          // ← upgrade HTTP → WebSocket
+      },
     },
   },
 });

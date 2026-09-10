@@ -40,7 +40,7 @@ export default function ClientsAdmin() {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Balance (DZD)</th>
+                  <th>Balance (MAD)</th>
                   <th>Actions</th>
                 </tr>
               </thead>

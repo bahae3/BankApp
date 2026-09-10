@@ -52,7 +52,7 @@ export default function Loans() {
           {success && <div className="alert alert--success"><i className="pi pi-check-circle"></i> {success}</div>}
           <form onSubmit={handleSubmit} className="inner-form">
             <div className="form-field">
-              <label htmlFor="loan-amount" className="form-field__label">Loan Amount (DZD)</label>
+              <label htmlFor="loan-amount" className="form-field__label">Loan Amount (MAD)</label>
               <InputText id="loan-amount" type="number" name="amount" min="1" step="0.01"
                 value={form.amount} onChange={handleChange} placeholder="0.00" required className="form-field__input" />
             </div>
@@ -64,7 +64,7 @@ export default function Loans() {
             {monthly && (
               <div className="loan-preview">
                 <p>
-                  Monthly repayment: <strong>{monthly} DZD</strong> × {form.months} months
+                  Monthly repayment: <strong>{monthly} MAD</strong> × {form.months} months
                 </p>
               </div>
             )}
@@ -82,11 +82,11 @@ export default function Loans() {
               {loans.map((l) => (
                 <div key={l.id} className="loan-item">
                   <div className="loan-item__header">
-                    <span className="loan-item__amount">{l.amount.toFixed(2)} DZD</span>
+                    <span className="loan-item__amount">{l.amount.toFixed(2)} MAD</span>
                     <span className="badge badge--green">Active</span>
                   </div>
                   <p className="loan-item__details">
-                    {l.monthly_return_amount.toFixed(2)} DZD/month × {l.term} months
+                    {l.monthly_return_amount.toFixed(2)} MAD/month × {l.term} months
                   </p>
                 </div>
               ))}

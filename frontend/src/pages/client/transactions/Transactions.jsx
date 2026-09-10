@@ -56,7 +56,7 @@ export default function Transactions() {
                     </td>
                     <td className={isDebit(tx.transaction_type) ? "amount--debit" : "amount--credit"}>
                       {isDebit(tx.transaction_type) ? "-" : "+"}
-                      {tx.amount.toFixed(2)} DZD
+                      {tx.amount.toFixed(2)} MAD
                     </td>
                     <td style={{ color: "var(--text-subtle)" }}>{tx.description}</td>
                   </tr>

@@ -1,0 +1,195 @@
+/* =============================================================
+   TRANSFER PAGE — Custom Beneficiary Dropdown
+   ============================================================= */
+
+/* ── Dropdown wrapper ───────────────────────────────────────── */
+.benef-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Trigger button ─────────────────────────────────────────── */
+.benef-dropdown__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem var(--space-4);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-normal),
+              background var(--transition-normal),
+              box-shadow var(--transition-normal);
+  min-height: 2.8rem;
+}
+
+.benef-dropdown__trigger:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary-light);
+}
+
+.benef-dropdown__trigger:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+.benef-dropdown__trigger--open {
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-glow);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.benef-dropdown__trigger--placeholder {
+  color: var(--text-muted);
+}
+
+.benef-dropdown__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Chevron icon ───────────────────────────────────────────── */
+.benef-dropdown__chevron {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+/* ── Selected value display ─────────────────────────────────── */
+.benef-dropdown__selected {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+/* ── Avatar circle ──────────────────────────────────────────── */
+.benef-dropdown__avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.benef-dropdown__avatar--sm {
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 0.65rem;
+}
+
+/* ── Name + RIB info block ──────────────────────────────────── */
+.benef-dropdown__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.benef-dropdown__name {
+  font-weight: 500;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.benef-dropdown__rib {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* ── Options panel ──────────────────────────────────────────── */
+.benef-dropdown__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  animation: dropdownFadeIn 0.15s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Individual option row ──────────────────────────────────── */
+.benef-dropdown__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.65rem var(--space-4);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.benef-dropdown__option:last-child {
+  border-bottom: none;
+}
+
+.benef-dropdown__option:hover {
+  background: var(--color-surface-hover);
+}
+
+.benef-dropdown__option--active {
+  background: var(--color-primary-glow);
+}
+
+.benef-dropdown__option--active .benef-dropdown__name {
+  color: var(--color-primary-light);
+}
+
+/* Checkmark for active selection */
+.benef-dropdown__check {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--color-primary-light);
+  flex-shrink: 0;
+}
+
+/* ── Hint text below field ──────────────────────────────────── */
+.form-hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.form-hint .pi {
+  font-size: 0.75rem;
+  color: var(--color-blue);
+}

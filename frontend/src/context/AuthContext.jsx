@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axiosClient from "../api/axiosClient";
 
 const AuthContext = createContext(null);
@@ -55,8 +55,16 @@ export function AuthProvider({ children }) {
     setRole(null);
   };
 
+  /**
+   * Called by the WebSocket listener when a balance_updated event arrives.
+   * Patches only the balance field without a full re-fetch.
+   */
+  const updateBalance = useCallback((newBalance) => {
+    setUser((prev) => prev ? { ...prev, balance: newBalance } : prev);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, role, loading, loginClient, loginAdmin, logout }}>
+    <AuthContext.Provider value={{ user, role, loading, loginClient, loginAdmin, logout, updateBalance }}>
       {children}
     </AuthContext.Provider>
   );

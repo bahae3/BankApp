@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import "./ClientLayout.css";
 
 const navItems = [
@@ -16,6 +17,7 @@ const navItems = [
 
 export default function ClientLayout({ children }) {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -67,9 +69,16 @@ export default function ClientLayout({ children }) {
           ))}
         </nav>
 
-        <button id="client-logout-btn" className="sidebar__logout" onClick={handleLogout}>
-          <i className="pi pi-sign-out"></i> Logout
-        </button>
+        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <button className="sidebar__logout" onClick={toggleTheme} style={{ color: 'var(--text-secondary)' }}>
+            <i className={`pi ${theme === 'dark' ? 'pi-sun' : 'pi-moon'}`}></i> 
+            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+          </button>
+          
+          <button id="client-logout-btn" className="sidebar__logout" onClick={handleLogout} style={{ marginTop: 0 }}>
+            <i className="pi pi-sign-out"></i> Logout
+          </button>
+        </div>
       </aside>
 
       {/* Main content */}

@@ -40,7 +40,7 @@ export default function DepositsAdmin() {
                 <tr>
                   <th>Client</th>
                   <th>Email</th>
-                  <th>Amount (DZD)</th>
+                  <th>Amount (MAD)</th>
                   <th>Actions</th>
                 </tr>
               </thead>

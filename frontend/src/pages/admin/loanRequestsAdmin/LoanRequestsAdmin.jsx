@@ -39,7 +39,7 @@ export default function LoanRequestsAdmin() {
               <thead>
                 <tr>
                   <th>Client</th>
-                  <th>Amount (DZD)</th>
+                  <th>Amount (MAD)</th>
                   <th>Term</th>
                   <th>Monthly</th>
                   <th>Status</th>
