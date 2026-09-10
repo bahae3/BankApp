@@ -6,10 +6,13 @@ import os
 from flask import Flask
 
 from app.config import config_map
-from app.extensions import db, migrate, jwt, cors
+from app.extensions import db, migrate, jwt, cors, socketio
+
+# Register Socket.IO event handlers
+from app.sockets import events
 
 # Import all models so SQLAlchemy/Alembic can discover them
-from app.models import Client, Admin, Card, Beneficiary, Transaction, Loan, Deposit  # noqa: F401
+from app.models import Client, Admin, Card, Beneficiary, Transaction, Loan, Deposit
 
 
 def create_app(env: str = None) -> Flask:
@@ -24,8 +27,15 @@ def create_app(env: str = None) -> Flask:
     migrate.init_app(app, db)
     jwt.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+    socketio.init_app(
+        app,
+        cors_allowed_origins="*",
+        async_mode="threading",
+        logger=False,
+        engineio_logger=False,
+    )
 
-    # Register blueprints
+    # Register HTTP blueprints
     from app.routes.auth import auth_bp
     from app.routes.client import client_bp
     from app.routes.admin import admin_bp

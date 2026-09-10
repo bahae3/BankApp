@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
+from app.extensions import socketio
 from app.models.client import Client
 from app.models.card import Card
 from app.services import client_service
@@ -136,10 +137,21 @@ def transfer():
     description = data.get("description", "")
     if not benef_client_id or not amount:
         return jsonify({"error": "beneficiary_client_id and amount are required."}), 400
-    _, error = client_service.transfer_money(client_id, int(benef_client_id), float(amount), description)
+    sender_bal, receiver_bal, error = client_service.transfer_money(
+        client_id, int(benef_client_id), float(amount), description
+    )
     if error:
         return jsonify({"error": error}), 400
+
+    # Push real-time balance updates — broadcast to all, each client filters their own
+    socketio.emit("balance_updated",
+                  {"client_id": client_id,          "balance": sender_bal},
+                  namespace="/")
+    socketio.emit("balance_updated",
+                  {"client_id": int(benef_client_id), "balance": receiver_bal},
+                  namespace="/")
     return jsonify({"message": "Transfer successful."}), 200
+
 
 
 # ── Deposit ───────────────────────────────────────────────────────────────────
@@ -158,6 +170,32 @@ def request_deposit():
     if error:
         return jsonify({"error": error}), 400
     return jsonify({"message": "Deposit request submitted.", "deposit": deposit.to_dict()}), 201
+
+
+@client_bp.get("/deposits")
+@jwt_required()
+def get_my_deposits():
+    """Returns the client's pending deposit requests (not yet approved by admin)."""
+    client_id, err = _require_client_role()
+    if err:
+        return err
+    from app.models.deposit import Deposit
+    deposits = Deposit.query.filter_by(client_id=client_id).all()
+    return jsonify([d.to_dict() for d in deposits]), 200
+
+
+@client_bp.get("/deposits/history")
+@jwt_required()
+def get_deposit_history():
+    """Returns approved deposits from the transactions table."""
+    client_id, err = _require_client_role()
+    if err:
+        return err
+    from app.models.transaction import Transaction
+    txs = Transaction.query.filter_by(
+        client_id=client_id, transaction_type="Deposit"
+    ).order_by(Transaction.date.desc()).all()
+    return jsonify([t.to_dict() for t in txs]), 200
 
 
 # ── Transactions ──────────────────────────────────────────────────────────────

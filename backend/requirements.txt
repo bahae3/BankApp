@@ -3,9 +3,10 @@ flask-sqlalchemy==3.1.1
 flask-migrate==4.1.0
 flask-jwt-extended==4.7.4
 flask-cors==6.0.5
+flask-socketio==5.5.1
+eventlet==0.39.1
 psycopg2-binary==2.9.12
 python-dotenv==1.2.2
 marshmallow==4.3.0
 werkzeug==3.1.8
-
 cryptography==48.0.1

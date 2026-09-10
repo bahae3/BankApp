@@ -81,30 +81,36 @@ def delete_beneficiary(client_id: int, benef_id: int) -> tuple[bool, None] | tup
 
 # ── Transfer ──────────────────────────────────────────────────────────────────
 
-def transfer_money(client_id: int, benef_client_id: int, amount: float, description: str) -> tuple[bool, None] | tuple[None, str]:
+def transfer_money(client_id: int, benef_client_id: int, amount: float, description: str):
+    """Returns (sender_balance, receiver_balance, None) on success, or (None, None, error_str)."""
     sender = db.session.get(Client, client_id)
     receiver = db.session.get(Client, benef_client_id)
     if not receiver:
-        return None, "Beneficiary account not found."
+        return None, None, "Beneficiary account not found."
     if amount <= 0:
-        return None, "Amount must be positive."
+        return None, None, "Amount must be positive."
     if sender.balance < amount:
-        return None, "Insufficient balance."
+        return None, None, "Insufficient balance."
 
-    sender.balance -= amount
-    receiver.balance += amount
+    try:
+        sender.balance -= amount
+        receiver.balance += amount
 
-    tx = Transaction(
-        client_id=client_id,
-        benef_id=benef_client_id,
-        date=datetime.utcnow(),
-        transaction_type="Transfer",
-        amount=amount,
-        description=description,
-    )
-    db.session.add(tx)
-    db.session.commit()
-    return True, None
+        tx = Transaction(
+            client_id=client_id,
+            benef_id=benef_client_id,
+            date=datetime.utcnow(),
+            transaction_type="Transfer",
+            amount=amount,
+            description=description,
+        )
+        db.session.add(tx)
+        db.session.commit()
+        # Return updated balances directly — avoids a second DB round-trip in the caller
+        return round(sender.balance, 2), round(receiver.balance, 2), None
+    except Exception as e:
+        db.session.rollback()
+        return None, None, f"Database transaction failed: {str(e)}"
 
 
 # ── Deposit ───────────────────────────────────────────────────────────────────

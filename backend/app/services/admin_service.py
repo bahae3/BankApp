@@ -43,21 +43,25 @@ def accept_deposit(deposit_id: int) -> tuple[bool, None] | tuple[None, str]:
     if not deposit:
         return None, "Deposit not found."
 
-    client = db.session.get(Client, deposit.client_id)
-    client.balance += deposit.amount
+    try:
+        client = db.session.get(Client, deposit.client_id)
+        client.balance += deposit.amount
 
-    tx = Transaction(
-        client_id=deposit.client_id,
-        benef_id=None,
-        date=datetime.utcnow(),
-        transaction_type="Deposit",
-        amount=deposit.amount,
-        description="Deposit approved by admin.",
-    )
-    db.session.add(tx)
-    db.session.delete(deposit)
-    db.session.commit()
-    return True, None
+        tx = Transaction(
+            client_id=deposit.client_id,
+            benef_id=None,
+            date=datetime.utcnow(),
+            transaction_type="Deposit",
+            amount=deposit.amount,
+            description="Deposit approved by admin.",
+        )
+        db.session.add(tx)
+        db.session.delete(deposit)
+        db.session.commit()
+        return True, None
+    except Exception as e:
+        db.session.rollback()
+        return None, f"Database transaction failed: {str(e)}"
 
 
 def reject_deposit(deposit_id: int) -> tuple[bool, None] | tuple[None, str]:
@@ -84,21 +88,25 @@ def accept_loan(loan_id: int) -> tuple[bool, None] | tuple[None, str]:
     if not loan:
         return None, "Loan not found."
 
-    loan.accepted_or_not = True
-    client = db.session.get(Client, loan.client_id)
-    client.balance += loan.amount
+    try:
+        loan.accepted_or_not = True
+        client = db.session.get(Client, loan.client_id)
+        client.balance += loan.amount
 
-    tx = Transaction(
-        client_id=loan.client_id,
-        benef_id=None,
-        date=datetime.utcnow(),
-        transaction_type="Loan",
-        amount=loan.amount,
-        description="Loan approved by admin.",
-    )
-    db.session.add(tx)
-    db.session.commit()
-    return True, None
+        tx = Transaction(
+            client_id=loan.client_id,
+            benef_id=None,
+            date=datetime.utcnow(),
+            transaction_type="Loan",
+            amount=loan.amount,
+            description="Loan approved by admin.",
+        )
+        db.session.add(tx)
+        db.session.commit()
+        return True, None
+    except Exception as e:
+        db.session.rollback()
+        return None, f"Database transaction failed: {str(e)}"
 
 
 def reject_loan(loan_id: int) -> tuple[bool, None] | tuple[None, str]:

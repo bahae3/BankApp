@@ -1,10 +1,11 @@
 """
-Entry point for the Flask REST API.
+Entry point for the Flask REST API with Socket.IO support.
 Run: python run.py
 """
 from app import create_app
+from app.extensions import socketio
 
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    socketio.run(app, debug=True, port=5000, use_reloader=False, allow_unsafe_werkzeug=True)
